@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun
 {
-	// Other components
-	private CharacterController _characterController;
-
 	// Editor variables
 	public PlayerMovement playerMovement;
-
+	public CharacterController characterController;
+	public GameObject head;
+	public Camera viewCamera;
+	public AudioListener audioListener;
+	
 	// Public variables
 
 	// Private variables
@@ -20,8 +21,8 @@ public class Player : MonoBehaviour
 	//--------------------------
 	void Awake()
 	{
-		// Other components
-		_characterController = GetComponent<CharacterController>();
+		if (photonView.IsMine) audioListener.enabled = true;
+		if (photonView.IsMine) viewCamera.enabled = true;
 	}
 
 	void Start()

@@ -55,26 +55,21 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 		Debug.Log("Joining random room failed:" + message);
 
 		Debug.Log("Creating new room");
-		PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 2 });
+		PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 10 });
 	}
 
 	public override void OnJoinedRoom()
 	{
-		if (PhotonNetwork.CurrentRoom.PlayerCount != 2)
+		if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
 		{
-			Debug.Log("Joined a room, waiting for it to fill");
-		}
-		else
-		{
-			Debug.Log("Joined a full room, waiting for the master to start the game");
+			Debug.Log("Joined an empty room, waiting for it to fill");
 		}
 	}
 
 	public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 	{
-		if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+		if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
 		{
-			PhotonNetwork.CurrentRoom.IsOpen = false;
 			Debug.Log("Room filled, starting the game");
 			PhotonNetwork.LoadLevel("Game");
 		}
