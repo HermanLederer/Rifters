@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 	public PhotonView _photonView { get; private set; }
 
 	// Editor Variables
+	public bool isOfflinePlayer = false;
 	public float movementSpeed = 7f;
 	public float mouseAcceleration = 100f;
 
@@ -45,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
-		if (_photonView.IsMine)
+		if (_photonView.IsMine || isOfflinePlayer)
 		{
 			// Camera rotation
 			float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.deltaTime;
