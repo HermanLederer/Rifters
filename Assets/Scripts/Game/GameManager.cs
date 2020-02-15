@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
 	// Private variables
 
+
 	// Static variables
 	public static GameManager instance;
 
@@ -32,10 +33,15 @@ public class GameManager : MonoBehaviour
     {
 		if (!offlineMode) // online mode
 		{
-			// instantiating players
+			// instantiating local player
 			PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
-			PhotonNetwork.Instantiate(gameManagerDataPrefab.name, transform.position, transform.rotation);
-			PhotonNetwork.Instantiate(gameBallPrefab.name, transform.position, transform.rotation);
+
+			// instantiating online game objects
+			if (PhotonNetwork.LocalPlayer.IsMasterClient)
+			{
+				PhotonNetwork.Instantiate(gameManagerDataPrefab.name, transform.position, transform.rotation);
+				PhotonNetwork.Instantiate(gameBallPrefab.name, transform.position, transform.rotation);
+			}
 		}
 		else
 		{

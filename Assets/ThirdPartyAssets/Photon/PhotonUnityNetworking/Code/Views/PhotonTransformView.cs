@@ -62,8 +62,9 @@ namespace Photon.Pun
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.IsWriting)
+            if (stream.IsWriting) // stream is writing
             {
+				// position
                 if (this.m_SynchronizePosition)
                 {
                     this.m_Direction = transform.position - this.m_StoredPosition;
@@ -73,20 +74,21 @@ namespace Photon.Pun
                     stream.SendNext(this.m_Direction);
                 }
 
+				// rotation
                 if (this.m_SynchronizeRotation)
                 {
                     stream.SendNext(transform.rotation);
                 }
 
+				// scale
                 if (this.m_SynchronizeScale)
                 {
                     stream.SendNext(transform.localScale);
                 }
             }
-            else
+            else // stream is not writing
             {
-
-
+				// position
                 if (this.m_SynchronizePosition)
                 {
                     this.m_NetworkPosition = (Vector3)stream.ReceiveNext();
@@ -102,12 +104,11 @@ namespace Photon.Pun
                         float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
                         this.m_NetworkPosition += this.m_Direction * lag;
                         this.m_Distance = Vector3.Distance(transform.position, this.m_NetworkPosition);
-                    }
-
-                   
+                    }  
                 }
 
-                if (this.m_SynchronizeRotation)
+				// rotation
+				if (this.m_SynchronizeRotation)
                 {
                     this.m_NetworkRotation = (Quaternion)stream.ReceiveNext();
 
@@ -122,7 +123,8 @@ namespace Photon.Pun
                     }
                 }
 
-                if (this.m_SynchronizeScale)
+				// scale
+				if (this.m_SynchronizeScale)
                 {
                     transform.localScale = (Vector3)stream.ReceiveNext();
                 }
