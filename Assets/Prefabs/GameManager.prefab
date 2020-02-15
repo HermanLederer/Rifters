@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offlineMode: 0
+  playerPrefab: {fileID: 886666309173420961, guid: ad6cc318b3df55c4083ba6b94cf89821,
+    type: 3}
   gameManagerDataPrefab: {fileID: 8512951221712517426, guid: 8fb2ffa3331eed24e93bea31d6a4d797,
     type: 3}
-  playerPrefab: {fileID: 886666309173420961, guid: ad6cc318b3df55c4083ba6b94cf89821,
+  gameBallPrefab: {fileID: 8982838994785950291, guid: ceb8f801768c520428df1bf4061d3f83,
     type: 3}

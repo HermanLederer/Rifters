@@ -6,6 +6,7 @@ using Photon.Pun;
 public class GameManagerData : MonoBehaviour, IPunObservable
 {
 	// GameManager variables
+	// (not using a dictuionary to minimize network load)
 	public int team1score;
 	public int team2score;
 
@@ -29,6 +30,15 @@ public class GameManagerData : MonoBehaviour, IPunObservable
 	//--------------------------
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
-		throw new System.NotImplementedException();
+		if (stream.IsWriting) // stream is writing
+		{
+			stream.SendNext(team1score);
+			stream.SendNext(team2score);
+		}
+		else // stream is reading
+		{
+			team1score = (int)stream.ReceiveNext();
+			team2score = (int)stream.ReceiveNext();
+		}
 	}
 }

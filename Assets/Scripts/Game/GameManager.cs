@@ -7,8 +7,9 @@ public class GameManager : MonoBehaviour
 {
 	// Editor variables
 	[SerializeField] private bool offlineMode;
-	[SerializeField] private GameObject gameManagerDataPrefab;
 	[SerializeField] private GameObject playerPrefab;
+	[SerializeField] private GameObject gameManagerDataPrefab;
+	[SerializeField] private GameObject gameBallPrefab;
 
 	// Private variables
 
@@ -33,12 +34,14 @@ public class GameManager : MonoBehaviour
 		{
 			// instantiating players
 			PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
-			PhotonNetwork.Instantiate(gameManagerDataPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
+			PhotonNetwork.Instantiate(gameManagerDataPrefab.name, transform.position, transform.rotation);
+			PhotonNetwork.Instantiate(gameBallPrefab.name, transform.position, transform.rotation);
 		}
 		else
 		{
 			GameManagerData data = Instantiate(gameManagerDataPrefab, transform.position, transform.rotation).GetComponent<GameManagerData>();
 			data.GetComponent<PhotonView>().enabled = false;
+			Instantiate(gameBallPrefab, transform.position, transform.rotation);
 		}
     }
 
@@ -47,6 +50,12 @@ public class GameManager : MonoBehaviour
 	//--------------------------
 	public void Score(GameTeam team)
 	{
-		Debug.Log("A goal has been scored by" + team);
+		// increasing the score
+		if (team == GameTeam.Team1) ++GameManagerData.instance.team1score;
+		else ++GameManagerData.instance.team2score;
+
+		// debugging
+		Debug.Log("A goal has been scored by " + team);
+		Debug.Log("" + GameTeam.Team1 + ": " + GameManagerData.instance.team1score + "; " + GameTeam.Team2 + ": " + GameManagerData.instance.team2score + ";");
 	}
 }
