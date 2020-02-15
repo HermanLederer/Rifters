@@ -31,7 +31,7 @@ public class GameGoalArea : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		//if (other.GetComponent<GameItem>() != null)
+		if (other.GetComponent<GameItem>() != null)
 			Debug.Log("A goal has been scored");
 	}
 
