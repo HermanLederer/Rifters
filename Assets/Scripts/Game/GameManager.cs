@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
 	// Editor variables
 	[SerializeField] private bool offlineMode;
+	[SerializeField] private GameObject gameManagerDataPrefab;
 	[SerializeField] private GameObject playerPrefab;
 
 	// Private variables
@@ -28,8 +29,17 @@ public class GameManager : MonoBehaviour
 
 	void Start()
     {
-		// instantiating players
-		if (!offlineMode) PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
+		if (!offlineMode) // online mode
+		{
+			// instantiating players
+			PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
+			PhotonNetwork.Instantiate(gameManagerDataPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
+		}
+		else
+		{
+			GameManagerData data = Instantiate(gameManagerDataPrefab, transform.position, transform.rotation).GetComponent<GameManagerData>();
+			data.GetComponent<PhotonView>().enabled = false;
+		}
     }
 
 	//--------------------------
