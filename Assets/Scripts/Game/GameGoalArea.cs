@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameGoalArea : MonoBehaviour
 {
 	// Editor variables
-	[SerializeField] public MonoBehaviour gameItemObject { get; private set; }
+	[SerializeField] private GameTeam team;
 
 	// Public variables
 
@@ -32,7 +32,7 @@ public class GameGoalArea : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.GetComponent<GameItem>() != null)
-			Debug.Log("A goal has been scored");
+			GameManager.instance.Score(team);
 	}
 
 	//--------------------------

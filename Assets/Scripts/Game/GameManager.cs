@@ -6,6 +6,7 @@ using Photon.Pun;
 public class GameManager : MonoBehaviour
 {
 	// Editor variables
+	[SerializeField] private bool offlineMode;
 	[SerializeField] private GameObject playerPrefab;
 
 	// Private variables
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
 		// instantiating players
-		PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
+		if (!offlineMode) PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
     }
 
 	//--------------------------
@@ -36,6 +37,6 @@ public class GameManager : MonoBehaviour
 	//--------------------------
 	public void Score(GameTeam team)
 	{
-		
+		Debug.Log("A goal has been scored by" + team);
 	}
 }
