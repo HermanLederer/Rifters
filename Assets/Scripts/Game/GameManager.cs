@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 		if (!offlineMode) // online mode
 		{
 			// instantiating local player
-			PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-3, 3), transform.rotation);
+			PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-2, 2), transform.rotation);
 
 			// instantiating online game objects
 			if (PhotonNetwork.LocalPlayer.IsMasterClient)

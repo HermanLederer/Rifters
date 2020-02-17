@@ -7,8 +7,8 @@ public class GameManagerData : MonoBehaviour, IPunObservable
 {
 	// GameManager variables
 	// (not using a dictuionary to minimize network load)
-	public int team1score;
-	public int team2score;
+	public int team1score = 0;
+	public int team2score = 0;
 
 	// Static variables
 	public static GameManagerData instance;
