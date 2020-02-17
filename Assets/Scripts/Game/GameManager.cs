@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 		// winning conditions
 		if (isGamePlaying)
 		{
-			if (GameManagerData.instance.team1score >= playToGoals || GameManagerData.instance.team1score >= playToGoals)
+			if (GameManagerData.instance.team1score >= playToGoals || GameManagerData.instance.team2score >= playToGoals)
 			{
 				if (GameManagerData.instance.team1score > GameManagerData.instance.team2score)
 					DeclareWiner(GameTeam.Team1);
@@ -71,10 +71,13 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			if (Input.GetButton("Cancel"))
+			{
+				Time.timeScale = 1f;
 				if (!offlineMode)
 					PhotonNetwork.LoadLevel("Game");
 				else
 					SceneManager.LoadScene("Game");
+			}
 		}
 	}
 
