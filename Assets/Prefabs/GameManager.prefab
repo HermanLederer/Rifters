@@ -50,3 +50,4 @@ MonoBehaviour:
     type: 3}
   gameBallPrefab: {fileID: 8982838994785950291, guid: ceb8f801768c520428df1bf4061d3f83,
     type: 3}
+  playToGoals: 2

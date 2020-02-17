@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class GameManager : MonoBehaviour
 {
 	// Editor variables
-	[SerializeField] private bool offlineMode;
-	[SerializeField] private GameObject playerPrefab;
-	[SerializeField] private GameObject gameManagerDataPrefab;
-	[SerializeField] private GameObject gameBallPrefab;
+	[SerializeField] private bool offlineMode = false;
+	[SerializeField] private GameObject playerPrefab = null;
+	[SerializeField] private GameObject gameManagerDataPrefab = null;
+	[SerializeField] private GameObject gameBallPrefab = null;
+	[SerializeField] private int playToGoals = 5;
 
 	// Private variables
-
+	private bool isGamePlaying;
 
 	// Static variables
 	public static GameManager instance;
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
 	//--------------------------
 	private void Awake()
 	{
+		isGamePlaying = true;
+		
 		// singleton
 		if (instance != null)
 			Destroy(gameObject);
@@ -51,6 +55,29 @@ public class GameManager : MonoBehaviour
 		}
     }
 
+	void FixedUpdate()
+	{
+		// winning conditions
+		if (isGamePlaying)
+		{
+			if (GameManagerData.instance.team1score >= playToGoals || GameManagerData.instance.team1score >= playToGoals)
+			{
+				if (GameManagerData.instance.team1score > GameManagerData.instance.team2score)
+					DeclareWiner(GameTeam.Team1);
+				else
+					DeclareWiner(GameTeam.Team2);
+			}
+		}
+		else
+		{
+			if (Input.GetButton("Cancel"))
+				if (!offlineMode)
+					PhotonNetwork.LoadLevel("Game");
+				else
+					SceneManager.LoadScene("Game");
+		}
+	}
+
 	//--------------------------
 	// GameManager methods
 	//--------------------------
@@ -63,5 +90,12 @@ public class GameManager : MonoBehaviour
 		// debugging
 		Debug.Log("A goal has been scored by " + team);
 		Debug.Log("" + GameTeam.Team1 + ": " + GameManagerData.instance.team1score + "; " + GameTeam.Team2 + ": " + GameManagerData.instance.team2score + ";");
+	}
+
+	public void DeclareWiner(GameTeam team)
+	{
+		Debug.Log(team + " won!");
+		isGamePlaying = false;
+		Time.timeScale = 0.1f;
 	}
 }
