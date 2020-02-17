@@ -12,7 +12,10 @@ public class PlayerMovement : MonoBehaviour
 
 	// Editor Variables
 	public bool isOfflinePlayer = false;
-	public float movementSpeed = 7f;
+	public float walkingPower = 4f;
+	public float sprintingPower = 7f;
+	public float walkJumpingPower = 7f;
+	public float sprintJumpingPower = 7f;
 	public float mouseAcceleration = 100f;
 
 	// Public variables
@@ -44,44 +47,60 @@ public class PlayerMovement : MonoBehaviour
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		if (_photonView.IsMine || isOfflinePlayer)
 		{
 			// Camera rotation
-			float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.deltaTime;
-			float mouseY = Input.GetAxis("Mouse Y") * mouseAcceleration * Time.deltaTime;
-
+			float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.fixedDeltaTime;
+			float mouseY = Input.GetAxis("Mouse Y") * mouseAcceleration * Time.fixedDeltaTime;
 			_player.head.transform.localRotation = Quaternion.Euler(_player.head.transform.localRotation.eulerAngles.x - mouseY, 0f, 0f);
 			transform.Rotate(Vector3.up * mouseX);
 
-			// Smooth locomotion
-			Vector3 forwardMovement = transform.forward * Input.GetAxis("Vertical");
-			Vector3 sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
+			// Resetting velocities
+			if (_characterController.isGrounded)
+				velocity = Vector3.zero;
 
-			Vector3 direction = forwardMovement + sidewaysMovement;
+			// Gravity
+			velocity += Physics.gravity * Time.fixedDeltaTime;
+
+			// Smooth locomotion
+			Vector3 forwardMovement = transform.forward * Input.GetAxisRaw("Vertical");
+			Vector3 sidewaysMovement = transform.right * Input.GetAxisRaw("Horizontal");
+			if (_characterController.isGrounded)
+			{
+				if (Input.GetButton("Sprint"))
+					velocity += (forwardMovement + sidewaysMovement).normalized * sprintingPower;
+				else
+					velocity += (forwardMovement + sidewaysMovement).normalized * walkingPower;
+			}
+
+			// Jumping
+			if (Input.GetButton("Jump") && _characterController.isGrounded)
+			{
+				if (Input.GetButton("Sprint"))
+					velocity += new Vector3(0, sprintJumpingPower, 0);
+				else
+					velocity += new Vector3(0, walkJumpingPower, 0);
+			}
+
+			// Rotating towards camera
 			//direction = Quaternion.Euler(0, headTransform.rotation.eulerAngles.y, 0) * direction;
 
 			// combined movement
-			_characterController.SimpleMove(Vector3.ClampMagnitude(direction, 1.0f) * movementSpeed);
+			_characterController.Move(velocity * Time.fixedDeltaTime);
 
 			// Sticking to slopes
-			if ((direction.x != 0 || direction.z != 0) && IsOnSlope())
-				_characterController.Move(Vector3.down * _characterController.height / 2 * 8 * Time.deltaTime);
+			if ((velocity.x != 0 || velocity.z != 0))
+			{
+				RaycastHit hit;
+				if (Physics.Raycast(transform.position, Vector3.down, out hit, _characterController.height / 2 + 0.0001f))
+					velocity += Vector3.down * 0.2f; // slope magnet force
+			}
 		}
 	}
 
 	//--------------------------
 	// PlayerMovement methods
 	//--------------------------
-	public bool IsOnSlope()
-	{
-		RaycastHit hit;
-
-		if (Physics.Raycast(transform.position, Vector3.down, out hit, _characterController.height / 2 + 1))
-			if (hit.normal != Vector3.up)
-				return true;
-
-		return false;
-	}
 }
