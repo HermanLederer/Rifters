@@ -27,7 +27,7 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	void Awake()
 	{
 		//Screen.fullScreen = false;
-		PhotonNetwork.AutomaticallySyncScene = true;
+		//PhotonNetwork.AutomaticallySyncScene = true;
 	}
 
 	void Start()
@@ -102,6 +102,8 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	//--------------------------
 	public void FindMatch()
 	{
+		PhotonNetwork.AutomaticallySyncScene = true;
+
 		if (PhotonNetwork.IsConnected)
 		{
 			mainPanel.SetActive(false);
