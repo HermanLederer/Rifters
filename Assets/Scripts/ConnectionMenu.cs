@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -11,6 +12,10 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 
 	// Editor variables
 	public PlayerMovement playerMovement;
+
+	public GameObject mainPanel;
+	public GameObject waitingPanel;
+	public Text waitingText;
 
 	// Public variables
 
@@ -27,7 +32,7 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 
 	void Start()
 	{
-		FindMatch();
+		//FindMatch();
 	}
 
 	void Update()
@@ -41,6 +46,10 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	public override void OnConnectedToMaster()
 	{
 		Debug.Log("Connected to master");
+
+		mainPanel.SetActive(false);
+		waitingPanel.SetActive(true);
+		waitingText.text = "Conecting...";
 
 		PhotonNetwork.JoinRandomRoom();
 	}
@@ -62,6 +71,8 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	{
 		if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
 		{
+			waitingText.text = "Waiting other players";
+
 			Debug.Log("Joined an empty room, waiting for it to fill");
 		}
 	}
@@ -71,6 +82,9 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 		if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
 		{
 			Debug.Log("Room filled, starting the game");
+
+			waitingText.text = "Starting Game";
+
 			PhotonNetwork.LoadLevel("Game");
 		}
 	}
@@ -90,6 +104,10 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	{
 		if (PhotonNetwork.IsConnected)
 		{
+			mainPanel.SetActive(false);
+			waitingPanel.SetActive(true);
+			waitingText.text = "Conecting...";
+
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else
