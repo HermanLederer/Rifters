@@ -65,8 +65,8 @@ public class PauseMenu : MonoBehaviour
 	{
 		returnToMenuPanel.SetActive(true);
 
-		PhotonNetwork.LoadLevel("Menu");
 		PhotonNetwork.LeaveRoom();
+		PhotonNetwork.LoadLevel("Menu");
 	}
 
 	public void ReloadGame()
