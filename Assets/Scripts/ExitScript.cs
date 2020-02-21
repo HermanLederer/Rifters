@@ -31,9 +31,4 @@ public class ExitScript : MonoBehaviour
 	//--------------------------
 	// ExitScript events
 	//--------------------------
-
-	public void ExitGame()
-	{
-		Application.Quit();
-	}
 }

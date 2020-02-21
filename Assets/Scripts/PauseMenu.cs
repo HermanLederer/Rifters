@@ -54,7 +54,6 @@ public class PauseMenu : MonoBehaviour
 	//--------------------------
 	// PauseMenu events
 	//--------------------------
-
 	public void ResumeGame()
 	{
 		menuPanel.SetActive(false);
@@ -65,7 +64,7 @@ public class PauseMenu : MonoBehaviour
 	{
 		returnToMenuPanel.SetActive(true);
 
-		PhotonNetwork.LeaveRoom();
+		PhotonNetwork.Disconnect();
 		PhotonNetwork.LoadLevel("Menu");
 	}
 

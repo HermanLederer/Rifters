@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
 	// Editor variables
 	[SerializeField] private bool offlineMode = false;
@@ -79,6 +79,16 @@ public class GameManager : MonoBehaviour
 					SceneManager.LoadScene("Game");
 			}
 		}
+	}
+
+	//--------------------------
+	// MonoBehaviourPunCallbacks events
+	//--------------------------
+	public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+	{
+		Debug.Log("Opponent left the room");
+		//PhotonNetwork.LeaveRoom();
+		//PhotonNetwork.LoadLevel("Menu");
 	}
 
 	//--------------------------
