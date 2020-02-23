@@ -60,6 +60,7 @@ public class PlayerJumpPlatform : MonoBehaviour
 	{
 		gameObject.SetActive(true);
 		transform.position = position;
+		transform.position += Vector3.down * 0.1f;
 		StartCoroutine(ShootCorutine());
 	}
 
@@ -68,7 +69,7 @@ public class PlayerJumpPlatform : MonoBehaviour
 		// Shoot
 		//Grab();
 		speed = 0;
-		targetHeight = transform.position.y + shootAmplitude;
+		targetHeight = transform.position.y + 0.1f + shootAmplitude;
 
 		while (transform.position.y < targetHeight)
 		{

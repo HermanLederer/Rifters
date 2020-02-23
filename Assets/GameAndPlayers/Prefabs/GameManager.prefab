@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8512951221712517388}
   - component: {fileID: 3604560500783926730}
+  - component: {fileID: -8164755920007316230}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,8 +47,30 @@ MonoBehaviour:
   offlineMode: 0
   playerPrefab: {fileID: 886666309173420961, guid: ad6cc318b3df55c4083ba6b94cf89821,
     type: 3}
-  gameManagerDataPrefab: {fileID: 8512951221712517426, guid: 8fb2ffa3331eed24e93bea31d6a4d797,
-    type: 3}
   gameBallPrefab: {fileID: 8982838994785950291, guid: ceb8f801768c520428df1bf4061d3f83,
     type: 3}
   playToGoals: 2
+  team1score: 0
+  team2score: 0
+--- !u!114 &-8164755920007316230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8512951221712517426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3604560500783926730}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
