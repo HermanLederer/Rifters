@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
 	// Other components
 	public Player _player { get; private set; }
@@ -14,16 +14,16 @@ public class PlayerMovement : MonoBehaviour
 	public bool isOfflinePlayer = false;
 	public float walkingPower = 4f;
 	public float sprintingPower = 7f;
-	public float walkJumpingPower = 7f;
-	public float sprintJumpingPower = 7f;
+	public float jumpCooldown = 1f;
 	public float mouseAcceleration = 100f;
+	public GameObject jumpingPlatfiormPrafab = null;
 
 	// Public variables
-	[HideInInspector]
-	public Vector3 spawnPoint;
+	[HideInInspector] public Vector3 spawnPoint;
+	[HideInInspector] public Vector3 velocity;
 
 	// Private variables
-	public Vector3 velocity { get; private set; }
+	private float nextJumpTime;
 
 	//--------------------------
 	// MonoBehaviour events
@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 		_player = GetComponent<Player>();
 		_characterController = _player.characterController;
 		_photonView = _player.photonView;
+
+		nextJumpTime = 0f;
 	}
 
 	private void Start()
@@ -76,13 +78,7 @@ public class PlayerMovement : MonoBehaviour
 			}
 
 			// Jumping
-			if (Input.GetButton("Jump") && _characterController.isGrounded)
-			{
-				if (Input.GetButton("Sprint"))
-					velocity += new Vector3(0, sprintJumpingPower, 0);
-				else
-					velocity += new Vector3(0, walkJumpingPower, 0);
-			}
+			if (Input.GetButton("Jump") && Time.time > nextJumpTime) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 
 			// Rotating towards camera
 			//direction = Quaternion.Euler(0, headTransform.rotation.eulerAngles.y, 0) * direction;
@@ -91,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 			_characterController.Move(velocity * Time.fixedDeltaTime);
 
 			// Sticking to slopes
-			if ((velocity.x != 0 || velocity.z != 0))
+			if ((velocity.x != 0 || velocity.z != 0) && velocity.y <= 0)
 			{
 				RaycastHit hit;
 				if (Physics.Raycast(transform.position, Vector3.down, out hit, _characterController.height / 2 + 0.0001f))
@@ -103,4 +99,19 @@ public class PlayerMovement : MonoBehaviour
 	//--------------------------
 	// PlayerMovement methods
 	//--------------------------
+	[PunRPC]
+	private bool Jump()
+	{
+		RaycastHit hit;
+		if (Physics.Raycast(transform.position, -transform.up, out hit, 2f))
+		{
+			GameObject jumpingPlatfiorm = Instantiate(jumpingPlatfiormPrafab);
+			jumpingPlatfiorm.GetComponent<PlayerJumpPlatform>().Shoot(hit.point);
+
+			//velocity += new Vector3(0, sprintJumpingPower, 0);
+			return true;
+		}
+		else
+			return false;
+	}
 }
