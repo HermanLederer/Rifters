@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
 public class ConnectionMenu : MonoBehaviourPunCallbacks
 {
 	// Other components
-	private CharacterController _characterController;
 
 	// Editor variables
-	public PlayerMovement playerMovement;
+	public GameObject mainPanel;
+	public GameObject waitingPanel;
+	public Text waitingText;
 
 	// Public variables
 
@@ -21,13 +23,12 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	//--------------------------
 	void Awake()
 	{
-		//Screen.fullScreen = false;
-		PhotonNetwork.AutomaticallySyncScene = true;
+		//PhotonNetwork.AutomaticallySyncScene = true;
 	}
 
 	void Start()
 	{
-		FindMatch();
+		
 	}
 
 	void Update()
@@ -40,7 +41,7 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	//--------------------------
 	public override void OnConnectedToMaster()
 	{
-		Debug.Log("Connected to master");
+		waitingText.text = "Connected";
 
 		PhotonNetwork.JoinRandomRoom();
 	}
@@ -55,14 +56,14 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 		Debug.Log("Joining random room failed:" + message);
 
 		Debug.Log("Creating new room");
-		PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 10 });
+		PhotonNetwork.CreateRoom(Time.time + "", new RoomOptions { MaxPlayers = 10 });
 	}
 
 	public override void OnJoinedRoom()
 	{
 		if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
 		{
-			Debug.Log("Joined an empty room, waiting for it to fill");
+			waitingText.text = "Waiting other players. Room ID: " + PhotonNetwork.CurrentRoom.Name;
 		}
 	}
 
@@ -70,26 +71,25 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 	{
 		if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
 		{
-			Debug.Log("Room filled, starting the game");
+			waitingText.text = "Starting Game";
+
 			PhotonNetwork.LoadLevel("Game");
 		}
 	}
 
-	// doesnt work
-	public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
-	{
-		Debug.Log("Player left the room, going back to menu");
-		PhotonNetwork.LoadLevel("Menu");
-		PhotonNetwork.LeaveRoom();
-	}
-
 	//--------------------------
-	// ConnectionMenu events
+	// ConnectionMenu methods
 	//--------------------------
 	public void FindMatch()
 	{
+		PhotonNetwork.AutomaticallySyncScene = true;
+
 		if (PhotonNetwork.IsConnected)
 		{
+			mainPanel.SetActive(false);
+			waitingPanel.SetActive(true);
+			waitingText.text = "Conecting...";
+
 			PhotonNetwork.JoinRandomRoom();
 		}
 		else
@@ -97,5 +97,10 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 			PhotonNetwork.GameVersion = Application.version;
 			PhotonNetwork.ConnectUsingSettings();
 		}
+	}
+
+	public void ExitGame()
+	{
+		Application.Quit();
 	}
 }
