@@ -4,12 +4,10 @@ using UnityEngine;
 using Photon.Pun;
 
 [RequireComponent(typeof(Player))]
-[RequireComponent(typeof(SphereCollider))]
 public class PlayerMovement : MonoBehaviourPun
 {
 	// Other components
 	public Player player { get; private set; }
-	public SphereCollider bumpSphere;
 
 	// Editor Variables
 	public bool isOfflinePlayer = false;
@@ -39,7 +37,6 @@ public class PlayerMovement : MonoBehaviourPun
 	{
 		// Other components
 		player = GetComponent<Player>();
-		bumpSphere = GetComponent<SphereCollider>();
 
 		nextJumpTime = 0f;
 	}
@@ -76,16 +73,22 @@ public class PlayerMovement : MonoBehaviourPun
 		Vector3 forwardMovement = transform.forward * Input.GetAxisRaw("Vertical");
 		Vector3 sidewaysMovement = transform.right * Input.GetAxisRaw("Horizontal");
 
+		// Gravity
+		ApplyGravity();
+
+		// Movement acceleration
 		if (forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero)
 		{
-				Accelerate((forwardMovement + sidewaysMovement).normalized * maxAcceleration);
+			Accelerate((forwardMovement + sidewaysMovement).normalized * maxAcceleration);
 		}
 		else
 		{
 			Decelerate(maxDeceleration);
 		}
 
-		ApplyGravity();
+		// Jumping
+		if (Input.GetButton("Jump") && Time.time > nextJumpTime) { velocity.y = 10f; nextJumpTime = Time.time + jumpCooldown; }
+		
 		Move();
 		VisualizeMovement();
 	}
@@ -97,8 +100,15 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void Accelerate(Vector3 acceleration)
 	{
+		
+
 		velocity += Vector3.ClampMagnitude(acceleration, maxAcceleration);
-		if (velocity.magnitude > maxSpeed) velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+		if (velocity.magnitude > maxSpeed)
+		{
+			float vy = velocity.y;
+			velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+			velocity.y = vy;
+		}
 	}
 
 	private void Decelerate(float deceleration)
@@ -117,7 +127,7 @@ public class PlayerMovement : MonoBehaviourPun
 
 		// collision detection
 		RaycastHit hit;
-		if (Physics.SphereCast(transform.position + Vector3.up * 1f, 0.5f, Vector3.down, out hit, 2f, levelLayerMask))
+		if (velocity.y <= 0 && Physics.SphereCast(transform.position + Vector3.up * 1f, 0.5f, Vector3.down, out hit, 0.6f, levelLayerMask))
 		{
 			velocity.y = 0;
 			transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
@@ -132,13 +142,12 @@ public class PlayerMovement : MonoBehaviourPun
 
 		// rolling sphere
 		movementVisualizer.transform.localScale = Vector3.one * (velocity.magnitude / maxSpeed);
-		movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * velocity.magnitude, 0, -Input.GetAxisRaw("Horizontal") * velocity.magnitude); //velocity.z
+		movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * velocity.magnitude, 0, 0); //velocity.z
 	}
 
 	//private void OldMovement()
 	//{
-	//	// Jumping
-	//	if (Input.GetButton("Jump") && Time.time > nextJumpTime) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
+
 
 	//	// Rotating towards camera
 	//	//direction = Quaternion.Euler(0, headTransform.rotation.eulerAngles.y, 0) * direction;
