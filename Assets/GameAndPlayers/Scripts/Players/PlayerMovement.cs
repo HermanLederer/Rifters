@@ -4,11 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(SphereCollider))]
 public class PlayerMovement : MonoBehaviourPun
 {
 	// Other components
 	public Player player { get; private set; }
-	public PhotonView photonView { get; private set; }
 	public SphereCollider bumpSphere;
 
 	// Editor Variables
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviourPun
 	public GameObject jumpingPlatfiormPrafab = null;
 	public GameObject movementVisualizer = null;
 	public GameObject velocityVisualizer = null;
+	public LayerMask levelLayerMask;
 
 	// Public variables
 	[HideInInspector] public Vector3 spawnPoint;
@@ -39,7 +40,6 @@ public class PlayerMovement : MonoBehaviourPun
 		// Other components
 		player = GetComponent<Player>();
 		bumpSphere = GetComponent<SphereCollider>();
-		photonView = player.photonView;
 
 		nextJumpTime = 0f;
 	}
@@ -78,24 +78,23 @@ public class PlayerMovement : MonoBehaviourPun
 
 		if (forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero)
 		{
-			if (Input.GetButton("Sprint"))
-				Accelerate((forwardMovement + sidewaysMovement).normalized * sprintingPower);
-			else
-				Accelerate((forwardMovement + sidewaysMovement).normalized * walkingPower);
+				Accelerate((forwardMovement + sidewaysMovement).normalized * maxAcceleration);
 		}
 		else
 		{
 			Decelerate(maxDeceleration);
 		}
 
+		ApplyGravity();
 		Move();
 		VisualizeMovement();
 	}
 
+	private void ApplyGravity()
+	{
+		velocity += Physics.gravity * Time.fixedDeltaTime;
+	}
 
-	// accelerate (any direction) (+forward can sprint)
-	// slow down
-	// excerpt force for dashing and jumping
 	private void Accelerate(Vector3 acceleration)
 	{
 		velocity += Vector3.ClampMagnitude(acceleration, maxAcceleration);
@@ -104,59 +103,45 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void Decelerate(float deceleration)
 	{
+		float vy = velocity.y;
+
 		deceleration = Mathf.Clamp(deceleration, 0, maxDeceleration);
 
 		velocity = Vector3.ClampMagnitude(velocity, Mathf.Max(0, velocity.magnitude - deceleration));
+		velocity.y = vy;
 	}
 
 	private void Move()
 	{
 		transform.position += velocity * Time.fixedDeltaTime;
 
-		// sticking to ground
-		//RaycastHit hit;
-		//if (Physics.SphereCast(transform.position + Vector3.up * 0.25f, 0.25f, Vector3.down, out hit, 15f))
-		//	transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+		// collision detection
+		RaycastHit hit;
+		if (Physics.SphereCast(transform.position + Vector3.up * 1f, 0.5f, Vector3.down, out hit, 2f, levelLayerMask))
+		{
+			velocity.y = 0;
+			transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+		}
 	}
 
 	private void VisualizeMovement()
 	{
-		// why not local?
+		// velocity visualization sphere
 		Vector3 worldVelocity = transform.position + velocity * 0.1f;
 		velocityVisualizer.transform.position = worldVelocity;
 
+		// rolling sphere
 		movementVisualizer.transform.localScale = Vector3.one * (velocity.magnitude / maxSpeed);
-		movementVisualizer.transform.Rotate(velocity); //velocity.z
+		movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * velocity.magnitude, 0, -Input.GetAxisRaw("Horizontal") * velocity.magnitude); //velocity.z
 	}
 
 	//private void OldMovement()
 	//{
-	//	// Resetting velocities
-	//	if (_characterController.isGrounded)
-	//		velocity = Vector3.zero;
-
-	//	// Gravity
-	//	velocity += Physics.gravity * Time.fixedDeltaTime;
-
-	//	// Smooth locomotion
-	//	Vector3 forwardMovement = transform.forward * Input.GetAxisRaw("Vertical");
-	//	Vector3 sidewaysMovement = transform.right * Input.GetAxisRaw("Horizontal");
-	//	if (_characterController.isGrounded)
-	//	{
-	//		if (Input.GetButton("Sprint"))
-	//			velocity += (forwardMovement + sidewaysMovement).normalized * sprintingPower;
-	//		else
-	//			velocity += (forwardMovement + sidewaysMovement).normalized * walkingPower;
-	//	}
-
 	//	// Jumping
 	//	if (Input.GetButton("Jump") && Time.time > nextJumpTime) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 
 	//	// Rotating towards camera
 	//	//direction = Quaternion.Euler(0, headTransform.rotation.eulerAngles.y, 0) * direction;
-
-	//	// combined movement
-	//	_characterController.Move(velocity * Time.fixedDeltaTime);
 
 	//	// Sticking to slopes
 	//	if ((velocity.x != 0 || velocity.z != 0) && velocity.y <= 0)
