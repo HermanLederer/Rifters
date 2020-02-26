@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviourPun
 	public float mouseAcceleration = 100f;
 	public GameObject jumpingPlatfiormPrafab = null;
 	public GameObject movementVisualizer = null;
+	public GameObject groundVisualizer = null;
 	public LayerMask levelLayerMask;
 
 	// Public variables
@@ -68,13 +69,21 @@ public class PlayerMovement : MonoBehaviourPun
 		// velocity visualization
 		Vector3 worldVelocity = transform.position + velocity * Time.fixedDeltaTime;
 
-		Gizmos.DrawWireSphere(worldVelocity, 0.25f);
-		Gizmos.DrawWireSphere(worldVelocity + Vector3.up * 1.7f, 0.25f);
+		float radius = 0.25f;
+		float height = 2f;
+		Vector3 center1 = transform.position + Vector3.up * radius;
+		Vector3 center2 = center1 + Vector3.up * (height - radius * 2);
 
-		Gizmos.DrawLine(worldVelocity + Vector3.forward * 0.25f, worldVelocity + Vector3.forward * 0.25f + Vector3.up * 1.7f);
-		Gizmos.DrawLine(worldVelocity - Vector3.forward * 0.25f, worldVelocity - Vector3.forward * 0.25f + Vector3.up * 1.7f);
-		Gizmos.DrawLine(worldVelocity + Vector3.right * 0.25f, worldVelocity + Vector3.right * 0.25f + Vector3.up * 1.7f);
-		Gizmos.DrawLine(worldVelocity - Vector3.right * 0.25f, worldVelocity - Vector3.right * 0.25f + Vector3.up * 1.7f);
+		Vector3 center1Velocity = center1 + velocity * Time.fixedDeltaTime;
+		Vector3 center2Velocity = center2 + velocity * Time.fixedDeltaTime;
+
+		Gizmos.DrawWireSphere(center1Velocity, radius);
+		Gizmos.DrawWireSphere(center2Velocity, radius);
+
+		Gizmos.DrawLine(center1Velocity + Vector3.forward * radius, center2Velocity + Vector3.forward * radius);
+		Gizmos.DrawLine(center1Velocity - Vector3.forward * radius, center2Velocity - Vector3.forward * radius);
+		Gizmos.DrawLine(center1Velocity + Vector3.right * radius, center2Velocity + Vector3.right * radius);
+		Gizmos.DrawLine(center1Velocity - Vector3.right * radius, center2Velocity - Vector3.right * radius);
 	}
 
 	//--------------------------
@@ -113,8 +122,6 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void Accelerate(Vector3 acceleration)
 	{
-		
-
 		velocity += Vector3.ClampMagnitude(acceleration, maxAcceleration);
 		if (velocity.magnitude > maxSpeed)
 		{
@@ -139,11 +146,25 @@ public class PlayerMovement : MonoBehaviourPun
 		transform.position += velocity * Time.fixedDeltaTime;
 
 		// collision detection
+		float radius = 0.25f;
+		//float height = 2f;
+		Vector3 center1 = transform.position + Vector3.up * (radius + radius);
+		//Vector3 center2 = center1 + Vector3.up * (height - radius * 2);
+
 		RaycastHit hit;
-		if (velocity.y < 0 && Physics.SphereCast(transform.position + Vector3.up * 1f, 0.5f, Vector3.down, out hit, 0.6f, levelLayerMask))
+		float rayLength = Mathf.Abs(velocity.y * Time.fixedDeltaTime) + radius + radius;
+
+		if (velocity.y < 0 && Physics.SphereCast(center1, radius, Vector3.down, out hit, rayLength))
 		{
+			float hitPointY = hit.point.y;
+
+			float slope = Vector3.Angle(Vector3.up, hit.normal);
+			float offset = slope / 90f;
+
+			groundVisualizer.transform.position = hit.point;
+
 			velocity.y = 0;
-			transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
 		}
 	}
 
@@ -179,7 +200,6 @@ public class PlayerMovement : MonoBehaviourPun
 			GameObject jumpingPlatfiorm = Instantiate(jumpingPlatfiormPrafab);
 			jumpingPlatfiorm.GetComponent<PlayerJumpPlatform>().Shoot(hit.point);
 
-			//velocity += new Vector3(0, sprintJumpingPower, 0);
 			return true;
 		}
 		else
