@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviourPun
 	public float mouseAcceleration = 100f;
 	public GameObject jumpingPlatfiormPrafab = null;
 	public GameObject movementVisualizer = null;
-	public GameObject velocityVisualizer = null;
 	public LayerMask levelLayerMask;
 
 	// Public variables
@@ -62,6 +61,20 @@ public class PlayerMovement : MonoBehaviourPun
 
 			ControlMovement();
 		}
+	}
+
+	private void OnDrawGizmos()
+	{
+		// velocity visualization
+		Vector3 worldVelocity = transform.position + velocity * Time.fixedDeltaTime;
+
+		Gizmos.DrawWireSphere(worldVelocity, 0.25f);
+		Gizmos.DrawWireSphere(worldVelocity + Vector3.up * 1.7f, 0.25f);
+
+		Gizmos.DrawLine(worldVelocity + Vector3.forward * 0.25f, worldVelocity + Vector3.forward * 0.25f + Vector3.up * 1.7f);
+		Gizmos.DrawLine(worldVelocity - Vector3.forward * 0.25f, worldVelocity - Vector3.forward * 0.25f + Vector3.up * 1.7f);
+		Gizmos.DrawLine(worldVelocity + Vector3.right * 0.25f, worldVelocity + Vector3.right * 0.25f + Vector3.up * 1.7f);
+		Gizmos.DrawLine(worldVelocity - Vector3.right * 0.25f, worldVelocity - Vector3.right * 0.25f + Vector3.up * 1.7f);
 	}
 
 	//--------------------------
@@ -127,7 +140,7 @@ public class PlayerMovement : MonoBehaviourPun
 
 		// collision detection
 		RaycastHit hit;
-		if (velocity.y <= 0 && Physics.SphereCast(transform.position + Vector3.up * 1f, 0.5f, Vector3.down, out hit, 0.6f, levelLayerMask))
+		if (velocity.y < 0 && Physics.SphereCast(transform.position + Vector3.up * 1f, 0.5f, Vector3.down, out hit, 0.6f, levelLayerMask))
 		{
 			velocity.y = 0;
 			transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
@@ -136,10 +149,6 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void VisualizeMovement()
 	{
-		// velocity visualization sphere
-		Vector3 worldVelocity = transform.position + velocity * 0.1f;
-		velocityVisualizer.transform.position = worldVelocity;
-
 		// rolling sphere
 		movementVisualizer.transform.localScale = Vector3.one * (velocity.magnitude / maxSpeed);
 		movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * velocity.magnitude, 0, 0); //velocity.z
