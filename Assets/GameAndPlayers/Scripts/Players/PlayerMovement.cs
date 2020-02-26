@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviourPun
 		}
 
 		// Jumping
-		if (Input.GetButton("Jump") && Time.time > nextJumpTime) { velocity.y = 10f; nextJumpTime = Time.time + jumpCooldown; }
+		if (Input.GetButton("Jump") && Time.time > nextJumpTime) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 		
 		Move();
 		VisualizeMovement();

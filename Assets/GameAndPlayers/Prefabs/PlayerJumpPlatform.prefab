@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 161331810227575266}
   - component: {fileID: 8448023635114500398}
   - component: {fileID: 8835955966116365146}
-  - component: {fileID: 8878149875809284989}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7849487219256465255}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2.1, y: 0, z: -2.01}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1046161761253644991}
   m_RootOrder: 0
@@ -394,20 +393,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &8878149875809284989
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7849487219256465255}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &8518186595361913605
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +419,7 @@ Transform:
   m_GameObject: {fileID: 8518186595361913605}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8899462085183299238}
   m_Father: {fileID: 0}
@@ -452,10 +437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bd88c8f2c671f24e84f47e3e2c6a889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 9
-  shootPower: 17
-  shootMaxSpeed: 17
-  shootAcceleration: 6
+  radius: 2
+  shootPower: 10
+  shootMaxSpeed: 20
+  shootAcceleration: 10
   shootAmplitude: 2
-  stayDuration: 1
+  stayDuration: 0.4
   platform: {fileID: 7849487219256465255}

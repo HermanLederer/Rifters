@@ -51,7 +51,7 @@ public class PlayerJumpPlatform : MonoBehaviour
 
 			if (interactable != null)
 			{
-				interactable.transform.parent = transform;
+				interactable.ChangeParent(transform);
 			}
 		}
 	}
@@ -59,6 +59,7 @@ public class PlayerJumpPlatform : MonoBehaviour
 	public void Shoot(Vector3 position)
 	{
 		gameObject.SetActive(true);
+		
 		transform.position = position;
 		transform.position += Vector3.down * 0.1f;
 		StartCoroutine(ShootCorutine());
@@ -66,8 +67,10 @@ public class PlayerJumpPlatform : MonoBehaviour
 
 	private IEnumerator ShootCorutine()
 	{
+		// Grab objects
+		Grab();
+
 		// Shoot
-		//Grab();
 		speed = 0;
 		targetHeight = transform.position.y + 0.1f + shootAmplitude;
 
@@ -78,17 +81,12 @@ public class PlayerJumpPlatform : MonoBehaviour
 
 			yield return null;
 		}
-
+		
 		// Launch objects up
-		/*foreach (Collider collider in Physics.OverlapSphere(transform.position, radius))
+		foreach (JumpPlatformInteractable interactable in GetComponentsInChildren<JumpPlatformInteractable>())
 		{
-			JumpPlatformInteractable interactable = collider.gameObject.GetComponent<JumpPlatformInteractable>();
-
-			if (interactable != null)
-			{
-				interactable.Launch(Vector3.up * shootPower);
-			}
-		}*/
+			interactable.Launch(Vector3.up * shootPower);
+		}
 
 		// Stay
 		yield return new WaitForSeconds(stayDuration);
