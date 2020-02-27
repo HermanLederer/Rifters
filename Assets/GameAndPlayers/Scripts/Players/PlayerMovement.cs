@@ -11,21 +11,41 @@ public class PlayerMovement : MonoBehaviourPun
 
 	// Editor Variables
 	public bool isOfflinePlayer = false;
-	public float walkingPower = 4f;
-	public float sprintingPower = 7f;
-	public float maxSpeed = 7f;
+
+	public float walkingTargetSpeed = 4f;
+	public float sprintingTargetSpeed = 7f;
 	public float maxAcceleration = 1f;
 	public float maxDeceleration = 2f;
+
 	public float jumpCooldown = 1f;
+	public bool isGrounded;
+
 	public float mouseAcceleration = 100f;
+
 	public GameObject jumpingPlatfiormPrafab = null;
+
 	public GameObject movementVisualizer = null;
 	public GameObject groundVisualizer = null;
 	public LayerMask levelLayerMask;
 
 	// Public variables
 	[HideInInspector] public Vector3 spawnPoint;
-	[HideInInspector] public Vector3 velocity;
+	[HideInInspector] public float verticalVelocity;
+	[HideInInspector] public Vector2 horizontalVelocity;
+
+	public Vector3 Velocity
+	{
+		get
+		{
+			return new Vector3(horizontalVelocity.x, verticalVelocity, horizontalVelocity.y);
+		}
+
+		set
+		{
+			verticalVelocity = value.y;
+			horizontalVelocity = new Vector2(value.x, value.z);
+		}
+	}
 
 	// Private variables
 	private float nextJumpTime;
@@ -47,14 +67,14 @@ public class PlayerMovement : MonoBehaviourPun
 		spawnPoint = transform.position;
 
 		// Private variables
-		velocity = Vector3.zero;
+		Velocity = Vector3.zero;
 	}
 
 	private void FixedUpdate()
 	{
 		if (photonView.IsMine || isOfflinePlayer)
 		{
-			// Camera rotation
+			// Controls
 			float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.fixedDeltaTime;
 			float mouseY = Input.GetAxis("Mouse Y") * mouseAcceleration * Time.fixedDeltaTime;
 			player.head.transform.localRotation = Quaternion.Euler(player.head.transform.localRotation.eulerAngles.x - mouseY, 0f, 0f);
@@ -67,15 +87,15 @@ public class PlayerMovement : MonoBehaviourPun
 	private void OnDrawGizmos()
 	{
 		// velocity visualization
-		Vector3 worldVelocity = transform.position + velocity * Time.fixedDeltaTime;
+		Vector3 worldVelocity = transform.position + Velocity * Time.fixedDeltaTime;
 
 		float radius = 0.25f;
 		float height = 2f;
 		Vector3 center1 = transform.position + Vector3.up * radius;
 		Vector3 center2 = center1 + Vector3.up * (height - radius * 2);
 
-		Vector3 center1Velocity = center1 + velocity * Time.fixedDeltaTime;
-		Vector3 center2Velocity = center2 + velocity * Time.fixedDeltaTime;
+		Vector3 center1Velocity = center1 + Velocity * Time.fixedDeltaTime;
+		Vector3 center2Velocity = center2 + Velocity * Time.fixedDeltaTime;
 
 		Gizmos.DrawWireSphere(center1Velocity, radius);
 		Gizmos.DrawWireSphere(center2Velocity, radius);
@@ -101,7 +121,11 @@ public class PlayerMovement : MonoBehaviourPun
 		// Movement acceleration
 		if (forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero)
 		{
-			Accelerate((forwardMovement + sidewaysMovement).normalized * maxAcceleration);
+			float speed = sprintingTargetSpeed;
+			if (!Input.GetButton("Sprint")) speed = walkingTargetSpeed;
+
+			Vector3 direction = forwardMovement + sidewaysMovement;
+			Accelerate(new Vector2(direction.x, direction.z), speed);
 		}
 		else
 		{
@@ -109,7 +133,7 @@ public class PlayerMovement : MonoBehaviourPun
 		}
 
 		// Jumping
-		if (Input.GetButton("Jump") && Time.time > nextJumpTime) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
+		if (Input.GetButton("Jump") && Time.time > nextJumpTime && isGrounded) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 		
 		Move();
 		VisualizeMovement();
@@ -117,85 +141,85 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void ApplyGravity()
 	{
-		velocity += Physics.gravity * Time.fixedDeltaTime;
+		Velocity += Physics.gravity * Time.fixedDeltaTime;
 	}
 
-	private void Accelerate(Vector3 acceleration)
+	private void Accelerate(Vector2 direction, float targetSpeed)
 	{
-		velocity += Vector3.ClampMagnitude(acceleration, maxAcceleration);
-		if (velocity.magnitude > maxSpeed)
-		{
-			float vy = velocity.y;
-			velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-			velocity.y = vy;
-		}
+		horizontalVelocity += Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxAcceleration);
+		horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, targetSpeed);
 	}
 
 	private void Decelerate(float deceleration)
 	{
-		float vy = velocity.y;
+		float vy = verticalVelocity;
 
 		deceleration = Mathf.Clamp(deceleration, 0, maxDeceleration);
 
-		velocity = Vector3.ClampMagnitude(velocity, Mathf.Max(0, velocity.magnitude - deceleration));
-		velocity.y = vy;
+		Velocity = Vector3.ClampMagnitude(Velocity, Mathf.Max(0, Velocity.magnitude - deceleration));
+		verticalVelocity = vy;
 	}
 
 	private void Move()
 	{
-		transform.position += velocity * Time.fixedDeltaTime;
+		isGrounded = false;
+		transform.position += Velocity * Time.fixedDeltaTime;
 
 		// collision detection
 		float radius = 0.25f;
-		//float height = 2f;
-		Vector3 center1 = transform.position + Vector3.up * (radius + radius);
-		//Vector3 center2 = center1 + Vector3.up * (height - radius * 2);
+		float height = 2f;
 
 		RaycastHit hit;
-		float rayLength = Mathf.Abs(velocity.y * Time.fixedDeltaTime) + radius + radius;
+		float rayLength;
 
-		if (velocity.y < 0 && Physics.SphereCast(center1, radius, Vector3.down, out hit, rayLength))
+		// vertical
+		rayLength = Mathf.Abs(verticalVelocity * Time.fixedDeltaTime) + radius * 2;
+		Vector3 center;
+
+		if (verticalVelocity < 0) // down
 		{
-			float hitPointY = hit.point.y;
+			center = transform.position + Vector3.up * (radius * 2);
 
-			float slope = Vector3.Angle(Vector3.up, hit.normal);
-			float offset = slope / 90f;
+			if (Physics.SphereCast(center, radius, Vector3.down, out hit, rayLength))
+			{
+				float hitPointY = hit.point.y;
 
-			groundVisualizer.transform.position = hit.point;
+				groundVisualizer.transform.position = hit.point;
 
-			velocity.y = 0;
-			transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
+				verticalVelocity = 0;
+				transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
+				isGrounded = true;
+			}
+		}
+		else if (verticalVelocity > 0) // up
+		{
+			center = transform.position + Vector3.up * (height - radius * 2);
+
+			if (Physics.SphereCast(center, radius, Vector3.up, out hit, rayLength))
+			{
+				float hitPointY = hit.point.y;
+
+				verticalVelocity = 0;
+				transform.position = new Vector3(transform.position.x, hitPointY - height, transform.position.z);
+			}
 		}
 	}
 
 	private void VisualizeMovement()
 	{
 		// rolling sphere
-		movementVisualizer.transform.localScale = Vector3.one * (velocity.magnitude / maxSpeed);
-		movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * velocity.magnitude, 0, 0); //velocity.z
+		//movementVisualizer.transform.localScale = Vector3.one * (Velocity.magnitude / maxSpeed);
+		//movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * Velocity.magnitude, 0, 0);
 	}
-
-	//private void OldMovement()
-	//{
-
-
-	//	// Rotating towards camera
-	//	//direction = Quaternion.Euler(0, headTransform.rotation.eulerAngles.y, 0) * direction;
-
-	//	// Sticking to slopes
-	//	if ((velocity.x != 0 || velocity.z != 0) && velocity.y <= 0)
-	//	{
-	//		RaycastHit hit;
-	//		if (Physics.Raycast(transform.position, Vector3.down, out hit, _characterController.height / 2 + 0.0001f))
-	//			velocity += Vector3.down * 0.2f; // slope magnet force
-	//	}
-	//}
 
 	[PunRPC]
 	private bool Jump()
 	{
+		float radius = 0.25f;
+		Vector3 center = transform.position + Vector3.up * radius;
+
 		RaycastHit hit;
-		if (Physics.Raycast(transform.position, -transform.up, out hit, 2f))
+		if (Physics.Raycast(center, -transform.up, out hit, 2f))
 		{
 			GameObject jumpingPlatfiorm = Instantiate(jumpingPlatfiormPrafab);
 			jumpingPlatfiorm.GetComponent<PlayerJumpPlatform>().Shoot(hit.point);

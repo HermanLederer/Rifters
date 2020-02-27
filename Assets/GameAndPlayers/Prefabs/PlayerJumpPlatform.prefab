@@ -439,8 +439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   shootPower: 10
-  shootMaxSpeed: 20
-  shootAcceleration: 10
+  shootMaxSpeed: 10
+  shootAcceleration: 8
   shootAmplitude: 2
   stayDuration: 0.4
   platform: {fileID: 7849487219256465255}

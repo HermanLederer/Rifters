@@ -33,7 +33,7 @@ public class JumpPlatformInteractable : MonoBehaviour
 	{
 		transform.parent = originalParent;
 
-		if (_playerMovement != null) { _playerMovement.velocity += launchVelocity;}
+		if (_playerMovement != null) { _playerMovement.Velocity += launchVelocity;}
 		else if (_rigidbody != null) { _rigidbody.velocity += launchVelocity; }
 	}
 }

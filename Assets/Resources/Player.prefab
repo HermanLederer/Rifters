@@ -231,12 +231,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOfflinePlayer: 0
-  walkingPower: 4
-  sprintingPower: 8
-  maxSpeed: 8
-  maxAcceleration: 1.25
+  walkingTargetSpeed: 8
+  sprintingTargetSpeed: 1
+  maxAcceleration: 0.89
   maxDeceleration: 0.8
   jumpCooldown: 1
+  isGrounded: 0
   mouseAcceleration: 120
   jumpingPlatfiormPrafab: {fileID: 8518186595361913605, guid: 8dd532029b1b0e1449216aa14f85eb1e,
     type: 3}
@@ -246,7 +246,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   spawnPoint: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
+  verticalVelocity: 0
+  horizontalVelocity: {x: 0, y: 0}
 --- !u!114 &4695232246568419335
 MonoBehaviour:
   m_ObjectHideFlags: 0
