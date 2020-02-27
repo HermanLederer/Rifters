@@ -11,19 +11,18 @@ public class PlayerMovement : MonoBehaviourPun
 
 	// Editor Variables
 	public bool isOfflinePlayer = false;
-
+	[Header("Movement")]
 	public float walkingTargetSpeed = 4f;
 	public float sprintingTargetSpeed = 7f;
 	public float maxAcceleration = 1f;
 	public float maxDeceleration = 2f;
-
 	public float jumpCooldown = 1f;
-	public bool isGrounded;
-
+	public float bounciness = 1f;
+	[Header("Camera")]
 	public float mouseAcceleration = 100f;
-
+	[Header("Prefabs")]
 	public GameObject jumpingPlatfiormPrafab = null;
-
+	[Header("Game objects")]
 	public GameObject movementVisualizer = null;
 	public GameObject groundVisualizer = null;
 	public LayerMask levelLayerMask;
@@ -32,6 +31,7 @@ public class PlayerMovement : MonoBehaviourPun
 	[HideInInspector] public Vector3 spawnPoint;
 	[HideInInspector] public float verticalVelocity;
 	[HideInInspector] public Vector2 horizontalVelocity;
+	[HideInInspector] public bool isGrounded;
 
 	public Vector3 Velocity
 	{
@@ -49,6 +49,20 @@ public class PlayerMovement : MonoBehaviourPun
 
 	// Private variables
 	private float nextJumpTime;
+	private float _concuction;
+
+	// Accessors
+	private float Concuction
+	{
+		get
+		{
+			return Mathf.Clamp(Time.time - _concuction, 0, _concuction) / _concuction;
+		}
+		set
+		{
+			_concuction = Time.time + value;
+		}
+	}
 
 	//--------------------------
 	// MonoBehaviour events
@@ -59,6 +73,7 @@ public class PlayerMovement : MonoBehaviourPun
 		player = GetComponent<Player>();
 
 		nextJumpTime = 0f;
+		_concuction = Time.time;
 	}
 
 	private void Start()
@@ -82,6 +97,8 @@ public class PlayerMovement : MonoBehaviourPun
 
 			ControlMovement();
 		}
+
+		Debug.Log(Concuction);
 	}
 
 	private void OnDrawGizmos()
@@ -98,16 +115,41 @@ public class PlayerMovement : MonoBehaviourPun
 		Vector3 center1Velocity = center1 + Velocity * Time.fixedDeltaTime;
 		Vector3 center2Velocity = center2 + Velocity * Time.fixedDeltaTime;
 
+		Vector3 origin = transform.position + Vector3.up * (height / 2);
+
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(center, radius);
+		Gizmos.DrawRay(origin, Velocity * Time.fixedDeltaTime);
+
 		Gizmos.color = Color.white;
 		Gizmos.DrawWireSphere(center1Velocity, radius);
 		Gizmos.DrawWireSphere(center2Velocity, radius);
-
 		Gizmos.DrawLine(center1Velocity + Vector3.forward * radius, center2Velocity + Vector3.forward * radius);
 		Gizmos.DrawLine(center1Velocity - Vector3.forward * radius, center2Velocity - Vector3.forward * radius);
 		Gizmos.DrawLine(center1Velocity + Vector3.right * radius, center2Velocity + Vector3.right * radius);
 		Gizmos.DrawLine(center1Velocity - Vector3.right * radius, center2Velocity - Vector3.right * radius);
+
+		//RaycastHit hit;
+		//float rayLength;
+		//float magnitude = horizontalVelocity.magnitude * Time.fixedDeltaTime;
+		////if (magnitude != 0)
+		////{
+		//	Vector3 direction = new Vector3(horizontalVelocity.x, 0 , horizontalVelocity.y).normalized;
+		//	float castingOffset = radius;
+
+		//	rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffset);
+		//	center1 = transform.position + Vector3.up * (radius * 2) - direction * castingOffset;
+		//	center2 = transform.position + Vector3.up * (height - radius * 2) - direction * castingOffset;
+
+		//	if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength))
+		//	{
+		//		Gizmos.color = Color.white;
+		//		Gizmos.DrawWireSphere(center1, radius);
+		//		Gizmos.DrawWireSphere(center2, radius);
+
+		//		Gizmos.color = Color.red;
+		//		Gizmos.DrawLine(origin, hit.point);
+		//	}
+		////}
 	}
 
 	//--------------------------
@@ -151,17 +193,13 @@ public class PlayerMovement : MonoBehaviourPun
 	private void Accelerate(Vector2 direction, float targetSpeed)
 	{
 		horizontalVelocity += Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxAcceleration);
-		horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, targetSpeed);
+		if (horizontalVelocity.magnitude > targetSpeed) Decelerate(Mathf.Min(horizontalVelocity.magnitude - targetSpeed, targetSpeed/2), true);
 	}
 
-	private void Decelerate(float deceleration)
+	private void Decelerate(float deceleration, bool force = false)
 	{
-		float vy = verticalVelocity;
-
-		deceleration = Mathf.Clamp(deceleration, 0, maxDeceleration);
-
-		Velocity = Vector3.ClampMagnitude(Velocity, Mathf.Max(0, Velocity.magnitude - deceleration));
-		verticalVelocity = vy;
+		if (!force) deceleration = Mathf.Clamp(deceleration, 0, maxDeceleration);
+		horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, Mathf.Max(0, Velocity.magnitude - deceleration));
 	}
 
 	private void Move()
@@ -175,16 +213,17 @@ public class PlayerMovement : MonoBehaviourPun
 
 		RaycastHit hit;
 		float rayLength;
-		Vector3 center;
+		Vector3 center1;
+		Vector3 center2;
 
 		// vertical
 		rayLength = Mathf.Abs(verticalVelocity * Time.fixedDeltaTime) + radius * 2;
 
 		if (verticalVelocity < 0) // down
 		{
-			center = transform.position + Vector3.up * (radius * 2);
+			center1 = transform.position + Vector3.up * (radius * 2);
 
-			if (Physics.SphereCast(center, radius, Vector3.down, out hit, rayLength, levelLayerMask))
+			if (Physics.SphereCast(center1, radius, Vector3.down, out hit, rayLength, levelLayerMask))
 			{
 				float hitPointY = hit.point.y;
 
@@ -197,9 +236,9 @@ public class PlayerMovement : MonoBehaviourPun
 		}
 		else if (verticalVelocity > 0) // up
 		{
-			center = transform.position + Vector3.up * (height - radius * 2);
+			center1 = transform.position + Vector3.up * (height - radius * 2);
 
-			if (Physics.SphereCast(center, radius, Vector3.up, out hit, rayLength,levelLayerMask))
+			if (Physics.SphereCast(center1, radius, Vector3.up, out hit, rayLength, levelLayerMask))
 			{
 				float hitPointY = hit.point.y;
 
@@ -208,33 +247,22 @@ public class PlayerMovement : MonoBehaviourPun
 			}
 		}
 
-		// horizontal x
-		if (horizontalVelocity.x != 0)
+		// horizontal
+		float magnitude = horizontalVelocity.magnitude * Time.fixedDeltaTime;
+		if (magnitude != 0)
 		{
-			Vector3 direction = new Vector3(horizontalVelocity.x, 0, 0);
-			float castingOffset = Mathf.Clamp(horizontalVelocity.x, -radius, radius);
+			Vector3 direction = new Vector3(horizontalVelocity.x, 0, horizontalVelocity.y).normalized;
+			float castingOffset = radius;
 
-			rayLength = Mathf.Abs(horizontalVelocity.x * Time.fixedDeltaTime) + Mathf.Abs(castingOffset);
-			center = transform.position + Vector3.up * ((height + radius) / 2) - Vector3.right * castingOffset;
+			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffset);
+			center1 = transform.position + Vector3.up * (radius * 2) - direction * castingOffset;
+			center2 = transform.position + Vector3.up * (height - radius * 2) - direction * castingOffset;
 
-			if (Physics.SphereCast(center, radius, direction, out hit, rayLength, levelLayerMask))
+			if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
 			{
-				horizontalVelocity.x = 0;
-				Debug.Log(Mathf.Abs(Vector3.Angle(Vector3.forward, hit.normal) / 90 - 1));
+				horizontalVelocity = new Vector2(hit.normal.x, hit.normal.z) * Mathf.Abs(magnitude);
+				Concuction = 2f;
 			}
-		}
-
-		// horizontal 
-		if (horizontalVelocity.y != 0)
-		{
-			Vector3 direction = new Vector3(0, 0, horizontalVelocity.y);
-			float castingOffset = Mathf.Clamp(horizontalVelocity.y, -radius, radius);
-
-			rayLength = Mathf.Abs(horizontalVelocity.y * Time.fixedDeltaTime) + Mathf.Abs(castingOffset);
-			center = transform.position + Vector3.up * ((height + radius) / 2) - Vector3.forward * castingOffset;
-
-			if (Physics.SphereCast(center, radius, direction, out hit, rayLength, levelLayerMask))
-				horizontalVelocity.y = 0;
 		}
 
 		// Movement
