@@ -91,12 +91,16 @@ public class PlayerMovement : MonoBehaviourPun
 
 		float radius = 0.25f;
 		float height = 2f;
+		Vector3 center = transform.position + Vector3.up * ((height + radius) / 2);
 		Vector3 center1 = transform.position + Vector3.up * radius;
 		Vector3 center2 = center1 + Vector3.up * (height - radius * 2);
 
 		Vector3 center1Velocity = center1 + Velocity * Time.fixedDeltaTime;
 		Vector3 center2Velocity = center2 + Velocity * Time.fixedDeltaTime;
 
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(center, radius);
+		Gizmos.color = Color.white;
 		Gizmos.DrawWireSphere(center1Velocity, radius);
 		Gizmos.DrawWireSphere(center2Velocity, radius);
 
@@ -162,25 +166,25 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void Move()
 	{
+		// aetting is grounded to false expecting this function to change that if the character is grounded
 		isGrounded = false;
-		transform.position += Velocity * Time.fixedDeltaTime;
-
+		
 		// collision detection
 		float radius = 0.25f;
 		float height = 2f;
 
 		RaycastHit hit;
 		float rayLength;
+		Vector3 center;
 
 		// vertical
 		rayLength = Mathf.Abs(verticalVelocity * Time.fixedDeltaTime) + radius * 2;
-		Vector3 center;
 
 		if (verticalVelocity < 0) // down
 		{
 			center = transform.position + Vector3.up * (radius * 2);
 
-			if (Physics.SphereCast(center, radius, Vector3.down, out hit, rayLength))
+			if (Physics.SphereCast(center, radius, Vector3.down, out hit, rayLength, levelLayerMask))
 			{
 				float hitPointY = hit.point.y;
 
@@ -195,7 +199,7 @@ public class PlayerMovement : MonoBehaviourPun
 		{
 			center = transform.position + Vector3.up * (height - radius * 2);
 
-			if (Physics.SphereCast(center, radius, Vector3.up, out hit, rayLength))
+			if (Physics.SphereCast(center, radius, Vector3.up, out hit, rayLength,levelLayerMask))
 			{
 				float hitPointY = hit.point.y;
 
@@ -203,6 +207,38 @@ public class PlayerMovement : MonoBehaviourPun
 				transform.position = new Vector3(transform.position.x, hitPointY - height, transform.position.z);
 			}
 		}
+
+		// horizontal x
+		if (horizontalVelocity.x != 0)
+		{
+			Vector3 direction = new Vector3(horizontalVelocity.x, 0, 0);
+			float castingOffset = Mathf.Clamp(horizontalVelocity.x, -radius, radius);
+
+			rayLength = Mathf.Abs(horizontalVelocity.x * Time.fixedDeltaTime) + Mathf.Abs(castingOffset);
+			center = transform.position + Vector3.up * ((height + radius) / 2) - Vector3.right * castingOffset;
+
+			if (Physics.SphereCast(center, radius, direction, out hit, rayLength, levelLayerMask))
+			{
+				horizontalVelocity.x = 0;
+				Debug.Log(Mathf.Abs(Vector3.Angle(Vector3.forward, hit.normal) / 90 - 1));
+			}
+		}
+
+		// horizontal 
+		if (horizontalVelocity.y != 0)
+		{
+			Vector3 direction = new Vector3(0, 0, horizontalVelocity.y);
+			float castingOffset = Mathf.Clamp(horizontalVelocity.y, -radius, radius);
+
+			rayLength = Mathf.Abs(horizontalVelocity.y * Time.fixedDeltaTime) + Mathf.Abs(castingOffset);
+			center = transform.position + Vector3.up * ((height + radius) / 2) - Vector3.forward * castingOffset;
+
+			if (Physics.SphereCast(center, radius, direction, out hit, rayLength, levelLayerMask))
+				horizontalVelocity.y = 0;
+		}
+
+		// Movement
+		transform.position += Velocity * Time.fixedDeltaTime;
 	}
 
 	private void VisualizeMovement()
