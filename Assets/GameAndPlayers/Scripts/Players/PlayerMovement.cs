@@ -20,10 +20,11 @@ public class PlayerMovement : MonoBehaviourPun
 	public float groundDeceleration = 2f;
 	public float airDeceleration = 2f;
 	public float jumpCooldown = 1f;
+	public float maxWalkingAngle = 35f;
+	public float maxStepupHeight = 0.2f;
 	[Header("Physics")]
 	public float mass = 2f;
 	public float bounciness = 1f;
-	public float maxSlope = 30f;
 	[Header("Camera")]
 	public float mouseAcceleration = 100f;
 	[Header("Prefabs")]
@@ -240,68 +241,64 @@ public class PlayerMovement : MonoBehaviourPun
 	{
 		// setting is grounded to false expecting this function to change that if the character is grounded
 		isGrounded = false;
-		
-		// collision detection
+
+		//
+		// Collision detection
+		//
 		float radius = 0.25f;
 		float height = 2f;
 
 		RaycastHit hit;
 		float rayLength;
+		float magnitude;
 		Vector3 center1;
 		Vector3 center2;
 
-		// vertical
-		rayLength = Mathf.Abs(verticalVelocity * Time.fixedDeltaTime) + radius * 2;
-
-		if (verticalVelocity < 0) // down
+		// Ground detector
+		if (verticalVelocity < 0)
 		{
-			center1 = transform.position + Vector3.up * (radius * 2);
+			magnitude = verticalVelocity * Time.fixedDeltaTime;
+			Vector3 direction = Vector3.down;
+			float castingOffsetLength = height / 2;
 
-			if (Physics.SphereCast(center1, radius, Vector3.down, out hit, rayLength, levelLayerMask))
+			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffsetLength);
+			center1 = transform.position + Vector3.up * (radius) - direction * castingOffsetLength;
+
+			if (Physics.SphereCast(center1, radius, direction, out hit, rayLength, levelLayerMask))
 			{
-				float hitPointY = hit.point.y;
-
-				groundVisualizer.transform.position = hit.point;
+				float hitPointY = hit.point.y - radius * (Vector3.Angle(Vector3.up, hit.normal) / 90);
 
 				verticalVelocity = 0;
-				if (Vector3.Angle(Vector3.up, hit.normal) <= maxSlope)
+
+				if (Mathf.Abs(transform.position.y - hitPointY) <= maxStepupHeight)
 					transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
 
+				groundVisualizer.transform.position = hit.point;
 				isGrounded = true;
 			}
 		}
-		else if (verticalVelocity > 0) // up
+
+		// Bumper
+		magnitude = Velocity.magnitude * Time.fixedDeltaTime;
+		if (true)
 		{
-			center1 = transform.position + Vector3.up * (height - radius * 2);
+			Vector3 direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y).normalized;
+			float castingOffsetLength = radius;
 
-			if (Physics.SphereCast(center1, radius, Vector3.up, out hit, rayLength, levelLayerMask))
-			{
-				float hitPointY = hit.point.y;
-
-				verticalVelocity = 0;
-				transform.position = new Vector3(transform.position.x, hitPointY - height, transform.position.z);
-			}
-		}
-
-		// horizontal
-		float magnitude = horizontalVelocity.magnitude * Time.fixedDeltaTime;
-		if (magnitude != 0)
-		{
-			Vector3 direction = new Vector3(horizontalVelocity.x, 0, horizontalVelocity.y).normalized;
-			float castingOffset = radius;
-
-			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffset);
-			center1 = transform.position + Vector3.up * (radius * 2) - direction * castingOffset;
-			center2 = transform.position + Vector3.up * (height - radius * 2) - direction * castingOffset;
+			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffsetLength);
+			center1 = transform.position + Vector3.up * (radius * 2) - direction * castingOffsetLength;
+			center2 = transform.position + Vector3.up * (height / 2) - direction * castingOffsetLength;
 
 			if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
 			{
-				horizontalVelocity = (horizontalVelocity.normalized + new Vector2(hit.normal.x, hit.normal.z)).normalized * Mathf.Abs(magnitude) * bounciness;
+				Velocity = (Velocity.normalized + hit.normal).normalized * Mathf.Abs(magnitude) * bounciness;
 				Concuction = 0.2f;
 			}
 		}
 
+		//
 		// Movement
+		//
 		transform.position += Velocity * Time.fixedDeltaTime;
 	}
 

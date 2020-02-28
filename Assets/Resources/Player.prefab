@@ -231,17 +231,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOfflinePlayer: 0
-  walkingMaximumSpeed: 5.8
+  walkingMaximumSpeed: 4.75
   sprintingMaximumSpeed: 13.06
   floatingMaximumSpeed: 1.5
   maxGroundAcceleration: 1.42
   maxAirAcceleration: 0.23
-  groundDeceleration: 0.43
+  groundDeceleration: 0.76
   airDeceleration: 0.15
   jumpCooldown: 1
+  maxWalkingAngle: 39.4
+  maxStepupHeight: 0.4
   mass: 2
   bounciness: 28.29
-  maxSlope: 36
   mouseAcceleration: 120
   jumpingPlatfiormPrafab: {fileID: 8518186595361913605, guid: 8dd532029b1b0e1449216aa14f85eb1e,
     type: 3}
