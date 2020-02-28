@@ -12,12 +12,18 @@ public class PlayerMovement : MonoBehaviourPun
 	// Editor Variables
 	public bool isOfflinePlayer = false;
 	[Header("Movement")]
-	public float walkingTargetSpeed = 4f;
-	public float sprintingTargetSpeed = 7f;
-	public float maxAcceleration = 1f;
-	public float maxDeceleration = 2f;
+	public float walkingMaximumSpeed = 5f;
+	public float sprintingMaximumSpeed = 11f;
+	public float floatingMaximumSpeed = 2f;
+	public float maxGroundAcceleration = 1f;
+	public float maxAirAcceleration = 0.5f;
+	public float groundDeceleration = 2f;
+	public float airDeceleration = 2f;
 	public float jumpCooldown = 1f;
+	[Header("Physics")]
+	public float mass = 2f;
 	public float bounciness = 1f;
+	public float maxSlope = 30f;
 	[Header("Camera")]
 	public float mouseAcceleration = 100f;
 	[Header("Prefabs")]
@@ -56,7 +62,7 @@ public class PlayerMovement : MonoBehaviourPun
 	{
 		get
 		{
-			return Mathf.Clamp(Time.time - _concuction, 0, _concuction) / _concuction;
+			return Mathf.Clamp(_concuction - Time.time, 0, 1);
 		}
 		set
 		{
@@ -97,8 +103,6 @@ public class PlayerMovement : MonoBehaviourPun
 
 			ControlMovement();
 		}
-
-		Debug.Log(Concuction);
 	}
 
 	private void OnDrawGizmos()
@@ -165,17 +169,33 @@ public class PlayerMovement : MonoBehaviourPun
 		ApplyGravity();
 
 		// Movement acceleration
-		if (forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero)
+		float acceleration = 0;
+
+		if ((forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero) && Concuction <= 0)
 		{
-			float speed = sprintingTargetSpeed;
-			if (!Input.GetButton("Sprint")) speed = walkingTargetSpeed;
+			if (isGrounded)
+			{
+				acceleration = sprintingMaximumSpeed;
+				if (!Input.GetButton("Sprint")) acceleration = walkingMaximumSpeed;
+			}
+			else
+				acceleration = floatingMaximumSpeed;
 
 			Vector3 direction = forwardMovement + sidewaysMovement;
-			Accelerate(new Vector2(direction.x, direction.z), speed);
+			Accelerate(new Vector2(direction.x, direction.z), acceleration);
 		}
 		else
 		{
-			Decelerate(maxDeceleration);
+			if (!isGrounded) Decelerate(airDeceleration);
+		}
+
+		if (horizontalVelocity.magnitude > acceleration && isGrounded)
+		{
+			float deceleration = groundDeceleration;
+
+			float overhead = horizontalVelocity.magnitude - acceleration;
+
+			Decelerate(Mathf.Clamp(overhead, 0, Mathf.Max(deceleration, deceleration * acceleration)), true);
 		}
 
 		// Jumping
@@ -187,24 +207,38 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void ApplyGravity()
 	{
-		Velocity += Physics.gravity * Time.fixedDeltaTime;
+		Velocity += Physics.gravity * mass * Time.fixedDeltaTime;
 	}
 
 	private void Accelerate(Vector2 direction, float targetSpeed)
 	{
-		horizontalVelocity += Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxAcceleration);
-		if (horizontalVelocity.magnitude > targetSpeed) Decelerate(Mathf.Min(horizontalVelocity.magnitude - targetSpeed, targetSpeed/2), true);
+		if (isGrounded)
+		{
+			direction = Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxGroundAcceleration); //  * Concuction
+			horizontalVelocity += direction;
+		}
+		else
+		{
+			float mag = horizontalVelocity.magnitude;
+			direction = Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxAirAcceleration); //  * Concuction
+			horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity + direction, Mathf.Max(Mathf.Max(floatingMaximumSpeed, maxAirAcceleration), mag));
+		}
 	}
 
 	private void Decelerate(float deceleration, bool force = false)
 	{
-		if (!force) deceleration = Mathf.Clamp(deceleration, 0, maxDeceleration);
-		horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, Mathf.Max(0, Velocity.magnitude - deceleration));
+		if (!force)
+			if (isGrounded)
+				deceleration = Mathf.Clamp(deceleration, 0, groundDeceleration);
+			else
+				deceleration = Mathf.Clamp(deceleration, 0, airDeceleration);
+
+		horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, Mathf.Max(0, horizontalVelocity.magnitude - deceleration));
 	}
 
 	private void Move()
 	{
-		// aetting is grounded to false expecting this function to change that if the character is grounded
+		// setting is grounded to false expecting this function to change that if the character is grounded
 		isGrounded = false;
 		
 		// collision detection
@@ -230,7 +264,9 @@ public class PlayerMovement : MonoBehaviourPun
 				groundVisualizer.transform.position = hit.point;
 
 				verticalVelocity = 0;
-				transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
+				if (Vector3.Angle(Vector3.up, hit.normal) <= maxSlope)
+					transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
+
 				isGrounded = true;
 			}
 		}
@@ -260,8 +296,8 @@ public class PlayerMovement : MonoBehaviourPun
 
 			if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
 			{
-				horizontalVelocity = new Vector2(hit.normal.x, hit.normal.z) * Mathf.Abs(magnitude);
-				Concuction = 2f;
+				horizontalVelocity = (horizontalVelocity.normalized + new Vector2(hit.normal.x, hit.normal.z)).normalized * Mathf.Abs(magnitude) * bounciness;
+				Concuction = 0.2f;
 			}
 		}
 
