@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviourPun
 	public float jumpCooldown = 1f;
 	public float maxWalkingAngle = 35f;
 	public float maxStepupHeight = 0.2f;
+	[Header("Collider")]
+	public float height = 2f;
+	public float radius = 0.25f;
 	[Header("Physics")]
 	public float mass = 2f;
 	public float bounciness = 1f;
@@ -127,8 +130,6 @@ public class PlayerMovement : MonoBehaviourPun
 		// velocity visualization
 		Vector3 worldVelocity = transform.position + Velocity * Time.fixedDeltaTime;
 
-		float radius = 0.25f;
-		float height = 2f;
 		Vector3 center = transform.position + Vector3.up * ((height + radius) / 2);
 		Vector3 center1 = transform.position + Vector3.up * radius;
 		Vector3 center2 = center1 + Vector3.up * (height - radius * 2);
@@ -258,9 +259,6 @@ public class PlayerMovement : MonoBehaviourPun
 		//
 		// Collision detection
 		#region Collision detection
-		float radius = 0.25f;
-		float height = 2f;
-
 		RaycastHit hit;
 		float rayLength;
 		float magnitude;
@@ -304,8 +302,8 @@ public class PlayerMovement : MonoBehaviourPun
 			float castingOffsetLength = radius;
 
 			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffsetLength);
-			center1 = transform.position + Vector3.up * (radius * 2) - direction * castingOffsetLength;
-			center2 = transform.position + Vector3.up * (height / 2) - direction * castingOffsetLength;
+			center1 = transform.position + Vector3.up * (height / 2) - direction * castingOffsetLength;
+			center2 = transform.position + Vector3.up * (height - radius) - direction * castingOffsetLength;
 
 			if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
 			{
@@ -331,7 +329,6 @@ public class PlayerMovement : MonoBehaviourPun
 	[PunRPC]
 	private bool Jump()
 	{
-		float radius = 0.25f;
 		Vector3 center = transform.position + Vector3.up * radius;
 
 		RaycastHit hit;
