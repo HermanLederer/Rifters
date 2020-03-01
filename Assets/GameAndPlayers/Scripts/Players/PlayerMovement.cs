@@ -6,10 +6,15 @@ using Photon.Pun;
 [RequireComponent(typeof(Player))]
 public class PlayerMovement : MonoBehaviourPun
 {
+	//
 	// Other components
+	#region Other components
 	public Player player { get; private set; }
+	#endregion
 
+	//
 	// Editor Variables
+	#region Editor variables
 	public bool isOfflinePlayer = false;
 	[Header("Movement")]
 	public float walkingMaximumSpeed = 5f;
@@ -33,13 +38,28 @@ public class PlayerMovement : MonoBehaviourPun
 	public GameObject movementVisualizer = null;
 	public GameObject groundVisualizer = null;
 	public LayerMask levelLayerMask;
+	#endregion
 
+	//
 	// Public variables
+	#region Public variables
 	[HideInInspector] public Vector3 spawnPoint;
 	[HideInInspector] public float verticalVelocity;
 	[HideInInspector] public Vector2 horizontalVelocity;
 	[HideInInspector] public bool isGrounded;
+	#endregion
 
+	//
+	// Private variables
+	#region Private variables
+	private float nextJumpTime;
+	private float _concuction;
+	private float slope;
+	#endregion
+
+	//
+	// Accessors
+	#region Accessors
 	public Vector3 Velocity
 	{
 		get
@@ -54,11 +74,6 @@ public class PlayerMovement : MonoBehaviourPun
 		}
 	}
 
-	// Private variables
-	private float nextJumpTime;
-	private float _concuction;
-
-	// Accessors
 	private float Concuction
 	{
 		get
@@ -70,6 +85,7 @@ public class PlayerMovement : MonoBehaviourPun
 			_concuction = Time.time + value;
 		}
 	}
+	#endregion
 
 	//--------------------------
 	// MonoBehaviour events
@@ -239,12 +255,9 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void Move()
 	{
-		// setting is grounded to false expecting this function to change that if the character is grounded
-		isGrounded = false;
-
 		//
 		// Collision detection
-		//
+		#region Collision detection
 		float radius = 0.25f;
 		float height = 2f;
 
@@ -255,6 +268,8 @@ public class PlayerMovement : MonoBehaviourPun
 		Vector3 center2;
 
 		// Ground detector
+		#region Ground detector
+		isGrounded = false;
 		if (verticalVelocity < 0)
 		{
 			magnitude = verticalVelocity * Time.fixedDeltaTime;
@@ -275,10 +290,13 @@ public class PlayerMovement : MonoBehaviourPun
 
 				groundVisualizer.transform.position = hit.point;
 				isGrounded = true;
+				slope = Vector3.Angle(Vector3.up, hit.normal);
 			}
 		}
+		#endregion
 
 		// Bumper
+		#region Bumper
 		magnitude = Velocity.magnitude * Time.fixedDeltaTime;
 		if (true)
 		{
@@ -295,10 +313,11 @@ public class PlayerMovement : MonoBehaviourPun
 				Concuction = 0.2f;
 			}
 		}
+		#endregion
+		#endregion
 
 		//
 		// Movement
-		//
 		transform.position += Velocity * Time.fixedDeltaTime;
 	}
 

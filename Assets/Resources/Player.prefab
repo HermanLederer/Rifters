@@ -239,8 +239,10 @@ MonoBehaviour:
   groundDeceleration: 0.76
   airDeceleration: 0.15
   jumpCooldown: 1
-  maxWalkingAngle: 39.4
+  maxWalkingAngle: 65.8
   maxStepupHeight: 0.4
+  radius: 0.25
+  height: 2
   mass: 2
   bounciness: 28.29
   mouseAcceleration: 120
