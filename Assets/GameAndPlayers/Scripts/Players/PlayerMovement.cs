@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviourPun
 	public float radius = 0.25f;
 	[Header("Physics")]
 	public float mass = 2f;
-	public float bounciness = 1f;
+	[Range(0f, 2f)]public float bounciness = 1f;
 	[Header("Camera")]
 	public float mouseAcceleration = 100f;
 	[Header("Prefabs")]
@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviourPun
 	[Header("Game objects")]
 	public GameObject movementVisualizer = null;
 	public GameObject groundVisualizer = null;
+	public GameObject slopeObject = null;
 	public LayerMask levelLayerMask;
 	#endregion
 
@@ -58,6 +59,7 @@ public class PlayerMovement : MonoBehaviourPun
 	private float nextJumpTime;
 	private float _concuction;
 	private float slope;
+	private Vector3 slopeNormal;
 	#endregion
 
 	//
@@ -128,11 +130,8 @@ public class PlayerMovement : MonoBehaviourPun
 	private void OnDrawGizmos()
 	{
 		// velocity visualization
-		Vector3 worldVelocity = transform.position + Velocity * Time.fixedDeltaTime;
-
-		Vector3 center = transform.position + Vector3.up * ((height + radius) / 2);
-		Vector3 center1 = transform.position + Vector3.up * radius;
-		Vector3 center2 = center1 + Vector3.up * (height - radius * 2);
+		Vector3 center1 = transform.position + Vector3.up * (radius * 2);
+		Vector3 center2 = transform.position + Vector3.up * (height - radius);
 
 		Vector3 center1Velocity = center1 + Velocity * Time.fixedDeltaTime;
 		Vector3 center2Velocity = center2 + Velocity * Time.fixedDeltaTime;
@@ -149,6 +148,11 @@ public class PlayerMovement : MonoBehaviourPun
 		Gizmos.DrawLine(center1Velocity - Vector3.forward * radius, center2Velocity - Vector3.forward * radius);
 		Gizmos.DrawLine(center1Velocity + Vector3.right * radius, center2Velocity + Vector3.right * radius);
 		Gizmos.DrawLine(center1Velocity - Vector3.right * radius, center2Velocity - Vector3.right * radius);
+
+		Vector3 direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y);
+		direction = Vector3.Cross(Quaternion.Euler(0, 90, 0) * direction, slopeNormal);
+
+		Gizmos.DrawRay(origin, direction);
 
 		//RaycastHit hit;
 		//float rayLength;
@@ -262,33 +266,39 @@ public class PlayerMovement : MonoBehaviourPun
 		RaycastHit hit;
 		float rayLength;
 		float magnitude;
+		Vector3 direction;
+		float castingOffsetLength;
 		Vector3 center1;
 		Vector3 center2;
 
 		// Ground detector
 		#region Ground detector
 		isGrounded = false;
-		if (verticalVelocity < 0)
+		float slopeRayLength;
+		if (horizontalVelocity.magnitude > 0) slopeRayLength = 3f;
+		else slopeRayLength = 0;
+		
+		if (verticalVelocity <= 0)
 		{
 			magnitude = verticalVelocity * Time.fixedDeltaTime;
-			Vector3 direction = Vector3.down;
-			float castingOffsetLength = height / 2;
+			direction = Vector3.down;
+			castingOffsetLength = height;
 
 			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffsetLength);
+			//rayLength = Mathf.Max(rayLength, slopeRayLength);
 			center1 = transform.position + Vector3.up * (radius) - direction * castingOffsetLength;
 
 			if (Physics.SphereCast(center1, radius, direction, out hit, rayLength, levelLayerMask))
 			{
+				// staying on the ground
 				float hitPointY = hit.point.y - radius * (Vector3.Angle(Vector3.up, hit.normal) / 90);
+				transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
 
+				// informing the class
 				verticalVelocity = 0;
-
-				if (Mathf.Abs(transform.position.y - hitPointY) <= maxStepupHeight)
-					transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
-
-				groundVisualizer.transform.position = hit.point;
 				isGrounded = true;
 				slope = Vector3.Angle(Vector3.up, hit.normal);
+				slopeNormal = hit.normal;
 			}
 		}
 		#endregion
@@ -296,22 +306,22 @@ public class PlayerMovement : MonoBehaviourPun
 		// Bumper
 		#region Bumper
 		magnitude = Velocity.magnitude * Time.fixedDeltaTime;
-		if (true)
+		direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y).normalized;
+		direction = Vector3.Cross(Quaternion.Euler(0, 90, 0) * direction, slopeNormal);
+		castingOffsetLength = magnitude;
+
+		rayLength = radius + castingOffsetLength;
+		center1 = transform.position + Vector3.up * (radius * 2) - direction * castingOffsetLength;
+		center2 = transform.position + Vector3.up * (height - radius) - direction * castingOffsetLength;
+
+		if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
 		{
-			Vector3 direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y).normalized;
-			float castingOffsetLength = radius;
-
-			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffsetLength);
-			center1 = transform.position + Vector3.up * (height / 2) - direction * castingOffsetLength;
-			center2 = transform.position + Vector3.up * (height - radius) - direction * castingOffsetLength;
-
-			if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
-			{
-				Velocity = (Velocity.normalized + hit.normal).normalized * Mathf.Abs(magnitude) * bounciness;
-				Concuction = 0.2f;
-			}
+			Velocity = -(2 * (Vector3.Dot(Velocity, Vector3.Normalize(hit.normal))) * Vector3.Normalize(hit.normal) - Velocity) * bounciness;
+			//Velocity = -Velocity;// Vector3.zero;//hit.normal * magnitude * bounciness;
+			Concuction = 0.2f;
 		}
 		#endregion
+
 		#endregion
 
 		//
