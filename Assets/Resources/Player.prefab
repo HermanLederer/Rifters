@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: df8fb2a2b0a94454cbac36f810beb0fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -312,17 +312,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6283d4bdde05cea4880f020bc1f83293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOfflinePlayer: 0
-  walkingMaximumSpeed: 4.75
-  sprintingMaximumSpeed: 13.06
-  floatingMaximumSpeed: 1.5
+  isOfflinePlayer: 1
+  maxSprintingSpeed: 11
+  maxWalkingSpeed: 5
+  maxFloatingSpeed: 2
   maxGroundAcceleration: 1.42
   maxAirAcceleration: 0.23
   groundDeceleration: 0.76
   airDeceleration: 0.15
+  slopeSlideAcceleration: 2.1
+  maxWalkingSlope: 45
+  maxStepuDistance: 1
   jumpCooldown: 1
-  maxWalkingAngle: 65.8
-  maxStepupHeight: 0.4
   height: 2
   radius: 0.25
   mass: 2
@@ -332,14 +333,14 @@ MonoBehaviour:
     type: 3}
   movementVisualizer: {fileID: 5229406368020519261}
   groundVisualizer: {fileID: 1229003081354086735}
-  slopeObject: {fileID: 849942730047765882}
+  slopeObject: {fileID: 0}
   levelLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  spawnPoint: {x: 0, y: 0, z: 0}
+  spawnPoint: {x: 7629.41, y: 422.17004, z: 7988.86}
   verticalVelocity: 0
   horizontalVelocity: {x: 0, y: 0}
-  isGrounded: 0
+  isGrounded: 1
 --- !u!114 &4695232246568419335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,7 +620,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: df8fb2a2b0a94454cbac36f810beb0fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -759,7 +760,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: df8fb2a2b0a94454cbac36f810beb0fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -877,7 +878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7774807725365195248
 Transform:
   m_ObjectHideFlags: 0
@@ -922,7 +923,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 046d63d2ab45d4a268ad613744852fc9, type: 2}
+  - {fileID: 2100000, guid: df8fb2a2b0a94454cbac36f810beb0fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1379,7 +1380,6 @@ GameObject:
   - component: {fileID: 8731378546817422245}
   - component: {fileID: 7415333335142601485}
   - component: {fileID: 5604781608226637002}
-  - component: {fileID: 4883262172937709468}
   m_Layer: 10
   m_Name: Hood
   m_TagString: Untagged
@@ -1448,20 +1448,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &4883262172937709468
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8674667667506203299}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8964486456512178059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,7 +1506,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: df8fb2a2b0a94454cbac36f810beb0fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

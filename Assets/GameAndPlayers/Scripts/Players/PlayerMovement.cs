@@ -16,27 +16,34 @@ public class PlayerMovement : MonoBehaviourPun
 	// Editor Variables
 	#region Editor variables
 	public bool isOfflinePlayer = false;
+
 	[Header("Movement")]
-	public float walkingMaximumSpeed = 5f;
-	public float sprintingMaximumSpeed = 11f;
-	public float floatingMaximumSpeed = 2f;
+	public float maxSprintingSpeed = 12f;
+	public float maxWalkingSpeed = 5f;
+	public float maxFloatingSpeed = 2f;
 	public float maxGroundAcceleration = 1f;
 	public float maxAirAcceleration = 0.5f;
 	public float groundDeceleration = 2f;
 	public float airDeceleration = 2f;
+	public float slopeSlideAcceleration = 2f;
+	public float maxWalkingSlope = 35f;
+	public float maxStepuDistance = 1f;
 	public float jumpCooldown = 1f;
-	public float maxWalkingAngle = 35f;
-	public float maxStepupHeight = 0.2f;
+
 	[Header("Collider")]
 	public float height = 2f;
 	public float radius = 0.25f;
+
 	[Header("Physics")]
 	public float mass = 2f;
-	[Range(0f, 2f)]public float bounciness = 1f;
+	[Range(0f, 2f)] public float bounciness = 1f;
+
 	[Header("Camera")]
 	public float mouseAcceleration = 100f;
+
 	[Header("Prefabs")]
 	public GameObject jumpingPlatfiormPrafab = null;
+
 	[Header("Game objects")]
 	public GameObject movementVisualizer = null;
 	public GameObject groundVisualizer = null;
@@ -138,10 +145,7 @@ public class PlayerMovement : MonoBehaviourPun
 
 		Vector3 origin = transform.position + Vector3.up * (height / 2);
 
-		Gizmos.color = Color.red;
-		Gizmos.DrawRay(origin, Velocity * Time.fixedDeltaTime);
-
-		Gizmos.color = Color.white;
+		Gizmos.color = Color.green;
 		Gizmos.DrawWireSphere(center1Velocity, radius);
 		Gizmos.DrawWireSphere(center2Velocity, radius);
 		Gizmos.DrawLine(center1Velocity + Vector3.forward * radius, center2Velocity + Vector3.forward * radius);
@@ -149,9 +153,11 @@ public class PlayerMovement : MonoBehaviourPun
 		Gizmos.DrawLine(center1Velocity + Vector3.right * radius, center2Velocity + Vector3.right * radius);
 		Gizmos.DrawLine(center1Velocity - Vector3.right * radius, center2Velocity - Vector3.right * radius);
 
-		Vector3 direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y);
-		direction = Vector3.Cross(Quaternion.Euler(0, 90, 0) * direction, slopeNormal);
-
+		//Vector3 direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y);
+		//direction = Vector3.Cross(Quaternion.Euler(0, 90, 0) * direction, slopeNormal);
+		Gizmos.color = Color.white;
+		Vector3 direction = Vector3.Cross(Vector3.Cross(transform.up, slopeNormal), slopeNormal);
+		//Vector3 direction = Quaternion.Euler(0, 90, 0) * Vector3.Cross(transform.up, slopeNormal);
 		Gizmos.DrawRay(origin, direction);
 
 		//RaycastHit hit;
@@ -187,23 +193,24 @@ public class PlayerMovement : MonoBehaviourPun
 		Vector3 forwardMovement = transform.forward * Input.GetAxisRaw("Vertical");
 		Vector3 sidewaysMovement = transform.right * Input.GetAxisRaw("Horizontal");
 
-		// Gravity
-		ApplyGravity();
-
 		// Movement acceleration
 		float acceleration = 0;
+		Vector3 groundDirection = Quaternion.Euler(0, 90, 0) * Vector3.Cross(transform.up, slopeNormal);
+		Vector3 direction = forwardMovement + sidewaysMovement;
 
 		if ((forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero) && Concuction <= 0)
 		{
 			if (isGrounded)
 			{
-				acceleration = sprintingMaximumSpeed;
-				if (!Input.GetButton("Sprint")) acceleration = walkingMaximumSpeed;
+				acceleration = maxSprintingSpeed;
+				if (!Input.GetButton("Sprint")) acceleration = maxWalkingSpeed;
 			}
 			else
-				acceleration = floatingMaximumSpeed;
+				acceleration = maxFloatingSpeed;
+			
+			if (slope > maxWalkingSlope && Vector3.Angle(direction, groundDirection) < 45)
+				acceleration = 0f;
 
-			Vector3 direction = forwardMovement + sidewaysMovement;
 			Accelerate(new Vector2(direction.x, direction.z), acceleration);
 		}
 		else
@@ -214,11 +221,11 @@ public class PlayerMovement : MonoBehaviourPun
 		if (horizontalVelocity.magnitude > acceleration && isGrounded)
 		{
 			float deceleration = groundDeceleration;
-
 			float overhead = horizontalVelocity.magnitude - acceleration;
-
 			Decelerate(Mathf.Clamp(overhead, 0, Mathf.Max(deceleration, deceleration * acceleration)), true);
 		}
+
+		 ApplyGravity();
 
 		// Jumping
 		if (Input.GetButton("Jump") && Time.time > nextJumpTime && isGrounded) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
@@ -229,21 +236,46 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void ApplyGravity()
 	{
-		Velocity += Physics.gravity * mass * Time.fixedDeltaTime;
+		if (isGrounded && slope > maxWalkingSlope)
+		{
+			// on slopes
+			Vector3 direction = Vector3.Cross(Vector3.Cross(transform.up, slopeNormal), slopeNormal);
+			Velocity += direction * slopeSlideAcceleration;
+		}
+		else
+		{
+			// constant
+			Velocity += Physics.gravity * mass * Time.fixedDeltaTime;
+		}
+	}
+
+	private void Accelerate(Vector3 direction, float targetSpeed)
+	{
+		if (isGrounded)
+		{
+			direction = Vector3.ClampMagnitude(direction.normalized * targetSpeed, maxGroundAcceleration);
+			Velocity += direction;
+		}
+		else
+		{
+			float mag = horizontalVelocity.magnitude;
+			direction = Vector3.ClampMagnitude(direction.normalized * targetSpeed, maxAirAcceleration);
+			Velocity = Vector3.ClampMagnitude(Velocity + direction, Mathf.Max(Mathf.Max(maxFloatingSpeed, maxAirAcceleration), mag));
+		}
 	}
 
 	private void Accelerate(Vector2 direction, float targetSpeed)
 	{
 		if (isGrounded)
 		{
-			direction = Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxGroundAcceleration); //  * Concuction
+			direction = Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxGroundAcceleration);
 			horizontalVelocity += direction;
 		}
 		else
 		{
 			float mag = horizontalVelocity.magnitude;
-			direction = Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxAirAcceleration); //  * Concuction
-			horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity + direction, Mathf.Max(Mathf.Max(floatingMaximumSpeed, maxAirAcceleration), mag));
+			direction = Vector2.ClampMagnitude(direction.normalized * targetSpeed, maxAirAcceleration);
+			horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity + direction, Mathf.Max(Mathf.Max(maxFloatingSpeed, maxAirAcceleration), mag));
 		}
 	}
 
@@ -270,35 +302,34 @@ public class PlayerMovement : MonoBehaviourPun
 		float castingOffsetLength;
 		Vector3 center1;
 		Vector3 center2;
+		Vector3 originalPosition = transform.position;
 
 		// Ground detector
 		#region Ground detector
 		isGrounded = false;
-		float slopeRayLength;
-		if (horizontalVelocity.magnitude > 0) slopeRayLength = 3f;
-		else slopeRayLength = 0;
 		
 		if (verticalVelocity <= 0)
 		{
-			magnitude = verticalVelocity * Time.fixedDeltaTime;
 			direction = Vector3.down;
-			castingOffsetLength = height;
-
+			castingOffsetLength = height / 2;
+			magnitude = verticalVelocity * Time.fixedDeltaTime;
 			rayLength = Mathf.Abs(magnitude) + Mathf.Abs(castingOffsetLength);
-			//rayLength = Mathf.Max(rayLength, slopeRayLength);
-			center1 = transform.position + Vector3.up * (radius) - direction * castingOffsetLength;
+			rayLength = Mathf.Max(rayLength, 0.3f);
+			center1 = transform.position + Velocity * Time.fixedDeltaTime + Vector3.up * (radius) - direction * castingOffsetLength;
+			//center1 = transform.position + Vector3.up * (radius) - direction * castingOffsetLength;
 
+			// thatying on the ground
 			if (Physics.SphereCast(center1, radius, direction, out hit, rayLength, levelLayerMask))
 			{
-				// staying on the ground
-				float hitPointY = hit.point.y - radius * (Vector3.Angle(Vector3.up, hit.normal) / 90);
-				transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
-
-				// informing the class
-				verticalVelocity = 0;
-				isGrounded = true;
 				slope = Vector3.Angle(Vector3.up, hit.normal);
 				slopeNormal = hit.normal;
+
+				float hitPointY = hit.point.y - radius * (Vector3.Angle(Vector3.up, hit.normal) / 90);
+				// staying on the ground
+				transform.position = new Vector3(transform.position.x, hitPointY, transform.position.z);
+				verticalVelocity = 0;
+
+				isGrounded = true;
 			}
 		}
 		#endregion
@@ -317,7 +348,6 @@ public class PlayerMovement : MonoBehaviourPun
 		if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
 		{
 			Velocity = -(2 * (Vector3.Dot(Velocity, Vector3.Normalize(hit.normal))) * Vector3.Normalize(hit.normal) - Velocity) * bounciness;
-			//Velocity = -Velocity;// Vector3.zero;//hit.normal * magnitude * bounciness;
 			Concuction = 0.2f;
 		}
 		#endregion
@@ -333,7 +363,7 @@ public class PlayerMovement : MonoBehaviourPun
 	{
 		// rolling sphere
 		//movementVisualizer.transform.localScale = Vector3.one * (Velocity.magnitude / maxSpeed);
-		//movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * Velocity.magnitude, 0, 0);
+		movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * Velocity.magnitude, 0, 0);
 	}
 
 	[PunRPC]
