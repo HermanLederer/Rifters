@@ -73,7 +73,7 @@ public class ConnectionMenu : MonoBehaviourPunCallbacks
 		{
 			waitingText.text = "Starting Game";
 
-			PhotonNetwork.LoadLevel("Game");
+			PhotonNetwork.LoadLevel("LevelDesign");
 		}
 	}
 

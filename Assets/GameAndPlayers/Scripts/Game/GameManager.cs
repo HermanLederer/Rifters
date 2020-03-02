@@ -4,17 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class GameManager : MonoBehaviourPunCallbacks
+public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
 	// Editor variables
 	[SerializeField] private bool offlineMode = false;
 	[SerializeField] private GameObject playerPrefab = null;
-	[SerializeField] private GameObject gameManagerDataPrefab = null;
 	[SerializeField] private GameObject gameBallPrefab = null;
 	[SerializeField] private int playToGoals = 5;
 
+	// Public variables
+	public int team1score = 0;
+	public int team2score = 0;
+
 	// Private variables
 	private bool isGamePlaying;
+
 
 	// Static variables
 	public static GameManager instance;
@@ -43,14 +47,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 			// instantiating online game objects
 			if (PhotonNetwork.LocalPlayer.IsMasterClient)
 			{
-				PhotonNetwork.Instantiate(gameManagerDataPrefab.name, transform.position, transform.rotation);
 				PhotonNetwork.Instantiate(gameBallPrefab.name, transform.position, transform.rotation);
 			}
 		}
 		else
 		{
-			GameManagerData data = Instantiate(gameManagerDataPrefab, transform.position, transform.rotation).GetComponent<GameManagerData>();
-			data.GetComponent<PhotonView>().enabled = false;
+			GetComponent<PhotonView>().enabled = false;
 			Instantiate(gameBallPrefab, transform.position, transform.rotation);
 		}
     }
@@ -60,9 +62,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 		// winning conditions
 		if (isGamePlaying)
 		{
-			if (GameManagerData.instance.team1score >= playToGoals || GameManagerData.instance.team2score >= playToGoals)
+			if (team1score >= playToGoals || team2score >= playToGoals)
 			{
-				if (GameManagerData.instance.team1score > GameManagerData.instance.team2score)
+				if (team1score > team2score)
 					DeclareWiner(GameTeam.Team1);
 				else
 					DeclareWiner(GameTeam.Team2);
@@ -92,17 +94,34 @@ public class GameManager : MonoBehaviourPunCallbacks
 	}
 
 	//--------------------------
+	// IPunObservable methods
+	//--------------------------
+	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	{
+		if (stream.IsWriting) // stream is writing
+		{
+			stream.SendNext(team1score);
+			stream.SendNext(team2score);
+		}
+		else // stream is reading
+		{
+			team1score = (int)stream.ReceiveNext();
+			team2score = (int)stream.ReceiveNext();
+		}
+	}
+
+	//--------------------------
 	// GameManager methods
 	//--------------------------
 	public void Score(GameTeam team)
 	{
 		// increasing the score
-		if (team == GameTeam.Team1) ++GameManagerData.instance.team1score;
-		else ++GameManagerData.instance.team2score;
+		if (team == GameTeam.Team1) ++team1score;
+		else ++team2score;
 
 		// debugging
 		Debug.Log("A goal has been scored by " + team);
-		Debug.Log("" + GameTeam.Team1 + ": " + GameManagerData.instance.team1score + "; " + GameTeam.Team2 + ": " + GameManagerData.instance.team2score + ";");
+		Debug.Log("" + GameTeam.Team1 + ": " + team1score + "; " + GameTeam.Team2 + ": " + team2score + ";");
 	}
 
 	public void DeclareWiner(GameTeam team)
