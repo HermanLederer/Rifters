@@ -117,6 +117,11 @@ PrefabInstance:
       propertyPath: isOfflinePlayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8988442709902289150, guid: ad6cc318b3df55c4083ba6b94cf89821,
+        type: 3}
+      propertyPath: isOfflinePlayer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad6cc318b3df55c4083ba6b94cf89821, type: 3}
 --- !u!114 &3970495197071236002 stripped

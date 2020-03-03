@@ -6,6 +6,9 @@ using Photon.Pun;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
+	// Singleton
+	public static GameManager instance;
+
 	// Editor variables
 	[SerializeField] private bool offlineMode = false;
 	[SerializeField] private GameObject playerPrefab = null;
@@ -15,26 +18,24 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	// Public variables
 	public int team1score = 0;
 	public int team2score = 0;
+	public List<Player> players;
 
 	// Private variables
 	private bool isGamePlaying;
-
-
-	// Static variables
-	public static GameManager instance;
 
 	//--------------------------
 	// MonoBehaviour methods
 	//--------------------------
 	private void Awake()
 	{
-		isGamePlaying = true;
-		
 		// singleton
 		if (instance != null)
 			Destroy(gameObject);
+		else
+			instance = this;
 
-		instance = this;
+		isGamePlaying = true;
+		players = new List<Player>();
 	}
 
 	void Start()
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		if (!offlineMode) // online mode
 		{
 			// instantiating local player
-			PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-2, 2), transform.rotation);
+			players.Add(PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-2, 2), transform.rotation).GetComponent<Player>());
 
 			// instantiating online game objects
 			if (PhotonNetwork.LocalPlayer.IsMasterClient)

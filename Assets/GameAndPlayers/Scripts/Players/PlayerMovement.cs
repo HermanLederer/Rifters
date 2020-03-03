@@ -15,8 +15,6 @@ public class PlayerMovement : MonoBehaviourPun
 	//
 	// Editor Variables
 	#region Editor variables
-	public bool isOfflinePlayer = false;
-
 	[Header("Movement")]
 	public float maxSprintingSpeed = 12f;
 	public float maxWalkingSpeed = 5f;
@@ -122,7 +120,7 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void FixedUpdate()
 	{
-		if (photonView.IsMine || isOfflinePlayer)
+		if (photonView.IsMine || player.isOfflinePlayer)
 		{
 			// Controls
 			float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.fixedDeltaTime;
