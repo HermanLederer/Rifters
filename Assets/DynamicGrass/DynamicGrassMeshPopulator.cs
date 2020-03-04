@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace DynamicGrass
 {
-	[ExecuteInEditMode]
-	public class DynamicGrassPopulator : MonoBehaviour
+	[ExecuteAlways]
+	public class DynamicGrassMeshPopulator : MonoBehaviour
 	{
 		//
 		// Other components
@@ -20,17 +20,21 @@ namespace DynamicGrass
 		[Header("Region")]
 		[SerializeField] private Vector3 boxSize;
 
+		//
+		// Private variables
+		List<Matrix4x4> matrixes;
+
 		//--------------------------
 		// MonoBehaviour methods
 		//--------------------------
 		private void Awake()
 		{
-			
+			Populate();
 		}
 
 		private void Update()
 		{
-			Populate();
+			Graphics.DrawMeshInstanced(grassMesh, 0, grassMaterial, matrixes);
 		}
 
 		private void OnDrawGizmosSelected()
@@ -45,7 +49,7 @@ namespace DynamicGrass
 		public void Populate()
 		{
 			Random.InitState((int) (transform.position.x + transform.position.z));
-			List<Matrix4x4> matrixes = new List<Matrix4x4>(grassAmount);
+			matrixes = new List<Matrix4x4>(grassAmount);
 
 			for (int i = 0; i < grassAmount; ++i)
 			{
@@ -65,12 +69,11 @@ namespace DynamicGrass
 						if (Vector3.Angle(hit.normal, Vector3.up) <= slopeThreshold)
 						{
 							origin = hit.point;
-							matrixes.Add(Matrix4x4.TRS(origin, Quaternion.identity, Vector3.one));
+							matrixes.Add(Matrix4x4.TRS(origin, Quaternion.LookRotation(Vector3.up), Vector3.one));
 						}
 					}
 				}
 			}
-			Graphics.DrawMeshInstanced(grassMesh, 0, grassMaterial, matrixes);
 		}
 	}
 }
