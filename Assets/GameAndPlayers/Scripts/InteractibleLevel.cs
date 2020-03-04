@@ -13,29 +13,78 @@ public class InteractibleLevel : MonoBehaviour
     public TypeOfInteractableObject typeOfObject;
 
     public bool activated;
-    public bool scaling;
-    public float speed;
+    public bool scaled;
 
-    private PlayerSpells myPlayer;
+    public float moveSpeed = 5f;
+    public float scaleSpeed = 3f;
+    public float timeBeingScaled = 5f;
 
-    private List<Transform> playersInRange = new List<Transform>();
+    public int maxSize = 8;
+
+    private float timeToDownscale = -1;
+
+    private int minSize;
 
     private Rigidbody rb;
+    private PlayerSpells myPlayer;
+    private List<Transform> playersInRange = new List<Transform>();
+
+    private Vector3 maxScale;
+    private Vector3 startScale;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        startScale = transform.localScale;
+        minSize = Mathf.RoundToInt(startScale.x);
+        //maxScale = new Vector3(startScale.x * maxSize, startScale.y * maxSize, startScale.z * maxSize/2);
+        maxScale = new Vector3(startScale.x, startScale.y * maxSize, startScale.z);
+    }
+
+    private void Start()
+    {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(typeOfObject == TypeOfInteractableObject.PULL)
+        if (activated)
         {
-            if (activated)
+            if (typeOfObject == TypeOfInteractableObject.PULL)
             {
-                transform.position = Vector3.MoveTowards(transform.position, myPlayer.ObjectHolder.transform.position, speed * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, myPlayer.ObjectHolder.transform.position, moveSpeed * Time.deltaTime);
+            }
+            else if (typeOfObject == TypeOfInteractableObject.SCALE)
+            {
+                if (!scaled)
+                {
+                    transform.localScale = Vector3.Lerp(transform.localScale, maxScale, scaleSpeed * Time.deltaTime);
+                    if(transform.localScale.y > maxSize - 0.2f)  //(transform.localScale.x > maxSize - 0.2f)
+                    {
+                        transform.localScale = maxScale;
+                        scaled = true;
+                        timeToDownscale = timeBeingScaled;
+                    }
+                }
+                else
+                {
+                    if(timeToDownscale > 0)
+                    {
+                        timeToDownscale -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        transform.localScale = Vector3.Lerp(transform.localScale, startScale, scaleSpeed * Time.deltaTime);
+                        if(transform.localScale.y < minSize + 0.2f)  //(transform.localScale.x < minSize + 0.2f)
+                        {
+                            transform.localScale = startScale;
+                            activated = false;
+                            scaled = false;
+                        }
+                    }
+                }
             }
         }
     }
@@ -73,7 +122,7 @@ public class InteractibleLevel : MonoBehaviour
             default:
                 if (!activated)
                 {
-                    ScaleObject(true);
+                    ScaleObject();
                 }
                 break;
         }
@@ -85,10 +134,6 @@ public class InteractibleLevel : MonoBehaviour
 
         rb.isKinematic = true;
 
-        //transform.position = myPlayer.ObjectHolder.position;
-
-        //transform.SetParent(myPlayer.ObjectHolder);
-
         activated = true;
 
         myPlayer.hasObject = true;
@@ -98,7 +143,6 @@ public class InteractibleLevel : MonoBehaviour
     {
         rb.isKinematic = false;
 
-        //transform.SetParent(null);
         activated = false;
 
         rb.AddForce(ps.cam.transform.forward * ps.throwingForce);
@@ -106,8 +150,8 @@ public class InteractibleLevel : MonoBehaviour
         ps.hasObject = false;
     }
 
-    private void ScaleObject(bool grow)
+    private void ScaleObject()
     {
-        scaling = true;
+        activated = true;
     }
 }
