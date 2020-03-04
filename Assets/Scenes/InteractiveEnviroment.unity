@@ -4466,6 +4466,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6690010204202964566, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: levelLayerMask.m_Bits
+      value: 8704
+      objectReference: {fileID: 0}
     - target: {fileID: 6846634084020653546, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_Mesh
@@ -21805,7 +21810,7 @@ GameObject:
   - component: {fileID: 2098989797}
   - component: {fileID: 2098989796}
   - component: {fileID: 2098989795}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22402,11 +22407,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6792415926111001961, guid: 488f50832e2adc849b6aabd9b644cac6,
-        type: 3}
-      propertyPath: speed
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6792415926111001962, guid: 488f50832e2adc849b6aabd9b644cac6,
         type: 3}

@@ -77,6 +77,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfObject: 0
   activated: 0
+  scaled: 0
+  moveSpeed: 5
+  scaleSpeed: 3
+  timeBeingScaled: 5
+  maxSize: 8
 --- !u!1 &6792415927275157773
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +94,7 @@ GameObject:
   - component: {fileID: 6792415927275157770}
   - component: {fileID: 6792415927275157771}
   - component: {fileID: 6792415927275157772}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
