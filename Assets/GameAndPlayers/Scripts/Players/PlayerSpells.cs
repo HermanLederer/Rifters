@@ -21,10 +21,10 @@ public class PlayerSpells : MonoBehaviour
     public Transform ObjectHolder;
 
     //[HideInInspector]
-    public List<InteractableLevel> inRangeObjects = new List<InteractableLevel>();
+    public List<InteractibleLevel> inRangeObjects = new List<InteractibleLevel>();
 
     // Private variables
-    public InteractableLevel activableObject;
+    public InteractibleLevel activableObject;
 
     //--------------------------
     // MonoBehaviour events
@@ -41,44 +41,39 @@ public class PlayerSpells : MonoBehaviour
 
     void Update()
     {
-        activableObject = null;
-
-        //If the player is looking that object
-        for (int i = 0; i < inRangeObjects.Count; i++)
+        if (!hasObject)
         {
-            Vector3 dir = (inRangeObjects[i].transform.position - cam.transform.position).normalized;
-            Debug.DrawLine(inRangeObjects[i].transform.position, cam.transform.position);
+            activableObject = null;
 
-            float angle = Vector3.Angle(dir, cam.transform.forward);
-            if(angle < minAngle)
+            //If the player is looking that object
+            for (int i = 0; i < inRangeObjects.Count; i++)
             {
-                activableObject = inRangeObjects[i];
-                break;
-            }
-        }
+                Vector3 dir = (inRangeObjects[i].transform.position - cam.transform.position).normalized;
+                Debug.DrawLine(inRangeObjects[i].transform.position, cam.transform.position);
 
-        if(activableObject != null)
-        {
-            SpellPanel.SetActive(true);
-        }
-        else
-        {
-            SpellPanel.SetActive(false);
+                float angle = Vector3.Angle(dir, cam.transform.forward);
+                if (angle < minAngle)
+                {
+                    activableObject = inRangeObjects[i];
+                    break;
+                }
+            }
+
+            if (activableObject != null)
+            {
+                SpellPanel.SetActive(true);
+            }
+            else
+            {
+                SpellPanel.SetActive(false);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
             if(activableObject != null)
             {
-                if (!hasObject)
-                {
-                    activableObject.ActivateObject(this);
-                }
-                else
-                {
-                    activableObject.ThrowObject(this);
-                }
-                
+                activableObject.ActivateObject(this);
             }
         }
     }

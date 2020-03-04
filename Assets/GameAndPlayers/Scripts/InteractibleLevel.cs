@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableLevel : MonoBehaviour
+public class InteractibleLevel : MonoBehaviour
 {
     public enum TypeOfInteractableObject{
-        PULLABLE,
-        SCALABLE
+        PULL,
+        SCALE
     }
 
     [Header("Type of Object")]
     public TypeOfInteractableObject typeOfObject;
 
     public bool activated;
+    public bool scaling;
+    public float speed;
+
+    private PlayerSpells myPlayer;
 
     private List<Transform> playersInRange = new List<Transform>();
 
@@ -27,6 +31,13 @@ public class InteractableLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(typeOfObject == TypeOfInteractableObject.PULL)
+        {
+            if (activated)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, myPlayer.ObjectHolder.transform.position, speed * Time.deltaTime);
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,37 +60,54 @@ public class InteractableLevel : MonoBehaviour
     {
         switch (typeOfObject)
         {
-            case TypeOfInteractableObject.PULLABLE:
+            case TypeOfInteractableObject.PULL:
                 if (!activated)
                 {
                     PullObject(ps);
                 }
+                else
+                {
+                    ThrowObject(ps);
+                }
                 break;
             default:
-                Debug.Log("Scale");
+                if (!activated)
+                {
+                    ScaleObject(true);
+                }
                 break;
         }
     }
 
     private void PullObject(PlayerSpells ps)
     {
+        myPlayer = ps;
+
         rb.isKinematic = true;
 
-        transform.position = ps.ObjectHolder.position;
+        //transform.position = myPlayer.ObjectHolder.position;
 
-        transform.SetParent(ps.ObjectHolder);
+        //transform.SetParent(myPlayer.ObjectHolder);
 
-        ps.hasObject = true;
+        activated = true;
+
+        myPlayer.hasObject = true;
     }
 
-    public void ThrowObject(PlayerSpells ps)
+    private void ThrowObject(PlayerSpells ps)
     {
         rb.isKinematic = false;
 
-        transform.SetParent(null);
+        //transform.SetParent(null);
+        activated = false;
 
         rb.AddForce(ps.cam.transform.forward * ps.throwingForce);
 
         ps.hasObject = false;
+    }
+
+    private void ScaleObject(bool grow)
+    {
+        scaling = true;
     }
 }
