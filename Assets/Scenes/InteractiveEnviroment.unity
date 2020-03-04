@@ -22554,7 +22554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minAngle: 20
-  throwingForce: 10
+  throwingForce: 800
   cam: {fileID: 0}
   hasObject: 0
   SpellPanel: {fileID: 1476201539}

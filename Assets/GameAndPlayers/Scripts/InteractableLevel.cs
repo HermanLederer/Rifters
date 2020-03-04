@@ -65,8 +65,7 @@ public class InteractableLevel : MonoBehaviour
     {
         rb.isKinematic = true;
 
-        Vector3 movement = ps.ObjectHolder.position - transform.position;
-        transform.Translate(movement);
+        transform.position = ps.ObjectHolder.position;
 
         transform.SetParent(ps.ObjectHolder);
 
@@ -76,9 +75,10 @@ public class InteractableLevel : MonoBehaviour
     public void ThrowObject(PlayerSpells ps)
     {
         rb.isKinematic = false;
-        rb.AddForce(ps.cam.transform.forward * ps.throwingForce);
 
         transform.SetParent(null);
+
+        rb.AddForce(ps.cam.transform.forward * ps.throwingForce);
 
         ps.hasObject = false;
     }
