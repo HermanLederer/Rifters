@@ -12,6 +12,7 @@ public class PlayerSpells : MonoBehaviour
     // Public variables
     public float minAngle = 20;
     public float throwingForce = 10;
+    public float raycastDistance = 6;
 
     public Camera cam;
 
@@ -19,12 +20,13 @@ public class PlayerSpells : MonoBehaviour
 
     public GameObject SpellPanel;
     public Transform ObjectHolder;
+    public LayerMask InteractibleLayer;
 
     //[HideInInspector]
     public List<InteractibleLevel> inRangeObjects = new List<InteractibleLevel>();
 
     // Private variables
-    public InteractibleLevel activableObject;
+    private InteractibleLevel activableObject;
 
     //--------------------------
     // MonoBehaviour events
@@ -41,6 +43,7 @@ public class PlayerSpells : MonoBehaviour
 
     void Update()
     {
+        Debug.DrawLine(cam.transform.position, cam.transform.position + cam.transform.forward * raycastDistance, Color.red);
         if (!hasObject)
         {
             activableObject = null;
@@ -52,7 +55,13 @@ public class PlayerSpells : MonoBehaviour
                 Debug.DrawLine(inRangeObjects[i].transform.position, cam.transform.position);
 
                 float angle = Vector3.Angle(dir, cam.transform.forward);
-                if (angle < minAngle)
+
+                bool lookingAt = false;
+                if(Physics.Raycast(cam.transform.position, cam.transform.forward, raycastDistance, InteractibleLayer))
+                {
+                    lookingAt = true;
+                }
+                if (angle < minAngle || lookingAt)
                 {
                     activableObject = inRangeObjects[i];
                     break;
@@ -61,7 +70,15 @@ public class PlayerSpells : MonoBehaviour
 
             if (activableObject != null)
             {
-                SpellPanel.SetActive(true);
+                if(activableObject.typeOfObject != InteractibleLevel.TypeOfInteractableObject.SCALE || !activableObject.activated)
+                {
+                    SpellPanel.SetActive(true); 
+                }
+                else
+                {
+                    SpellPanel.SetActive(false);
+                }
+                
             }
             else
             {
