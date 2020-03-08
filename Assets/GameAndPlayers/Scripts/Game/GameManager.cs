@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
+[RequireComponent(typeof(InGameUI))]
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
 	// Singleton
 	public static GameManager instance;
+
+	// Other components
+	private InGameUI inGameUI;
 
 	// Editor variables
 	[SerializeField] private bool offlineMode = false;
@@ -33,6 +37,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 			Destroy(gameObject);
 		else
 			instance = this;
+
+		inGameUI = GetComponent<InGameUI>();
 
 		isGamePlaying = true;
 		players = new List<Player>();
@@ -130,5 +136,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		Debug.Log(team + " won!");
 		isGamePlaying = false;
 		Time.timeScale = 0.1f;
+	}
+
+	public void Win()
+	{
+		Debug.Log("The player finished the game");
+		inGameUI.LoadWinningScreen();
+		isGamePlaying = false;
+		//Time.timeScale = 0.1f;
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExitScript : MonoBehaviour
+public class GameFinishArea : MonoBehaviour
 {
 	// Editor variables
 
@@ -28,7 +28,13 @@ public class ExitScript : MonoBehaviour
 		
 	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.GetComponent<Player>() != null)
+			GameManager.instance.Win();
+	}
+
 	//--------------------------
-	// ExitScript events
+	// GameFinishArea events
 	//--------------------------
 }
