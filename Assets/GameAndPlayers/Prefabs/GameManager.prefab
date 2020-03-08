@@ -100,6 +100,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8512951221712517388}
     m_Modifications:
+    - target: {fileID: 6511401009121159652, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2375395152340349139}
+    - target: {fileID: 6511401009121159652, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511401009215841576, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2375395152340349139}
+    - target: {fileID: 6511401009215841576, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511401009467274170, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2375395152340349139}
+    - target: {fileID: 6511401009467274170, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511401010345552855, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2375395152340349139}
+    - target: {fileID: 6511401010345552855, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResumeGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511401010830964384, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2375395152340349139}
+    - target: {fileID: 6511401010830964384, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511401010859064862, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2375395152340349139}
+    - target: {fileID: 6511401010859064862, guid: cc6214e75811e244db3cd3becd61f982,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToMainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 6511401010966781060, guid: cc6214e75811e244db3cd3becd61f982,
         type: 3}
       propertyPath: m_Name

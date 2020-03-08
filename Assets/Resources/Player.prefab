@@ -296,6 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9797b6d7e2e3a7e4e9a2d4f5c3a5b40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOfflinePlayer: 0
   playerMovement: {fileID: 7057436410636451889}
   head: {fileID: 4684622215860418202}
   viewCamera: {fileID: 393211641128803661}
@@ -312,7 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6283d4bdde05cea4880f020bc1f83293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOfflinePlayer: 1
   maxSprintingSpeed: 11
   maxWalkingSpeed: 5
   maxFloatingSpeed: 2
@@ -336,7 +336,7 @@ MonoBehaviour:
   slopeObject: {fileID: 0}
   levelLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2560
   spawnPoint: {x: 7629.41, y: 422.17004, z: 7988.86}
   verticalVelocity: 0
   horizontalVelocity: {x: 0, y: 0}
@@ -399,7 +399,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886666309173420961}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.125, y: 0.125, z: 0.125}

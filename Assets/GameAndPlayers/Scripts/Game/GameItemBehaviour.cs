@@ -15,6 +15,7 @@ public class GameItemBehaviour : MonoBehaviour
 	//
 	// Editor variables
 	[SerializeField] private float randomDecisionRate = 2f;
+	[SerializeField] private LayerMask interactWithLayers;
 
 	//
 	// Public variables
@@ -44,7 +45,7 @@ public class GameItemBehaviour : MonoBehaviour
 		// switching states
 		if (Time.time > nextRandomDecision)
 		{
-			int rand = (int) Mathf.Floor(Random.Range(0, 3));
+			int rand = (int) Mathf.Floor(Random.Range(0, 4));
 			//Debug.Log(rand);
 			switch (rand)
 			{
@@ -57,6 +58,9 @@ public class GameItemBehaviour : MonoBehaviour
 				case 2:
 					navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-2, 5), 0 , Random.Range(-2, 5)));
 					break;
+				case 3:
+					state = new GameItemTryFollowNearestPlayer(navMeshAgent, perception.GetNearestPlayer().transform, interactWithLayers);
+					break;
 			}
 
 			nextRandomDecision = Time.time + randomDecisionRate;
@@ -64,6 +68,14 @@ public class GameItemBehaviour : MonoBehaviour
 
 		// performing actions
 		state.Update();
+	}
+
+	//--------------------------
+	// GameItemBehaviour methods
+	//--------------------------
+	public void Kick(Vector3 direction)
+	{
+
 	}
 
 	//--------------------------
@@ -78,10 +90,9 @@ public class GameItemBehaviour : MonoBehaviour
 	{
 		Transform transform;
 		Transform targetPlayerTransform;
-
+		
 		public GameItemLookAtNearestPlayer(Transform transform, Transform targetPlayerTransform)
 		{
-			
 			this.transform = transform;
 			this.targetPlayerTransform = targetPlayerTransform;
 		}
@@ -91,6 +102,28 @@ public class GameItemBehaviour : MonoBehaviour
 			Vector3 targetDirection = targetPlayerTransform.position - transform.position;
 			Vector3 direction = Vector3.RotateTowards(transform.forward, targetDirection, 5f * Time.deltaTime, 0f);
 			transform.rotation = Quaternion.LookRotation(direction);
+		}
+	}
+
+	private class GameItemTryFollowNearestPlayer : GameItemState
+	{
+		NavMeshAgent navMeshAgent;
+		Transform targetPlayerTransform;
+		LayerMask interactWithLayers;
+
+		public GameItemTryFollowNearestPlayer(NavMeshAgent navMeshAgent, Transform targetPlayerTransform, LayerMask interactWithLayers)
+		{
+			this.navMeshAgent = navMeshAgent;
+			this.targetPlayerTransform = targetPlayerTransform;
+			this.interactWithLayers = interactWithLayers;
+		}
+
+		public override void Update()
+		{
+			if (Vector3.Distance(navMeshAgent.transform.position, targetPlayerTransform.position) < 10f)
+			{
+				navMeshAgent.SetDestination(targetPlayerTransform.position);
+			}
 		}
 	}
 }

@@ -17,9 +17,9 @@ MonoBehaviour:
   profile:
     scatteringDistance: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     transmissionTint: {r: 0.7169812, g: 0.2595172, b: 0.16571736, a: 1}
-    texturingMode: 0
+    texturingMode: 1
     transmissionMode: 0
-    thicknessRemap: {x: 0, y: 5}
+    thicknessRemap: {x: 0, y: 12.336633}
     worldScale: 1
-    ior: 1.375
+    ior: 1.233
     hash: 1080213215

@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 
 [RequireComponent(typeof(PlayerMovement))]
-
 public class Player : MonoBehaviourPun
 {
 	// Editor variables

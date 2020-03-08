@@ -347,6 +347,11 @@ public class PlayerMovement : MonoBehaviourPun
 		{
 			Velocity = -(2 * (Vector3.Dot(Velocity, Vector3.Normalize(hit.normal))) * Vector3.Normalize(hit.normal) - Velocity) * bounciness;
 			Concuction = 0.2f;
+
+			// finish area detection
+			// TODO: replace costom collision detection with rigidbody and use onTriggerEnter event in GameFinishArea
+			if (hit.collider.GetComponent<GameFinishArea>() != null)
+				GameManager.instance.Win();
 		}
 		#endregion
 

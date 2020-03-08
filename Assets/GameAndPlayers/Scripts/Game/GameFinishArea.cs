@@ -15,7 +15,7 @@ public class GameFinishArea : MonoBehaviour
 	//--------------------------
 	void Awake()
 	{
-		
+
 	}
 
 	void Start()

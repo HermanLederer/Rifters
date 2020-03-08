@@ -290,6 +290,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomDecisionRate: 2
+  interactWithLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &6383202012589143670
 MonoBehaviour:
   m_ObjectHideFlags: 0
