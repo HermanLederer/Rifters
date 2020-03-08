@@ -12,6 +12,8 @@ public class ScaleObject : InteractibleLevel
 
     public int maxSize = 8; //Scale
 
+    public GameObject wallPs;
+
     // Public variables
 
     // Private variables
@@ -89,5 +91,7 @@ public class ScaleObject : InteractibleLevel
     private void ScaleTheObject()
     {
         activated = true;
+        GameObject ps = Instantiate(wallPs, transform.position, Quaternion.identity);
+        Destroy(ps, 2f);
     }
 }
