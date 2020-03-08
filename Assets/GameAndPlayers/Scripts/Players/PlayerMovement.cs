@@ -15,8 +15,6 @@ public class PlayerMovement : MonoBehaviourPun
 	//
 	// Editor Variables
 	#region Editor variables
-	public bool isOfflinePlayer = false;
-
 	[Header("Movement")]
 	public float maxSprintingSpeed = 12f;
 	public float maxWalkingSpeed = 5f;
@@ -122,7 +120,7 @@ public class PlayerMovement : MonoBehaviourPun
 
 	private void FixedUpdate()
 	{
-		if (photonView.IsMine || isOfflinePlayer)
+		if (photonView.IsMine || player.isOfflinePlayer)
 		{
 			// Controls
 			float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.fixedDeltaTime;
@@ -349,6 +347,11 @@ public class PlayerMovement : MonoBehaviourPun
 		{
 			Velocity = -(2 * (Vector3.Dot(Velocity, Vector3.Normalize(hit.normal))) * Vector3.Normalize(hit.normal) - Velocity) * bounciness;
 			Concuction = 0.2f;
+
+			// finish area detection
+			// TODO: replace costom collision detection with rigidbody and use onTriggerEnter event in GameFinishArea
+			if (hit.collider.GetComponent<GameFinishArea>() != null)
+				GameManager.instance.Win();
 		}
 		#endregion
 

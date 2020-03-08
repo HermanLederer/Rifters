@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 64.26045, g: 178.99622, b: 301.5002, a: 1}
+  m_IndirectSpecularColor: {r: 30.298544, g: 68.1613, b: 146.45772, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: df7243cb3636ba94e877381ccc7521e1, type: 2}
   m_StaticLightingSkyUniqueID: 3
-  m_SkySettings: {fileID: 1664681211}
+  m_SkySettings: {fileID: 1686060013}
   m_SkySettingsFromProfile: {fileID: 5432513390165529012, guid: df7243cb3636ba94e877381ccc7521e1,
     type: 2}
 --- !u!4 &215083580
@@ -3308,7 +3308,13 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 417349377}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1664681211
+--- !u!4 &1679075640 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000010968662070, guid: 30b99e7dc1382e346a7f9789de00de5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 67770869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1686060013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3332,10 +3338,10 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 8.2
   multiplier:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 20
     min: 0
   upperHemisphereLuxValue:
     m_OverrideState: 0
@@ -3359,31 +3365,25 @@ MonoBehaviour:
     m_Value: 0
   top:
     m_OverrideState: 0
-    m_Value: {r: 0, g: 0, b: 1, a: 1}
+    m_Value: {r: 0.18396229, g: 0.42866266, b: 1, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   middle:
     m_OverrideState: 0
-    m_Value: {r: 0.3, g: 0.7, b: 1, a: 1}
+    m_Value: {r: 0.07471521, g: 0.30718607, b: 0.6886792, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   bottom:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.16037738, g: 0.06975425, b: 0.01437344, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   gradientDiffusion:
     m_OverrideState: 0
     m_Value: 1
---- !u!4 &1679075640 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4000010968662070, guid: 30b99e7dc1382e346a7f9789de00de5e,
-    type: 3}
-  m_PrefabInstance: {fileID: 67770869}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1698298983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4937,6 +4937,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8164755920007316230, guid: 378b63b9f95333347be2f64b85fbe290,
+        type: 3}
       propertyPath: viewIdField
       value: 2
       objectReference: {fileID: 0}

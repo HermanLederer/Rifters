@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PauseMenu : MonoBehaviour
+public class InGameUI : MonoBehaviour
 {
 	// Editor variables
 	public GameObject menuPanel;
@@ -70,7 +71,9 @@ public class PauseMenu : MonoBehaviour
 
 	public void ReloadGame()
 	{
-		PhotonNetwork.LoadLevel("Game");
+		// TODO: sswitch to photon scene loading if multiplayer is necessary
+		//PhotonNetwork.LoadLevel("Game");
+		SceneManager.LoadScene("Runner prototype");
 	}
 
 	public void LoadWinningScreen()

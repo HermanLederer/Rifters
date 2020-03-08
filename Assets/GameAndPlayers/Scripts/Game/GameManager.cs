@@ -4,8 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
+[RequireComponent(typeof(InGameUI))]
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
+	// Singleton
+	public static GameManager instance;
+
+	// Other components
+	private InGameUI inGameUI;
+
 	// Editor variables
 	[SerializeField] private bool offlineMode = false;
 	[SerializeField] private GameObject playerPrefab = null;
@@ -15,26 +22,26 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	// Public variables
 	public int team1score = 0;
 	public int team2score = 0;
+	public List<Player> players;
 
 	// Private variables
 	private bool isGamePlaying;
-
-
-	// Static variables
-	public static GameManager instance;
 
 	//--------------------------
 	// MonoBehaviour methods
 	//--------------------------
 	private void Awake()
 	{
-		isGamePlaying = true;
-		
 		// singleton
 		if (instance != null)
 			Destroy(gameObject);
+		else
+			instance = this;
 
-		instance = this;
+		inGameUI = GetComponent<InGameUI>();
+
+		isGamePlaying = true;
+		players = new List<Player>();
 	}
 
 	void Start()
@@ -42,7 +49,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		if (!offlineMode) // online mode
 		{
 			// instantiating local player
-			PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-2, 2), transform.rotation);
+			players.Add(PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-2, 2), transform.rotation).GetComponent<Player>());
 
 			// instantiating online game objects
 			if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -129,5 +136,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		Debug.Log(team + " won!");
 		isGamePlaying = false;
 		Time.timeScale = 0.1f;
+	}
+
+	public void Win()
+	{
+		Debug.Log("The player finished the game");
+		inGameUI.LoadWinningScreen();
+		isGamePlaying = false;
+		//Time.timeScale = 0.1f;
 	}
 }

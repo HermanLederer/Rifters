@@ -418,7 +418,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 1
-    m_Value: 9.44
+    m_Value: 8.2
   multiplier:
     m_OverrideState: 1
     m_Value: 20
@@ -445,19 +445,19 @@ MonoBehaviour:
     m_Value: 0
   top:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0.50891304, b: 1, a: 1}
+    m_Value: {r: 0.18396229, g: 0.42866266, b: 1, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   middle:
     m_OverrideState: 1
-    m_Value: {r: 0.97203916, g: 1, b: 0.33333337, a: 1}
+    m_Value: {r: 0.07471521, g: 0.30718607, b: 0.6886792, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   bottom:
     m_OverrideState: 1
-    m_Value: {r: 0.1509434, g: 0.072373375, b: 0.03488786, a: 1}
+    m_Value: {r: 0.16037738, g: 0.06975425, b: 0.01437344, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
