@@ -53,6 +53,12 @@ public class AudioManager : MonoBehaviour
         activeSource.volume = 1;
         musicSource.Play();
     }
+    public void StopMusic(AudioClip musicClip)
+    {
+        AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicSource : musicSource2;
+        musicSource.clip = musicClip;
+        musicSource.Stop();
+    }
     public void PlayMusicWithFade(AudioClip newClip, float transitionTime = 1.0f)
     {
         // Check which source is active
@@ -121,6 +127,13 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySfx(AudioClip clip, float volume)
     {
+        sfxSource.PlayOneShot(clip, volume);
+    }
+
+    public void PlaySfx(AudioClip clip, float volume, float speed)
+    {
+
+        sfxSource.pitch = 2f;
         sfxSource.PlayOneShot(clip, volume);
     }
 

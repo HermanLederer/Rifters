@@ -10,11 +10,14 @@ public class AudioTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Space))
             AudioManager.Instance.PlaySfx(SFX, 1);
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.W))
             AudioManager.Instance.PlayMusic(music1);
+
+        if (Input.GetKeyUp(KeyCode.W))
+            AudioManager.Instance.StopMusic(music1);
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
             AudioManager.Instance.PlayMusic(music2);
