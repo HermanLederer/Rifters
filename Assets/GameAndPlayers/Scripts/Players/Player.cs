@@ -1,41 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 using Photon.Pun;
 
-[RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviourPun
 {
-	// Editor variables
-	public bool isOfflinePlayer = false;
-	public PlayerMovement playerMovement;
-	public GameObject head;
+	//
+	// Editor Variables
+	#region Editor variables
+	[Header("Player components")]
+	public CinemachineFreeLook cameraRig;
 	public Camera viewCamera;
 	public AudioListener audioListener;
-	
-	// Public variables
+	public PlayerCharacterModel characterModel;
+	public Transform playerOrigin;
+	public Transform orientationTransform;
 
-	// Private variables
+	[Header("Camera settings")]
+	public float mouseAcceleration = 100f;
+	#endregion
 
 	//--------------------------
 	// MonoBehaviour events
 	//--------------------------
 	void Awake()
 	{
-		if (isOfflinePlayer) GameManager.instance.players.Add(GetComponent<Player>());
-
-		if (photonView.IsMine) audioListener.enabled = true;
-		if (photonView.IsMine) viewCamera.enabled = true;
-		if (photonView.IsMine) viewCamera.enabled = true;
+		//if (photonView.IsMine) audioListener.enabled = true;
+		//if (photonView.IsMine) viewCamera.enabled = true;
+		//if (photonView.IsMine) viewCamera.enabled = true;
 	}
 
 	void Start()
 	{
-		PhotonNetwork.NickName = Time.fixedTime.ToString();
+		//if (isOfflinePlayer) GameManager.instance.players.Add(GetComponent<Player>());
+		//PhotonNetwork.NickName = Time.fixedTime.ToString();
 	}
 
 	void Update()
 	{
-		
+		float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.fixedDeltaTime;
+		float mouseY = Input.GetAxis("Mouse Y") * mouseAcceleration * Time.fixedDeltaTime;
+
+		// rotating the camera
+		cameraRig.m_XAxis.Value += mouseX;
+		cameraRig.m_YAxis.Value -= mouseY / 180f;
 	}
 }
