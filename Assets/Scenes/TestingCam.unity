@@ -2428,7 +2428,8 @@ MonoBehaviour:
   JumpOnGrass: {fileID: 8300000, guid: 640c889ae2fccf948a2b847b3d6f5257, type: 3}
   JumpOnRocks: {fileID: 8300000, guid: d96961aa32e0fac4bb64308194f23b12, type: 3}
   MoveOnGrass: {fileID: 8300000, guid: 1af0314b30ab1d84e8d244b7940eef51, type: 3}
-  MoveOnRocks: {fileID: 8300000, guid: 78e9d2811a7e9a044a09a209a19f0347, type: 3}
+  MoveOnRocks: {fileID: 8300000, guid: 9cea2c1c3a1b5394d84de7156167c0e5, type: 3}
+  Environment: {fileID: 8300000, guid: 079cfbe4bba8d974cbead72a21670dce, type: 3}
 --- !u!114 &524678773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6651,7 +6652,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278231618}
-  m_LocalRotation: {x: 0.3462189, y: -0.00000004160453, z: 0.000000020185706, w: 0.93815374}
+  m_LocalRotation: {x: 0.34621894, y: -0.000000002064303, z: 0.0000000055936686, w: 0.93815374}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -22348,7 +22349,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024985519}
-  m_LocalRotation: {x: 0.3462189, y: -0.000000010514521, z: 0.000000013136482, w: 0.9381538}
+  m_LocalRotation: {x: 0.3462189, y: -0.000000010514621, z: 0.000000013136764, w: 0.9381538}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
