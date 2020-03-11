@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
+    private PlayerMovement playerMovement;
     public static AudioManager Instance
     {
         get
@@ -30,10 +31,31 @@ public class AudioManager : MonoBehaviour
     private AudioSource sfxSource;
 
     private bool firstMusicSourceIsPlaying;
+
+    private void Update()
+    {
+        if (!playerMovement.isGrounded)
+        {
+            musicSource.volume = 0;
+        }
+        else
+        {
+            musicSource.volume = 1;
+        }
+
+        if (musicSource.isPlaying)
+        {
+            musicSource.pitch = Random.Range(1f, 1.2f);
+
+            if (Input.GetKey(KeyCode.LeftShift))
+                musicSource.pitch = Random.Range(1.2f, 1.5f);
+        }
+    }
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
 
+        playerMovement = FindObjectOfType<PlayerMovement>();
         // Create audio sources, and save them as references
         musicSource = this.gameObject.AddComponent<AudioSource>();
         musicSource2 = this.gameObject.AddComponent<AudioSource>();
