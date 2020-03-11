@@ -12,12 +12,12 @@ public class AudioTest : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            AudioManager.Instance.PlaySfx(JumpOnRocks, 1);
+            AudioManager.Instance.PlaySfx(JumpOnGrass, 1);
 
         if (Input.GetKeyDown(KeyCode.W))
-            AudioManager.Instance.PlayMusic(MoveOnRocks);
+            AudioManager.Instance.PlayMusic(MoveOnGrass);
 
         if (Input.GetKeyUp(KeyCode.W))
-            AudioManager.Instance.StopMusic(MoveOnRocks);
+            AudioManager.Instance.StopMusic(MoveOnGrass);
     }
 }

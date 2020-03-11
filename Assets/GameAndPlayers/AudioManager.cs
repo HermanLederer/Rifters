@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
             musicSource.pitch = Random.Range(1f, 1.2f);
 
             if (Input.GetKey(KeyCode.LeftShift))
-                musicSource.pitch = Random.Range(1.2f, 1.5f);
+                musicSource.pitch = Random.Range(1.2f, 1.4f);
         }
     }
     private void Awake()
