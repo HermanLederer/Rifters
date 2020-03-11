@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class AudioTest : MonoBehaviour
 {
-    [SerializeField] private AudioClip SFX;
-    [SerializeField] private AudioClip music1;
-    [SerializeField] private AudioClip music2;
+
+    [SerializeField] private AudioClip JumpOnGrass;
+    [SerializeField] private AudioClip JumpOnRocks;
+
+    [SerializeField] private AudioClip WalkOnGrass;
+    [SerializeField] private AudioClip WalkOnRocks;
+
+
 
     private void Update()
     {
+<<<<<<< Updated upstream
         if (Input.GetKeyDown(KeyCode.Alpha1))
             AudioManager.Instance.PlaySfx(SFX, 1);
 
@@ -30,5 +36,15 @@ public class AudioTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha7))
             AudioManager.Instance.PlayMusicWithCrossFade(music2, 3.0f);
+=======
+        if (Input.GetKeyDown(KeyCode.Space))
+            AudioManager.Instance.PlayJump(JumpOnGrass);
+
+        if (Input.GetKeyDown(KeyCode.W))
+            AudioManager.Instance.PlayMusic(WalkOnGrass);
+
+        if (Input.GetKeyUp(KeyCode.W))
+            AudioManager.Instance.StopMusic(WalkOnGrass);
+>>>>>>> Stashed changes
     }
 }

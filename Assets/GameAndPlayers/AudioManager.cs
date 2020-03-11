@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
+    private PlayerMovement playerMovement;
     public static AudioManager Instance
     {
         get
@@ -34,6 +35,7 @@ public class AudioManager : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
 
+        playerMovement = FindObjectOfType<PlayerMovement>();
         // Create audio sources, and save them as references
         musicSource = this.gameObject.AddComponent<AudioSource>();
         musicSource2 = this.gameObject.AddComponent<AudioSource>();
@@ -42,6 +44,25 @@ public class AudioManager : MonoBehaviour
         // Loop the tracks
         musicSource.loop = true;
         musicSource2.loop = true;
+    }
+    private void Update()
+    {
+        if(!playerMovement.isGrounded || musicSource2.isPlaying)
+        {
+            musicSource.volume = 0;
+        }
+        else
+        {
+            musicSource.volume = 1;
+        }
+
+        if (musicSource.isPlaying)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+                musicSource.pitch = (Random.Range(1f, 1.4f));
+            else
+                musicSource.pitch = (Random.Range(1f, 1.1f));
+        }
     }
 
     public void PlayMusic(AudioClip musicClip)
@@ -53,6 +74,24 @@ public class AudioManager : MonoBehaviour
         activeSource.volume = 1;
         musicSource.Play();
     }
+<<<<<<< Updated upstream
+=======
+    public void PlayJump(AudioClip musicClip)
+    {
+        // Check which source is active
+        AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicSource : musicSource2;
+
+        musicSource2.clip = musicClip;
+        activeSource.volume = 1;
+        musicSource2.PlayOneShot(musicClip, 1);
+    }
+    public void StopMusic(AudioClip musicClip)
+    {
+        AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicSource : musicSource2;
+        musicSource.clip = musicClip;
+        musicSource.Stop();
+    }
+>>>>>>> Stashed changes
     public void PlayMusicWithFade(AudioClip newClip, float transitionTime = 1.0f)
     {
         // Check which source is active
