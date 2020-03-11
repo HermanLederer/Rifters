@@ -89,12 +89,19 @@ public class PlayerMovement : MonoBehaviourPun
 		{
 			// Controls
 			ControlMovement();
+		}
+	}
 
-			// Updating Player components
-			if (rigidbody.velocity.magnitude > 0)
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (!isGrounded)
+		{
+			Vector3 normal = collision.contacts[0].normal;
+
+			if (Vector3.Angle(Vector3.up, normal) >= 90)
 			{
-				player.characterModel.transform.position = player.playerOrigin.position + Vector3.down * collider.radius;
-				player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, Quaternion.Euler(0, player.viewCamera.transform.rotation.eulerAngles.y, 0), 180f * Time.deltaTime);
+				Debug.DrawRay(collision.contacts[0].point, normal, Color.red, 2f);
+				rigidbody.AddForce(normal * rigidbody.velocity.magnitude * rigidbody.mass * collider.material.bounciness, ForceMode.Impulse);
 			}
 		}
 	}
@@ -105,16 +112,24 @@ public class PlayerMovement : MonoBehaviourPun
 	private void ControlMovement()
 	{
 		// Direction
-		Vector3 forwardMovement = player.orientationTransform.forward * Input.GetAxisRaw("Vertical");
-		Vector3 sidewaysMovement = player.orientationTransform.right * Input.GetAxisRaw("Horizontal");
-		Vector3 targetDirection = forwardMovement + sidewaysMovement;
+		float axisV = Input.GetAxisRaw("Vertical");
+		float axisH = Input.GetAxisRaw("Horizontal");
 
 		// Climbing the ground
 		FollowGround();
 
 		// Movement acceleration
-		if ((forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero) && Concuction <= 0)
+		if ((axisV != 0 || axisH != 0) && Concuction <= 0)
 		{
+			// rotating the model
+			player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, Quaternion.Euler(0, player.viewCamera.transform.rotation.eulerAngles.y, 0), 600f * Time.deltaTime);
+
+			// calculating direction vector
+			Vector3 forwardMovement = player.orientationTransform.forward * axisV;
+			Vector3 sidewaysMovement = player.orientationTransform.right * axisH;
+			Vector3 targetDirection = forwardMovement + sidewaysMovement;
+
+			// accelerating
 			float acceleration = 0;
 
 			if (isGrounded)
@@ -142,6 +157,9 @@ public class PlayerMovement : MonoBehaviourPun
 
 		// Jumping
 		if (isGrounded && Time.time >= nextJumpTime && Input.GetButton("Jump")) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
+
+		// Moving the model
+		player.characterModel.transform.position = player.playerOrigin.position + Vector3.down * collider.radius;
 	}
 
 	private void FollowGround()

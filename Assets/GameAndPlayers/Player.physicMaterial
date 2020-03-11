@@ -9,6 +9,6 @@ PhysicMaterial:
   m_Name: Player
   dynamicFriction: 7
   staticFriction: 7
-  bounciness: 0
+  bounciness: 0.1
   frictionCombine: 0
   bounceCombine: 0
