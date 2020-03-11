@@ -6,7 +6,6 @@ public class JumpPlatformInteractable : MonoBehaviour
 {
 	// OtherComponents
 	private Rigidbody _rigidbody;
-	private PlayerMovement _playerMovement;
 
 	// Public variables
 	[HideInInspector] public Transform originalParent;
@@ -17,7 +16,6 @@ public class JumpPlatformInteractable : MonoBehaviour
 	void Awake()
 	{
 		TryGetComponent<Rigidbody>(out _rigidbody);
-		TryGetComponent<PlayerMovement>(out _playerMovement);
 	}
 
 	//--------------------------
@@ -33,7 +31,6 @@ public class JumpPlatformInteractable : MonoBehaviour
 	{
 		transform.parent = originalParent;
 
-		if (_playerMovement != null) { _playerMovement.Velocity += launchVelocity;}
-		else if (_rigidbody != null) { _rigidbody.velocity += launchVelocity; }
+		if (_rigidbody != null) { _rigidbody.AddForce(launchVelocity); }
 	}
 }

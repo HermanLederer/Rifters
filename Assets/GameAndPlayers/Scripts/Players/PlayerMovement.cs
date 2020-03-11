@@ -4,12 +4,16 @@ using UnityEngine;
 using Photon.Pun;
 
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviourPun
 {
 	//
 	// Other components
 	#region Other components
 	public Player player { get; private set; }
+	private CapsuleCollider collider;
+	private Rigidbody rigidbody;
 	#endregion
 
 	//
@@ -28,25 +32,11 @@ public class PlayerMovement : MonoBehaviourPun
 	public float maxStepuDistance = 1f;
 	public float jumpCooldown = 1f;
 
-	[Header("Collider")]
-	public float height = 2f;
-	public float radius = 0.25f;
-
-	[Header("Physics")]
-	public float mass = 2f;
-	[Range(0f, 2f)] public float bounciness = 1f;
-
 	[Header("Camera")]
 	public float mouseAcceleration = 100f;
 
 	[Header("Prefabs")]
 	public GameObject jumpingPlatfiormPrafab = null;
-
-	[Header("Game objects")]
-	public GameObject movementVisualizer = null;
-	public GameObject groundVisualizer = null;
-	public GameObject slopeObject = null;
-	public LayerMask levelLayerMask;
 	#endregion
 
 	//
@@ -104,9 +94,11 @@ public class PlayerMovement : MonoBehaviourPun
 	{
 		// Other components
 		player = GetComponent<Player>();
+		collider = GetComponent<CapsuleCollider>();
+		rigidbody = GetComponent<Rigidbody>();
 
 		nextJumpTime = 0f;
-		_concuction = Time.time;
+		_concuction = 0f;
 	}
 
 	private void Start()
@@ -132,24 +124,28 @@ public class PlayerMovement : MonoBehaviourPun
 		}
 	}
 
-	private void OnDrawGizmos()
+	private void OnDrawGizmosSelected()
 	{
+		// can't visualize in editor because of relience on Awake to get other components
+		// TODO: make it not rely on Awake?
+		if (Application.isEditor) return;
+
 		// velocity visualization
-		Vector3 center1 = transform.position + Vector3.up * (radius * 2);
-		Vector3 center2 = transform.position + Vector3.up * (height - radius);
+		Vector3 center1 = transform.position + Vector3.up * (collider.radius * 2);
+		Vector3 center2 = transform.position + Vector3.up * (collider.height - collider.radius);
 
 		Vector3 center1Velocity = center1 + Velocity * Time.fixedDeltaTime;
 		Vector3 center2Velocity = center2 + Velocity * Time.fixedDeltaTime;
 
-		Vector3 origin = transform.position + Vector3.up * (height / 2);
+		Vector3 origin = transform.position + Vector3.up * (collider.height / 2);
 
 		Gizmos.color = Color.green;
-		Gizmos.DrawWireSphere(center1Velocity, radius);
-		Gizmos.DrawWireSphere(center2Velocity, radius);
-		Gizmos.DrawLine(center1Velocity + Vector3.forward * radius, center2Velocity + Vector3.forward * radius);
-		Gizmos.DrawLine(center1Velocity - Vector3.forward * radius, center2Velocity - Vector3.forward * radius);
-		Gizmos.DrawLine(center1Velocity + Vector3.right * radius, center2Velocity + Vector3.right * radius);
-		Gizmos.DrawLine(center1Velocity - Vector3.right * radius, center2Velocity - Vector3.right * radius);
+		Gizmos.DrawWireSphere(center1Velocity, collider.radius);
+		Gizmos.DrawWireSphere(center2Velocity, collider.radius);
+		Gizmos.DrawLine(center1Velocity + Vector3.forward * collider.radius, center2Velocity + Vector3.forward * collider.radius);
+		Gizmos.DrawLine(center1Velocity - Vector3.forward * collider.radius, center2Velocity - Vector3.forward * collider.radius);
+		Gizmos.DrawLine(center1Velocity + Vector3.right * collider.radius, center2Velocity + Vector3.right * collider.radius);
+		Gizmos.DrawLine(center1Velocity - Vector3.right * collider.radius, center2Velocity - Vector3.right * collider.radius);
 
 		//Vector3 direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y);
 		//direction = Vector3.Cross(Quaternion.Euler(0, 90, 0) * direction, slopeNormal);
@@ -223,28 +219,11 @@ public class PlayerMovement : MonoBehaviourPun
 			Decelerate(Mathf.Clamp(overhead, 0, Mathf.Max(deceleration, deceleration * acceleration)), true);
 		}
 
-		 ApplyGravity();
-
 		// Jumping
 		if (Input.GetButton("Jump") && Time.time > nextJumpTime && isGrounded) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 		
 		Move();
 		VisualizeMovement();
-	}
-
-	private void ApplyGravity()
-	{
-		if (isGrounded && slope > maxWalkingSlope)
-		{
-			// on slopes
-			Vector3 direction = Vector3.Cross(Vector3.Cross(transform.up, slopeNormal), slopeNormal);
-			Velocity += direction * slopeSlideAcceleration;
-		}
-		else
-		{
-			// constant
-			Velocity += Physics.gravity * mass * Time.fixedDeltaTime;
-		}
 	}
 
 	private void Accelerate(Vector3 direction, float targetSpeed)
@@ -300,13 +279,12 @@ public class PlayerMovement : MonoBehaviourPun
 		float castingOffsetLength;
 		Vector3 center1;
 		Vector3 center2;
-		Vector3 originalPosition = transform.position;
 
-		// Ground detector
+		// Ground lifter
 		#region Ground detector
-		isGrounded = false;
-		
-		if (verticalVelocity <= 0)
+		isGrounded = true;
+
+		/*if (verticalVelocity <= 0)
 		{
 			direction = Vector3.down;
 			castingOffsetLength = height / 2;
@@ -316,7 +294,7 @@ public class PlayerMovement : MonoBehaviourPun
 			center1 = transform.position + Velocity * Time.fixedDeltaTime + Vector3.up * (radius) - direction * castingOffsetLength;
 			//center1 = transform.position + Vector3.up * (radius) - direction * castingOffsetLength;
 
-			// thatying on the ground
+			// staying on the ground
 			if (Physics.SphereCast(center1, radius, direction, out hit, rayLength, levelLayerMask))
 			{
 				slope = Vector3.Angle(Vector3.up, hit.normal);
@@ -329,50 +307,26 @@ public class PlayerMovement : MonoBehaviourPun
 
 				isGrounded = true;
 			}
-		}
-		#endregion
-
-		// Bumper
-		#region Bumper
-		magnitude = Velocity.magnitude * Time.fixedDeltaTime;
-		direction = new Vector3(horizontalVelocity.x, Mathf.Clamp(verticalVelocity, 0, verticalVelocity), horizontalVelocity.y).normalized;
-		direction = Vector3.Cross(Quaternion.Euler(0, 90, 0) * direction, slopeNormal);
-		castingOffsetLength = magnitude;
-
-		rayLength = radius + castingOffsetLength;
-		center1 = transform.position + Vector3.up * (radius * 2) - direction * castingOffsetLength;
-		center2 = transform.position + Vector3.up * (height - radius) - direction * castingOffsetLength;
-
-		if (Physics.CapsuleCast(center1, center2, radius, direction, out hit, rayLength, levelLayerMask))
-		{
-			Velocity = -(2 * (Vector3.Dot(Velocity, Vector3.Normalize(hit.normal))) * Vector3.Normalize(hit.normal) - Velocity) * bounciness;
-			Concuction = 0.2f;
-
-			// finish area detection
-			// TODO: replace costom collision detection with rigidbody and use onTriggerEnter event in GameFinishArea
-			if (hit.collider.GetComponent<GameFinishArea>() != null)
-				GameManager.instance.Win();
-		}
+		}*/
 		#endregion
 
 		#endregion
 
 		//
 		// Movement
-		transform.position += Velocity * Time.fixedDeltaTime;
+		rigidbody.velocity = new Vector3(Velocity.x, rigidbody.velocity.y, Velocity.z);
 	}
 
 	private void VisualizeMovement()
 	{
 		// rolling sphere
 		//movementVisualizer.transform.localScale = Vector3.one * (Velocity.magnitude / maxSpeed);
-		movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * Velocity.magnitude, 0, 0);
+		//movementVisualizer.transform.Rotate(Input.GetAxisRaw("Vertical") * Velocity.magnitude, 0, 0);
 	}
-
-	[PunRPC]
+	
 	private bool Jump()
 	{
-		Vector3 center = transform.position + Vector3.up * radius;
+		Vector3 center = transform.position + Vector3.up * collider.radius;
 
 		RaycastHit hit;
 		if (Physics.Raycast(center, -transform.up, out hit, 2f))

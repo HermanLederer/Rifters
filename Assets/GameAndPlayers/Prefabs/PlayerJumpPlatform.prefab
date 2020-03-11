@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 2
-  shootPower: 10
+  shootPower: 200
   shootMaxSpeed: 10
   shootAcceleration: 8
   shootAmplitude: 2
