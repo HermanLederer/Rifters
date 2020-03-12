@@ -22,8 +22,14 @@ public class PlayerMovement : MonoBehaviourPun
 	public float maxSprintingSpeed = 12f;
 	public float maxWalkingSpeed = 5f;
 	public float maxFloatingSpeed = 2f;
-	[Range(0f, 2f)] public float groundDeceleration = 2f;
-	public float killVelocity = 2f;
+
+	[Range(0f, 50f)] public float maxGroundAcceleration = 20f;
+	[Range(0f, 50f)] public float maxGroundDeceleration = 10f;
+
+	[Range(0f, 50f)] public float maxAirAcceleration = 5f;
+	[Range(0f, 50f)] public float maxAirDeceleration = 5f;
+
+	public float jumpPower = 8f;
 	public float jumpCooldown = 0.1f;
 
 	[Header("Prefabs")]
@@ -86,10 +92,10 @@ public class PlayerMovement : MonoBehaviourPun
 	private void FixedUpdate()
 	{
 		//if (photonView.IsMine || player.isOfflinePlayer)
-		{
+		//{
 			// Controls
 			ControlMovement();
-		}
+		//}
 	}
 
 	private void OnCollisionEnter(Collision collision)
@@ -118,48 +124,77 @@ public class PlayerMovement : MonoBehaviourPun
 		// Climbing the ground
 		FollowGround();
 
-		// Movement acceleration
+		// Acceleration
+		Vector3 horizontalVelocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+
+		float targetSpeed = 0;
+
 		if ((axisV != 0 || axisH != 0) && Concuction <= 0)
 		{
 			// rotating the model
-			player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, Quaternion.Euler(0, player.viewCamera.transform.rotation.eulerAngles.y, 0), 600f * Time.deltaTime);
+			player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, player.orientationTransform.rotation, 600f * Time.deltaTime);
 
 			// calculating direction vector
 			Vector3 forwardMovement = player.orientationTransform.forward * axisV;
 			Vector3 sidewaysMovement = player.orientationTransform.right * axisH;
 			Vector3 targetDirection = forwardMovement + sidewaysMovement;
+			targetDirection = targetDirection.normalized;
 
-			// accelerating
-			float acceleration = 0;
-
+			// determining acceleration force and target speed
+			float acceleration;
 			if (isGrounded)
 			{
-				acceleration = maxSprintingSpeed;
-				if (!Input.GetButton("Sprint")) acceleration = maxWalkingSpeed;
+				acceleration = maxGroundAcceleration;
+				targetSpeed = maxSprintingSpeed;
+				if (!Input.GetButton("Sprint")) targetSpeed = maxWalkingSpeed;
 			}
 			else
-				acceleration = maxFloatingSpeed;
-
-			rigidbody.AddForce(targetDirection.normalized * acceleration, ForceMode.VelocityChange);
-		}
-		else
-		{
-			// Decelerating if there is no user input
-			if (isGrounded)
 			{
-				if (rigidbody.velocity.magnitude > killVelocity)
-					rigidbody.velocity -= rigidbody.velocity * groundDeceleration;
-				else
-					rigidbody.velocity -= rigidbody.velocity;
-
+				acceleration = maxAirAcceleration;
+				targetSpeed = maxFloatingSpeed;
 			}
+
+			// accelerating
+			Accelerate(targetDirection, acceleration * Time.fixedDeltaTime);
 		}
+
+		// Deceleration
+		float deceleration;
+		if (isGrounded) deceleration = maxGroundDeceleration;
+		else deceleration = maxAirDeceleration;
+		deceleration *= Time.fixedDeltaTime;
+
+		float overhead = horizontalVelocity.magnitude - targetSpeed;
+		Decelerate(Mathf.Clamp(overhead, 0, Mathf.Max(deceleration, deceleration * targetSpeed)));
 
 		// Jumping
 		if (isGrounded && Time.time >= nextJumpTime && Input.GetButton("Jump")) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 
 		// Moving the model
 		player.characterModel.transform.position = player.playerOrigin.position + Vector3.down * collider.radius;
+	}
+
+	private void Accelerate(Vector3 direction, float acceleration)
+	{
+		if (isGrounded) rigidbody.AddForce(direction * acceleration * rigidbody.mass, ForceMode.Impulse);
+		else
+		{
+			float mag = Mathf.Max(new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z).magnitude, maxFloatingSpeed);
+			rigidbody.AddForce(direction * acceleration * rigidbody.mass, ForceMode.Impulse);
+
+			Vector3 vel = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+			vel = Vector3.ClampMagnitude(vel, mag);
+
+			rigidbody.velocity = new Vector3(vel.x, rigidbody.velocity.y, vel.z);
+		}
+	}
+
+	private void Decelerate(float deceleration)
+	{
+		// Only decelerates horizontally
+		Vector3 horizontalVelocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+		horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, horizontalVelocity.magnitude - deceleration);
+		rigidbody.velocity = new Vector3(horizontalVelocity.x, rigidbody.velocity.y, horizontalVelocity.z);
 	}
 
 	private void FollowGround()
@@ -185,7 +220,7 @@ public class PlayerMovement : MonoBehaviourPun
 	
 	private bool Jump()
 	{
-		rigidbody.AddForce(Vector3.up * 8f * rigidbody.mass, ForceMode.Impulse);
+		rigidbody.AddForce(Vector3.up * jumpPower * rigidbody.mass, ForceMode.Impulse);
 		return true;
 
 		Vector3 center = transform.position + Vector3.up * collider.radius;

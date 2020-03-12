@@ -9,16 +9,22 @@ public class Player : MonoBehaviourPun
 	//
 	// Editor Variables
 	#region Editor variables
+	public bool isOfflinePlayer;
 	[Header("Player components")]
 	public CinemachineFreeLook cameraRig;
 	public Camera viewCamera;
 	public AudioListener audioListener;
 	public PlayerCharacterModel characterModel;
 	public Transform playerOrigin;
-	public Transform orientationTransform;
 
 	[Header("Camera settings")]
 	public float mouseAcceleration = 100f;
+	#endregion
+
+	//
+	// Public Variables
+	#region Editor variables
+	[HideInInspector] public Transform orientationTransform;
 	#endregion
 
 	//--------------------------
@@ -45,5 +51,7 @@ public class Player : MonoBehaviourPun
 		// rotating the camera
 		cameraRig.m_XAxis.Value += mouseX;
 		cameraRig.m_YAxis.Value -= mouseY / 180f;
+
+		orientationTransform.rotation = Quaternion.Euler(0, viewCamera.transform.rotation.eulerAngles.y, 0);
 	}
 }

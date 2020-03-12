@@ -53,13 +53,13 @@ public class GameItemBehaviour : MonoBehaviour
 					state = new GameItemState();
 					break;
 				case 1:
-					state = new GameItemLookAtNearestPlayer(transform, perception.GetNearestPlayer().transform);
+					//state = new GameItemLookAtNearestPlayer(transform, perception.GetNearestPlayer().transform);
 					break;
 				case 2:
 					navMeshAgent.SetDestination(transform.position + new Vector3(Random.Range(-2, 5), 0 , Random.Range(-2, 5)));
 					break;
 				case 3:
-					state = new GameItemTryFollowNearestPlayer(navMeshAgent, perception.GetNearestPlayer().transform, interactWithLayers);
+					//state = new GameItemTryFollowNearestPlayer(navMeshAgent, perception.GetNearestPlayer().transform, interactWithLayers);
 					break;
 			}
 
