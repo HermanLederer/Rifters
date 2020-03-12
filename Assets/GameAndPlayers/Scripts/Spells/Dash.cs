@@ -7,8 +7,8 @@ public class Dash : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float dashSpeed;
-    public float startDashTime;
+    public float dashSpeed = 40f;
+    public float startDashTime = 0.2f;
 
     private float dashTime;
     private bool dashing;

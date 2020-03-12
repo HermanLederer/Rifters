@@ -21991,6 +21991,36 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 881852324}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2095367787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095367786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f3de609266b2c4db6ff98cb945e1fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 80
+  startDashTime: 0.1
+--- !u!54 &2095367788
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095367786}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!4 &2095367793 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2269399541636492762, guid: ba977945d2c14dd40bd279be3c3b05f5,
