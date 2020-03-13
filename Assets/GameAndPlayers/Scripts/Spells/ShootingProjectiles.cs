@@ -25,11 +25,6 @@ public class ShootingProjectiles : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 shootingPos = transform.right * offsetX + transform.up * offsetY;
-
-        Debug.DrawLine(transform.position, transform.position + shootingPos, Color.red);
-        //Debug.DrawLine(transform.position, transform.position + new Vector3(-shootingPos.x, shootingPos.y, shootingPos.z), Color.green);
-
         if (!shooting)
         {
             if (Input.GetKeyDown(KeyCode.Q))
