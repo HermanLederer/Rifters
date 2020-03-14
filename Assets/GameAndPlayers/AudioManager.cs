@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
+    private PlayerMovement playerMovement;
     public static AudioManager Instance
     {
         get
@@ -30,10 +31,31 @@ public class AudioManager : MonoBehaviour
     private AudioSource sfxSource;
 
     private bool firstMusicSourceIsPlaying;
+
+    private void Update()
+    {
+        if (!playerMovement.isGrounded)
+        {
+            musicSource.volume = 0;
+        }
+        else
+        {
+            musicSource.volume = 1;
+        }
+
+        if (musicSource.isPlaying)
+        {
+            musicSource.pitch = Random.Range(1f, 1.2f);
+
+            if (Input.GetKey(KeyCode.LeftShift))
+                musicSource.pitch = Random.Range(1.2f, 1.4f);
+        }
+    }
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
 
+        playerMovement = FindObjectOfType<PlayerMovement>();
         // Create audio sources, and save them as references
         musicSource = this.gameObject.AddComponent<AudioSource>();
         musicSource2 = this.gameObject.AddComponent<AudioSource>();
@@ -50,8 +72,18 @@ public class AudioManager : MonoBehaviour
         AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicSource : musicSource2;
 
         musicSource.clip = musicClip;
-        activeSource.volume = 1;
+        musicSource.volume = 1;
         musicSource.Play();
+    }
+
+    public void PlayBackgroundMusic(AudioClip musicClip, float volume)
+    {
+        // Check which source is active
+        AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicSource : musicSource2;
+
+        musicSource2.clip = musicClip;
+        musicSource2.volume = volume;
+        musicSource2.Play();
     }
     public void StopMusic(AudioClip musicClip)
     {
@@ -121,11 +153,11 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    public void PlaySfx(AudioClip clip)
+    public void PlayJump(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
     }
-    public void PlaySfx(AudioClip clip, float volume)
+    public void PlayJump(AudioClip clip, float volume)
     {
         sfxSource.PlayOneShot(clip, volume);
     }
