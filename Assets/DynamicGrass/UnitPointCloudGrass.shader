@@ -1,4 +1,4 @@
-﻿Shader "Custom/DynamicGrassPointCloudShaderUnlit"
+﻿Shader "DynamicGrass/PointCloudUnlit"
 {
     Properties
     {
@@ -16,7 +16,6 @@
 		{
 			"RenderType" = "Opaque"
 			"Queue" = "Transparent"
-			"LightMode" = "GBuffer"
 		}
         LOD 200
         //CULL OFF
@@ -178,8 +177,6 @@
 				//light += skyLightColor * skyLighting; // sky
 				//light += goundLightColor * groundLighting; // gound
 				//light *= _Color; // diffuse
-
-				
 
 				float4 result = diffuse;// * float4(light.rgb, 1);
 	            return float4(result);

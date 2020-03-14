@@ -54,8 +54,8 @@ namespace DynamicGrass
 			List<int> indicies = new List<int>();
 			List<Vector3> normals = new List<Vector3>();
 
-			int index = 0;
-			for (int i = 0; i < grassAmount; ++i)
+			int i = 0;
+			while (i < grassAmount)
 			{
 				Vector3 origin = transform.position;
 
@@ -75,8 +75,8 @@ namespace DynamicGrass
 							origin = hit.point;
 
 							vertexPositions.Add(origin - transform.position);
-							indicies.Add(index);
-							++index;
+							indicies.Add(i);
+							++i;
 							normals.Add(hit.normal);
 						}
 					}
