@@ -20,9 +20,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	[SerializeField] private int playToGoals = 5;
 
 	// Public variables
-	public int team1score = 0;
-	public int team2score = 0;
-	public List<Player> players;
+	[HideInInspector] public int team1score = 0;
+	[HideInInspector] public int team2score = 0;
+	[HideInInspector] public List<Player> players;
 
 	// Private variables
 	private bool isGamePlaying;

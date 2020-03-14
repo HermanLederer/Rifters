@@ -42,7 +42,6 @@ public class PlayerJumpPlatform : MonoBehaviour
 	//--------------------------
 	// PlayerJumpPlatform events
 	//--------------------------
-	// Not used becaue of charactercontroller problems
 	public void Grab()
 	{
 		foreach (Collider collider in Physics.OverlapSphere(transform.position, radius))
