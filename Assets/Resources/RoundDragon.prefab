@@ -131,8 +131,8 @@ MonoBehaviour:
   dragonMesh: {fileID: -5676588575540745739, guid: e720cc0cca600d943932621d53a6251c,
     type: 3}
   meshFilter: {fileID: 3093090539230323078}
-  randomDecisionRate: 2
-  interactWithLayers:
+  randomDecisionRate: 1
+  playerLayer:
     serializedVersion: 2
     m_Bits: 1024
 --- !u!114 &6383202012589143670

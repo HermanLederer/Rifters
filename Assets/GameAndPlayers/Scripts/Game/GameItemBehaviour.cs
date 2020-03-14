@@ -24,7 +24,7 @@ public class GameItemBehaviour : MonoBehaviour
 	[SerializeField] private MeshFilter meshFilter = null;
 	[Header("AI")]
 	[SerializeField] private float randomDecisionRate = 2f;
-	[SerializeField] private LayerMask interactWithLayers;
+	[SerializeField] private LayerMask playerLayer;
 
 	//
 	// Public variables
@@ -65,14 +65,14 @@ public class GameItemBehaviour : MonoBehaviour
 	void Update()
 	{
 		// Modes
-		if (Physics.OverlapSphere(transform.position, 6f, interactWithLayers).Length > 0)
+		if (Physics.OverlapSphere(transform.position, 6f, playerLayer).Length > 0)
 		{
 			BecomeBall();
 			nextDragonTime = Time.time + 1.4f;
 		}
 		else
 		{
-			if (Time.time >= nextDragonTime)
+			if (Time.time >= nextDragonTime && rigidbody.velocity.magnitude <= 1f)
 			{
 				BecomeDragon();
 			}
@@ -103,6 +103,11 @@ public class GameItemBehaviour : MonoBehaviour
 		}
 
 		state.Update();
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (playerLayer == (playerLayer | (1 << collision.gameObject.layer))) Kick(collision.contacts[0].normal * 10f + Vector3.up * 0.36f);
 	}
 
 	//--------------------------
@@ -145,13 +150,13 @@ public class GameItemBehaviour : MonoBehaviour
 		// rotation and navmesh destination
 		transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 		navMeshAgent.SetDestination(transform.position + vel);
-		Debug.Log(rigidbody.velocity);
 
 		return true;
 	}
 
 	public void Kick(Vector3 direction)
 	{
+		Debug.Log("kick");
 		rigidbody.AddForce(direction * rigidbody.mass, ForceMode.Impulse);
 	}
 
