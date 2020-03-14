@@ -110,7 +110,7 @@ PrefabInstance:
     - target: {fileID: 5451511731707923266, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 5.9467773
       objectReference: {fileID: 0}
     - target: {fileID: 5451511731707923266, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
@@ -120,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 5451511731707923266, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4
+      value: -19.239258
       objectReference: {fileID: 0}
     - target: {fileID: 6527438459104171288, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
@@ -155,7 +155,7 @@ PrefabInstance:
     - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000010694127
+      value: 0.0000000010694297
       objectReference: {fileID: 0}
     - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
@@ -185,7 +185,7 @@ PrefabInstance:
     - target: {fileID: 9201521985844773275, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: maxAirDeceleration
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9201521985844773275, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}

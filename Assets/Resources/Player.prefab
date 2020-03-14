@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6537470561615283657}
   - component: {fileID: 1411267331623073083}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TopRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663179138094789684}
-  m_LocalRotation: {x: 0.062137432, y: -0.000000017173111, z: 0.000000001069159, w: 0.9980676}
+  m_LocalRotation: {x: 0.062137432, y: -0.000000017173122, z: 0.0000000010689947,
+    w: 0.9980676}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -226,7 +227,7 @@ GameObject:
   - component: {fileID: 6423583205260427328}
   - component: {fileID: 8351672043694460135}
   - component: {fileID: 8366008719575888601}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +307,7 @@ GameObject:
   - component: {fileID: 9056966454747968987}
   - component: {fileID: 2222788718788728748}
   - component: {fileID: 6996020065428694458}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +433,7 @@ GameObject:
   - component: {fileID: 5842304043966962162}
   - component: {fileID: 2417944440620050659}
   - component: {fileID: 2082964650125922870}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -604,8 +605,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393719862988174145}
-  m_LocalRotation: {x: 0.020319153, y: 0.0000000021503537, z: -4.3702392e-11, w: 0.9997935}
-  m_LocalPosition: {x: 7656.008, y: 424.5, z: 7964.627}
+  m_LocalRotation: {x: 0.020319153, y: 0.0000000043007073, z: -8.7404785e-11, w: 0.9997935}
+  m_LocalPosition: {x: 7627.28, y: 424.5, z: 7969.68}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2474792901071616957}
@@ -889,7 +890,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2466943444847111106}
   - component: {fileID: 2035145398503147078}
-  m_Layer: 0
+  - component: {fileID: 4624124971026965429}
+  m_Layer: 10
   m_Name: CharacterModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -929,6 +931,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1804862892492501761}
   offset: {x: 0, y: -0.25, z: 0}
+--- !u!136 &4624124971026965429
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5049215142534706581}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.33
+  m_Height: 1.0276163
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.358873, z: 0}
 --- !u!1 &5397675396354295238
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +955,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7471651424007734143}
   - component: {fileID: 4381160104053300684}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BottomRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1021,7 +1037,7 @@ GameObject:
   - component: {fileID: 3432252591260424008}
   - component: {fileID: 405889881398491006}
   - component: {fileID: 3436168028481924055}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CameraRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1180,8 +1196,8 @@ MonoBehaviour:
   m_Strategy: 1
   m_MaximumEffort: 4
   m_SmoothingTime: 0
-  m_Damping: 2.29
-  m_DampingWhenOccluded: 0.21
+  m_Damping: 2
+  m_DampingWhenOccluded: 0.1
   m_OptimalTargetDistance: 0
 --- !u!1 &5811442120551077370
 GameObject:
@@ -1194,7 +1210,7 @@ GameObject:
   - component: {fileID: 1584769834429843762}
   - component: {fileID: 8370301604050406604}
   - component: {fileID: 7533034103285123360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1273,7 +1289,7 @@ GameObject:
   - component: {fileID: 4623086517532350573}
   - component: {fileID: 1338452603238827194}
   - component: {fileID: 1771711894935665499}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1351,7 +1367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2215860526746735268}
   - component: {fileID: 5323410868492364534}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MiddleRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1381,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7039975947920963318}
-  m_LocalRotation: {x: 0.02031915, y: -0.000000001075177, z: 2.1851196e-11, w: 0.9997936}
+  m_LocalRotation: {x: 0.02031915, y: 0.0000000010751768, z: -2.1851188e-11, w: 0.9997936}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1434,7 +1450,7 @@ GameObject:
   - component: {fileID: 4797708737368086524}
   - component: {fileID: 5919764401825118240}
   - component: {fileID: 3824852164569569235}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Walker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1474,7 +1490,7 @@ MonoBehaviour:
   maxGroundAcceleration: 33.7
   maxGroundDeceleration: 26.7
   maxAirAcceleration: 7.8
-  maxAirDeceleration: 2.1
+  maxAirDeceleration: 6.5
   jumpPower: 7.48
   jumpCooldown: 1
   jumpingPlatfiormPrafab: {fileID: 8518186595361913605, guid: 8dd532029b1b0e1449216aa14f85eb1e,
@@ -1522,7 +1538,7 @@ GameObject:
   - component: {fileID: 5943566753139849892}
   - component: {fileID: 670522113446744056}
   - component: {fileID: 5633341001050102640}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

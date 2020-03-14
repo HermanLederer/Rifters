@@ -4,16 +4,25 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(GameItemPerception))]
+[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class GameItemBehaviour : MonoBehaviour
 {
 	//
 	// Other compnents
 	private GameItemPerception perception;
-	private NavMeshAgent navMeshAgent; 
+	private SphereCollider collider;
+	private Rigidbody rigidbody;
+	private NavMeshAgent navMeshAgent;
 
 	//
 	// Editor variables
+	[Header("Meshes")]
+	[SerializeField] private Mesh ballMesh = null;
+	[SerializeField] private Mesh dragonMesh = null;
+	[SerializeField] private MeshFilter meshFilter = null;
+	[Header("AI")]
 	[SerializeField] private float randomDecisionRate = 2f;
 	[SerializeField] private LayerMask interactWithLayers;
 
@@ -22,8 +31,17 @@ public class GameItemBehaviour : MonoBehaviour
 
 	//
 	// Private variables
+	public bool isBall { get; private set; }
 	private GameItemState state;
 	private float nextRandomDecision;
+	private float nextDragonTime;
+
+	//
+	// Accessors
+	public bool isDragon
+	{
+		get { return !isBall; }
+	}
 
 	//--------------------------
 	// MonoBehaviour methods
@@ -31,19 +49,37 @@ public class GameItemBehaviour : MonoBehaviour
 	void Awake()
 	{
 		perception = GetComponent<GameItemPerception>();
+		collider = GetComponent<SphereCollider>();
+		rigidbody = GetComponent<Rigidbody>();
 		navMeshAgent = GetComponent<NavMeshAgent>();
 	}
 
 	void Start()
 	{
+		BecomeDragon();
+
 		state = new GameItemState();
 		nextRandomDecision = Time.time;
 	}
 
 	void Update()
 	{
-		// switching states
-		if (Time.time > nextRandomDecision)
+		// Modes
+		if (Physics.OverlapSphere(transform.position, 6f, interactWithLayers).Length > 0)
+		{
+			BecomeBall();
+			nextDragonTime = Time.time + 1.4f;
+		}
+		else
+		{
+			if (Time.time >= nextDragonTime)
+			{
+				BecomeDragon();
+			}
+		}
+
+		// States
+		if (isDragon && Time.time > nextRandomDecision)
 		{
 			int rand = (int) Mathf.Floor(Random.Range(0, 4));
 			//Debug.Log(rand);
@@ -66,16 +102,57 @@ public class GameItemBehaviour : MonoBehaviour
 			nextRandomDecision = Time.time + randomDecisionRate;
 		}
 
-		// performing actions
 		state.Update();
 	}
 
 	//--------------------------
 	// GameItemBehaviour methods
 	//--------------------------
+	private bool BecomeBall()
+	{
+		if (isBall) return false;
+
+		// bool
+		isBall = true;
+
+		// mesh
+		meshFilter.mesh = ballMesh;
+
+		// components
+		navMeshAgent.enabled = false;
+		collider.enabled = true;
+		rigidbody.isKinematic = false;
+
+		return true;
+	}
+
+	private bool BecomeDragon()
+	{
+		if (isDragon) return false;
+
+		// bool
+		isBall = false;
+
+		// mesh
+		meshFilter.mesh = dragonMesh;
+
+		// components
+		Vector3 vel = rigidbody.velocity; // used later to set navmesh destination
+		navMeshAgent.enabled = true;
+		collider.enabled = false;
+		rigidbody.isKinematic = true;
+
+		// rotation and navmesh destination
+		transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+		navMeshAgent.SetDestination(transform.position + vel);
+		Debug.Log(rigidbody.velocity);
+
+		return true;
+	}
+
 	public void Kick(Vector3 direction)
 	{
-
+		rigidbody.AddForce(direction * rigidbody.mass, ForceMode.Impulse);
 	}
 
 	//--------------------------
