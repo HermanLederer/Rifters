@@ -5,8 +5,6 @@ using UnityEngine;
 public class RootInvocation : MonoBehaviour
 {
     public GameObject plantMarker;
-    public GameObject roots;
-
     public LayerMask levelLayer;
 
     public bool aiming;
@@ -42,11 +40,6 @@ public class RootInvocation : MonoBehaviour
             {
                 marker.SetActive(true);
                 marker.transform.position = hit.point;
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Instantiate(roots, marker.transform.position, Quaternion.identity);
-                }
             }
             else
             {
