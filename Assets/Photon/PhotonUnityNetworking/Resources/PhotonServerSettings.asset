@@ -31,6 +31,9 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - DestroyRpc
+<<<<<<< Updated upstream
   - Jump
+=======
+>>>>>>> Stashed changes
   DisableAutoOpenWizard: 1
   ShowSettings: 0
