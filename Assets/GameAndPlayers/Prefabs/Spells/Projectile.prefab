@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7978442082950290702}
   - component: {fileID: 7978442082950290701}
   - component: {fileID: 7978442082950290700}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 7978442084086964322}
   - component: {fileID: 7978442084086964332}
   - component: {fileID: 7978442084086964323}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4831,7 +4831,7 @@ GameObject:
   - component: {fileID: 7978442084664621201}
   - component: {fileID: 7978442084664621200}
   - component: {fileID: 7978442084664621207}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

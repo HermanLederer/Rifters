@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        target = GameObject.FindGameObjectWithTag("Ball").transform; //The ball must have a tag
+        target = GameObject.FindGameObjectWithTag("Dragon").transform; //The ball must have a tag
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ball")
+        if(collision.gameObject.tag == "Dragon")
         {
             //Instantiate Particle System
 

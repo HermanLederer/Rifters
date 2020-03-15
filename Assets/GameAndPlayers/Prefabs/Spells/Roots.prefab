@@ -142,8 +142,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 8
   holdingPosition: {fileID: 2811975524984821400}
-  HoldingTime: 4
+  HoldingTime: 8
   livingTime: 8
+  holdedObjectSpeed: 10
+  dragonLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!135 &6151790838700225539
 SphereCollider:
   m_ObjectHideFlags: 0
