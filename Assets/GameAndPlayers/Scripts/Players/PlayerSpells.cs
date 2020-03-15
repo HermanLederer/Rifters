@@ -41,49 +41,11 @@ public class PlayerSpells : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        Debug.DrawLine(cam.transform.position, cam.transform.position + cam.transform.forward * raycastDistance, Color.red);
         if (!hasObject)
         {
-            activableObject = null;
-
-            //If the player is looking that object
-            for (int i = 0; i < inRangeObjects.Count; i++)
-            {
-                Vector3 dir = (inRangeObjects[i].transform.position - cam.transform.position).normalized;
-                Debug.DrawLine(inRangeObjects[i].transform.position, cam.transform.position);
-
-                float angle = Vector3.Angle(dir, cam.transform.forward);
-
-                bool lookingAt = false;
-                if(Physics.Raycast(cam.transform.position, cam.transform.forward, raycastDistance, InteractibleLayer))
-                {
-                    lookingAt = true;
-                }
-                if (angle < minAngle || lookingAt)
-                {
-                    activableObject = inRangeObjects[i];
-                    break;
-                }
-            }
-
-            if (activableObject != null)
-            {
-                if(activableObject.typeOfObject != InteractibleLevel.TypeOfInteractableObject.SCALE || !activableObject.activated)
-                {
-                    SpellPanel.SetActive(true); 
-                }
-                else
-                {
-                    SpellPanel.SetActive(false);
-                }
-                
-            }
-            else
-            {
-                SpellPanel.SetActive(false);
-            }
+            DetectInteractibleObjects();
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -98,4 +60,46 @@ public class PlayerSpells : MonoBehaviour
     //--------------------------
     // PlayerSpells events
     //--------------------------
+
+    private void DetectInteractibleObjects()
+    {
+        activableObject = null;
+
+        //If the player is looking that object
+        for (int i = 0; i < inRangeObjects.Count; i++)
+        {
+            Vector3 dir = (inRangeObjects[i].transform.position - cam.transform.position).normalized;
+            Debug.DrawLine(inRangeObjects[i].transform.position, cam.transform.position);
+
+            float angle = Vector3.Angle(dir, cam.transform.forward);
+
+            bool lookingAt = false;
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, raycastDistance, InteractibleLayer))
+            {
+                lookingAt = true;
+            }
+            if (angle < minAngle || lookingAt)
+            {
+                activableObject = inRangeObjects[i];
+                break;
+            }
+        }
+
+        if (activableObject != null)
+        {
+            if (activableObject.typeOfObject != InteractibleLevel.TypeOfInteractableObject.SCALE || !activableObject.activated)
+            {
+                SpellPanel.SetActive(true);
+            }
+            else
+            {
+                SpellPanel.SetActive(false);
+            }
+
+        }
+        else
+        {
+            SpellPanel.SetActive(false);
+        }
+    }
 }
