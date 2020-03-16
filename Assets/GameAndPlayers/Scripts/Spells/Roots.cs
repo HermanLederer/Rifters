@@ -37,22 +37,16 @@ public class Roots : MonoBehaviour
         }
         else
         {
+            if(holdedObject != null)
+            {
+                holdedObject.GetComponent<Rigidbody>().useGravity = true;
+            }
             Destroy(gameObject);
         }
 
         if (holding)
         {
             holdedObject.transform.position = Vector3.MoveTowards(holdedObject.transform.position, holdingPosition.position, holdedObjectSpeed * Time.deltaTime);
-            /*if(timeHolding > 0)
-            {
-                timeHolding -= Time.deltaTime;
-            }
-            else
-            {
-                holdingAnimator.SetBool("Holding", false);
-                holdedObject.transform.parent = null;
-                holdedObject = null;
-            }*/
         }
     }
 
@@ -60,10 +54,6 @@ public class Roots : MonoBehaviour
     {
         if (dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer))
         {
-            GameItemBehaviour dragon =  other.GetComponent<GameItemBehaviour>();
-            dragon.BecomeBall();
-            dragon.SetNextDragonTime(livingTime + 1);
-
             SetHoldedObject(other.gameObject);
         }
     }
@@ -72,25 +62,17 @@ public class Roots : MonoBehaviour
     {
         holdedObject = other;
 
+        GameItemBehaviour dragon = holdedObject.GetComponent<GameItemBehaviour>();
+
+        dragon.BecomeBall();
+        dragon.SetNextDragonTime(livingTime + 1);
+
         Rigidbody rb = other.GetComponent<Rigidbody>();
 
         if(rb != null)
         {
-            Debug.Log("No es null");
             rb.useGravity = false;
             holding = true;
         }
-        
-
-        //other.transform.parent = holdingPosition;
-
-        //other.transform.position = Vector3.zero;
-
-        //timeHol
-
-        //holding = true;
-        //holdingAnimator.SetBool("Holding", true);
-
-        //holdedObject = other;*/
     }
 }

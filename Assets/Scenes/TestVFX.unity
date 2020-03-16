@@ -335,6 +335,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 684120807, guid: ba977945d2c14dd40bd279be3c3b05f5, type: 3}
+      propertyPath: geyserMarker
+      value: 
+      objectReference: {fileID: 6299925467043999103, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+    - target: {fileID: 684120807, guid: ba977945d2c14dd40bd279be3c3b05f5, type: 3}
+      propertyPath: geyser
+      value: 
+      objectReference: {fileID: 1803423315677284343, guid: eb136894ca982bf4f8b76325cfd08f1c,
+        type: 3}
     - target: {fileID: 2269399541636492762, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -405,11 +415,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OfflinePlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 3560288592489346502, guid: ba977945d2c14dd40bd279be3c3b05f5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5451511731707923266, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalRotation.y
@@ -438,17 +443,12 @@ PrefabInstance:
     - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017173228
+      value: -0.00000001717325
       objectReference: {fileID: 0}
     - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000010706588
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998823431798566471, guid: ba977945d2c14dd40bd279be3c3b05f5,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
+      value: 0.0000000010710062
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba977945d2c14dd40bd279be3c3b05f5, type: 3}
@@ -1026,107 +1026,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677846754}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &684120801 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6435407697471566218, guid: ba977945d2c14dd40bd279be3c3b05f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 348442050}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &684120806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684120801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0376f9be6da3a8e479bad1515490ef8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingForce: 30
-  timeBtwProjectiles: 0.1
-  characterModel: {fileID: 1009314210}
-  projectileCount: 6
-  shooting: 0
-  projectilePrefab: {fileID: 7082647631796819266, guid: e455071aad30ab84da37b447baca814e,
-    type: 3}
-  offsetX: 1
-  offsetY: 1
---- !u!114 &684120807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684120801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5609b969ff4574d9b1fbb19a8e1e96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantMarker: {fileID: 6299925467043999103, guid: 9de3f04052cdb2448aac40706cdaf953,
-    type: 3}
-  roots: {fileID: 1358804166814435524, guid: 24bb6cd205126eb49bdd88dc6edb4f94, type: 3}
-  levelLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  aiming: 0
---- !u!114 &684120808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684120801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 897a0ae4167d96a4fba3b021aeb5f5da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pushStart: {fileID: 1063895379}
-  radius: 3
-  pushForce: 5000
-  angle: 20
-  levelLayer:
-    serializedVersion: 2
-    m_Bits: 4608
---- !u!4 &1009314210 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2241361247636454821, guid: ba977945d2c14dd40bd279be3c3b05f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 348442050}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1063895378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1063895379}
-  m_Layer: 10
-  m_Name: PushStart
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1063895379
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063895378}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.15, z: 0.67}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1009314210}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294237950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,31 +1119,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294237950}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1372093171 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3560288592489346502, guid: ba977945d2c14dd40bd279be3c3b05f5,
-    type: 3}
-  m_PrefabInstance: {fileID: 348442050}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1372093174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372093171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5609b969ff4574d9b1fbb19a8e1e96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantMarker: {fileID: 6299925467043999103, guid: 9de3f04052cdb2448aac40706cdaf953,
-    type: 3}
-  roots: {fileID: 1358804166814435524, guid: 24bb6cd205126eb49bdd88dc6edb4f94, type: 3}
-  levelLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  aiming: 0
 --- !u!1 &1614981253
 GameObject:
   m_ObjectHideFlags: 0
