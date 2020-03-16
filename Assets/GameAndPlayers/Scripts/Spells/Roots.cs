@@ -64,19 +64,20 @@ public class Roots : MonoBehaviour
             dragon.BecomeBall();
             dragon.SetNextDragonTime(livingTime + 1);
 
-            //SetHoldedObject(other.gameObject);
+            SetHoldedObject(other.gameObject);
         }
     }
 
     private void SetHoldedObject(GameObject other)
     {
-        /*holdedObject = other;
+        holdedObject = other;
 
         Rigidbody rb = other.GetComponent<Rigidbody>();
+
         if(rb != null)
         {
             Debug.Log("No es null");
-            //rb.velocity = Vector3.zero;
+            rb.useGravity = false;
             holding = true;
         }
         
