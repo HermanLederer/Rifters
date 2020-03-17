@@ -25,7 +25,6 @@
         	CGPROGRAM
         
 	        #include "UnityCG.cginc"
-	        #include "AutoLight.cginc"
 
 			#pragma multi_compile_fwdbase
 
