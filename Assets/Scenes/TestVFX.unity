@@ -335,16 +335,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 684120807, guid: ba977945d2c14dd40bd279be3c3b05f5, type: 3}
-      propertyPath: geyserMarker
-      value: 
-      objectReference: {fileID: 6299925467043999103, guid: cb8d184d9a104d848a279a4b2ca45c3d,
-        type: 3}
-    - target: {fileID: 684120807, guid: ba977945d2c14dd40bd279be3c3b05f5, type: 3}
-      propertyPath: geyser
-      value: 
-      objectReference: {fileID: 1803423315677284343, guid: eb136894ca982bf4f8b76325cfd08f1c,
-        type: 3}
     - target: {fileID: 2269399541636492762, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -438,17 +428,17 @@ PrefabInstance:
     - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.06213745
+      value: 0.062137432
       objectReference: {fileID: 0}
     - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000001717325
+      value: 0.00000001717301
       objectReference: {fileID: 0}
     - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000010710062
+      value: -0.0000000010672063
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba977945d2c14dd40bd279be3c3b05f5, type: 3}

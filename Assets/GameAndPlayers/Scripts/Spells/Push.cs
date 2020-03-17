@@ -8,9 +8,12 @@ public class Push : MonoBehaviour
 
     public float radius = 3f;
     public float pushForce = 50f;
+    public float tornadoTime = 3f;
     public int angle = 30;
 
     public LayerMask levelLayer;
+
+    public GameObject tornadoVFX;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,10 @@ public class Push : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Quaternion look = Quaternion.LookRotation(pushStart.forward, pushStart.up);
+
+            GameObject tornado = Instantiate(tornadoVFX, pushStart.position, look);
+            Destroy(tornado, tornadoTime);
             PushObjects();
         }
     }
