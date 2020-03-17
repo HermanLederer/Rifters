@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
@@ -8,10 +9,16 @@ using Photon.Realtime;
 public class InGameUI : MonoBehaviour
 {
 	// Editor variables
+	[Header("Panels")]
 	public GameObject menuPanel;
 	public GameObject returnToMenuPanel;
 	public GameObject winningPanel;
 	public GameObject losingPanel;
+	[Header("Text fields")]
+	public Text score1;
+	public Text score2;
+	public Text yourTeam1;
+	public Text yourTeam2;
 
 	// Public variables
 

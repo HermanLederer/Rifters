@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	// Public variables
 	[HideInInspector] public int team1score = 0;
 	[HideInInspector] public int team2score = 0;
+	[HideInInspector] public GameTeam localPlayerTeam = GameTeam.Team1;
 	[HideInInspector] public List<Player> players;
 
 	// Private variables
@@ -62,7 +63,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 			GetComponent<PhotonView>().enabled = false;
 			Instantiate(gameBallPrefab, transform.position, transform.rotation);
 		}
-    }
+
+		localPlayerTeam = GameTeam.Team1;
+
+		if (localPlayerTeam == GameTeam.Team1)
+			inGameUI.yourTeam1.gameObject.SetActive(true);
+		else
+			inGameUI.yourTeam2.gameObject.SetActive(true);
+	}
 
 	void FixedUpdate()
 	{
@@ -125,6 +133,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		// increasing the score
 		if (team == GameTeam.Team1) ++team1score;
 		else ++team2score;
+
+		inGameUI.score1.text = "" + team1score;
+		inGameUI.score2.text = "" + team2score;
 
 		// debugging
 		Debug.Log("A goal has been scored by " + team);
