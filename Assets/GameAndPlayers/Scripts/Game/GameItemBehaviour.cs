@@ -25,6 +25,7 @@ public class GameItemBehaviour : MonoBehaviour
 	[Header("AI")]
 	[SerializeField] private float randomDecisionRate = 2f;
 	[SerializeField] private LayerMask playerLayer;
+	[SerializeField] private LayerMask spellLayer;
 
 	//
 	// Public variables
@@ -110,10 +111,20 @@ public class GameItemBehaviour : MonoBehaviour
 		if (playerLayer == (playerLayer | (1 << collision.gameObject.layer))) Kick(collision.contacts[0].normal * 10f + Vector3.up * 0.36f);
 	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+		if (spellLayer == (spellLayer & 1 << other.gameObject.layer))
+		{
+			Debug.Log("Entra Proyectil");
+			BecomeBall();
+			nextDragonTime = Time.time + 1.4f;
+		}
+	}
+
 	//--------------------------
 	// GameItemBehaviour methods
 	//--------------------------
-	private bool BecomeBall()
+	public bool BecomeBall()
 	{
 		if (isBall) return false;
 
@@ -131,7 +142,7 @@ public class GameItemBehaviour : MonoBehaviour
 		return true;
 	}
 
-	private bool BecomeDragon()
+	public bool BecomeDragon()
 	{
 		if (isDragon) return false;
 
@@ -158,6 +169,11 @@ public class GameItemBehaviour : MonoBehaviour
 	{
 		Debug.Log("kick");
 		rigidbody.AddForce(direction * rigidbody.mass, ForceMode.Impulse);
+	}
+
+	public void SetNextDragonTime(float amount)
+	{
+		nextDragonTime = Time.time + amount;
 	}
 
 	//--------------------------

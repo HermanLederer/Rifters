@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BasicPS_Add
+  m_Name: BasicTrail
   m_Shader: {fileID: -6465566751694194690, guid: c01aa9ef173fd5342bdfc8bc4f25bebe,
     type: 3}
   m_ShaderKeywords: 
@@ -28,4 +28,4 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
-    - Color_1FE05934: {r: 3.9999995, g: 3.9999995, b: 3.9999995, a: 1}
+    - Color_1FE05934: {r: 4, g: 4, b: 4, a: 1}
