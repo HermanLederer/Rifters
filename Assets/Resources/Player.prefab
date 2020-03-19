@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663179138094789684}
-  m_LocalRotation: {x: 0.062137432, y: -0.000000017173122, z: 0.0000000010689947,
+  m_LocalRotation: {x: 0.062137432, y: -0.000000017173122, z: 0.0000000010689842,
     w: 0.9980676}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -605,8 +605,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393719862988174145}
-  m_LocalRotation: {x: 0.020319153, y: 0.0000000043007073, z: -8.7404785e-11, w: 0.9997935}
-  m_LocalPosition: {x: 7627.28, y: 424.5, z: 7969.68}
+  m_LocalRotation: {x: 0.020319153, y: -0.0000000021503537, z: 4.3702392e-11, w: 0.9997935}
+  m_LocalPosition: {x: 0, y: 2.5, z: -4}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2474792901071616957}
@@ -969,7 +969,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5397675396354295238}
-  m_LocalRotation: {x: -0.020956278, y: -0.0000000021503255, z: -4.5072703e-11, w: 0.9997804}
+  m_LocalRotation: {x: -0.020956278, y: 0.0000000021503255, z: 4.5072727e-11, w: 0.9997804}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1381,7 +1381,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7039975947920963318}
-  m_LocalRotation: {x: 0.02031915, y: 0.0000000010751768, z: -2.1851188e-11, w: 0.9997936}
+  m_LocalRotation: {x: 0.02031915, y: -0.000000001075177, z: 2.1851196e-11, w: 0.9997936}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1487,8 +1487,8 @@ MonoBehaviour:
   maxSprintingSpeed: 9.48
   maxWalkingSpeed: 5.58
   maxFloatingSpeed: 1
-  maxGroundAcceleration: 33.7
-  maxGroundDeceleration: 26.7
+  maxGroundAcceleration: 41.2
+  maxGroundDeceleration: 38.2
   maxAirAcceleration: 7.8
   maxAirDeceleration: 6.5
   jumpPower: 7.48
@@ -1505,7 +1505,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7235477998575429613}
   serializedVersion: 2
-  m_Mass: 80
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1

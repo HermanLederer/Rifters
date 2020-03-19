@@ -101,7 +101,7 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 9
   compensation:
     m_OverrideState: 1
     m_Value: 1.6
@@ -167,10 +167,10 @@ MonoBehaviour:
     m_Value: 1
   colorMode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   color:
-    m_OverrideState: 1
-    m_Value: {r: 65.23632, g: 245.34529, b: 270.87253, a: 1}
+    m_OverrideState: 0
+    m_Value: {r: 0.18431373, g: 0.68235296, b: 0.7490196, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -193,10 +193,10 @@ MonoBehaviour:
     min: 0
   baseHeight:
     m_OverrideState: 1
-    m_Value: -500
+    m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 800
   albedo:
     m_OverrideState: 0
     m_Value: {r: 0, g: 0.50891304, b: 1, a: 1}
@@ -205,14 +205,14 @@ MonoBehaviour:
     showEyeDropper: 1
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 200
+    m_Value: 300
     min: 1
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
   anisotropy:
     m_OverrideState: 1
-    m_Value: 0.471
+    m_Value: 0.7
     min: -1
     max: 1
   globalLightProbeDimmer:
@@ -318,23 +318,23 @@ MonoBehaviour:
   m_AdvancedMode: 0
   quality:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 2
   rayTracing:
     m_OverrideState: 0
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1.48
+    m_Value: 2.56
     min: 0
     max: 4
   directLightingStrength:
     m_OverrideState: 1
-    m_Value: 0.113
+    m_Value: 0
     min: 0
     max: 1
   radius:
     m_OverrideState: 1
-    m_Value: 0.95
+    m_Value: 0.97
     min: 0.25
     max: 5
   temporalAccumulation:
@@ -418,7 +418,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 9
   multiplier:
     m_OverrideState: 1
     m_Value: 20
@@ -445,19 +445,19 @@ MonoBehaviour:
     m_Value: 0
   top:
     m_OverrideState: 1
-    m_Value: {r: 0.18396229, g: 0.42866266, b: 1, a: 1}
+    m_Value: {r: 0, g: 0.14509805, b: 0.7490196, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   middle:
     m_OverrideState: 1
-    m_Value: {r: 0.07471521, g: 0.30718607, b: 0.6886792, a: 1}
+    m_Value: {r: 1.0705818, g: 1.755232, b: 2.670157, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   bottom:
     m_OverrideState: 1
-    m_Value: {r: 0.16037738, g: 0.06975425, b: 0.01437344, a: 1}
+    m_Value: {r: 0.26415092, g: 0.0855208, b: 0.061053753, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -476,14 +476,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f077503be6ae942a1e1245dbd53ea9, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   quality:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 2
   threshold:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 1.46
     min: 0
   intensity:
     m_OverrideState: 1
@@ -492,12 +492,12 @@ MonoBehaviour:
     max: 1
   scatter:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.36
     min: 0
     max: 1
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0.51195806, b: 0.6415094, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1

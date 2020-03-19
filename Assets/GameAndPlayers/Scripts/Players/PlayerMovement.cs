@@ -47,26 +47,8 @@ public class PlayerMovement : MonoBehaviourPun
 	// Private variables
 	#region Private variables
 	private float nextJumpTime;
-	private float _concuction;
-	private Vector3 slopeNormal;
-	private float slope;
+	private Vector3 groundNormal;
 	private bool isGrounded = true;
-	#endregion
-
-	//
-	// Accessors
-	#region Accessors
-	private float Concuction
-	{
-		get
-		{
-			return Mathf.Clamp(_concuction - Time.time, 0, 1);
-		}
-		set
-		{
-			_concuction = Time.time + value;
-		}
-	}
 	#endregion
 
 	//--------------------------
@@ -80,7 +62,6 @@ public class PlayerMovement : MonoBehaviourPun
 		rigidbody = GetComponent<Rigidbody>();
 
 		nextJumpTime = 0f;
-		_concuction = 0f;
 	}
 
 	private void Start()
@@ -106,7 +87,7 @@ public class PlayerMovement : MonoBehaviourPun
 
 			if (Vector3.Angle(Vector3.up, normal) >= 90)
 			{
-				Debug.DrawRay(collision.contacts[0].point, normal, Color.red, 2f);
+				//Debug.DrawRay(collision.contacts[0].point, normal, Color.red, 2f);
 				rigidbody.AddForce(normal * rigidbody.velocity.magnitude * rigidbody.mass * collider.material.bounciness, ForceMode.Impulse);
 			}
 		}
@@ -129,16 +110,17 @@ public class PlayerMovement : MonoBehaviourPun
 
 		float targetSpeed = 0;
 
-		if ((axisV != 0 || axisH != 0) && Concuction <= 0)
+		if ((axisV != 0 || axisH != 0))
 		{
 			// rotating the model
-			player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, player.orientationTransform.rotation, 600f * Time.deltaTime);
+			//player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, player.orientationTransform.rotation, 600f * Time.deltaTime);
 
 			// calculating direction vector
 			Vector3 forwardMovement = player.orientationTransform.forward * axisV;
 			Vector3 sidewaysMovement = player.orientationTransform.right * axisH;
 			Vector3 targetDirection = forwardMovement + sidewaysMovement;
 			targetDirection = targetDirection.normalized;
+			
 
 			// determining acceleration force and target speed
 			float acceleration;
@@ -201,20 +183,19 @@ public class PlayerMovement : MonoBehaviourPun
 	{
 		isGrounded = false;
 
-		if (rigidbody.velocity.y <= 0)
+		// Params
+		float castingOffsetLength = 0.1f;
+		float rayLength = castingOffsetLength + collider.radius;
+
+		Vector3 center = transform.position;
+		center -= Vector3.down * castingOffsetLength;
+
+		RaycastHit hit;
+		if (Physics.SphereCast(center, collider.radius, Vector3.down, out hit, rayLength))
 		{
-			// Params
-			float castingOffsetLength = 0.1f;
-			float rayLength = castingOffsetLength  + 0.5f;
-
-			Vector3 center = transform.position;
-			center -= Vector3.down * castingOffsetLength;
-
-			RaycastHit hit;
-			if (Physics.SphereCast(center, collider.radius, Vector3.down, out hit, rayLength))
-			{
-				isGrounded = true;
-			}
+			isGrounded = true;
+			groundNormal = hit.normal;
+			Debug.DrawLine(transform.position, hit.point);
 		}
 	}
 	
@@ -222,18 +203,5 @@ public class PlayerMovement : MonoBehaviourPun
 	{
 		rigidbody.AddForce(Vector3.up * jumpPower * rigidbody.mass, ForceMode.Impulse);
 		return true;
-
-		Vector3 center = transform.position + Vector3.up * collider.radius;
-
-		RaycastHit hit;
-		if (Physics.Raycast(center, -transform.up, out hit, 2f))
-		{
-			GameObject jumpingPlatfiorm = Instantiate(jumpingPlatfiormPrafab);
-			jumpingPlatfiorm.GetComponent<PlayerJumpPlatform>().Shoot(hit.point);
-
-			return true;
-		}
-		else
-			return false;
 	}
 }
