@@ -101,7 +101,7 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 9
+    m_Value: 9.1
   compensation:
     m_OverrideState: 1
     m_Value: 1.6
@@ -212,7 +212,7 @@ MonoBehaviour:
     m_Value: 1
   anisotropy:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.88
     min: -1
     max: 1
   globalLightProbeDimmer:
@@ -245,10 +245,10 @@ MonoBehaviour:
   m_Name: Post-process Volume Profile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -6767118307632838439}
   - {fileID: 327619243941295401}
-  - {fileID: 3758153167074614810}
+  - {fileID: -6767118307632838439}
   - {fileID: 5432513390165529012}
+  - {fileID: 3758153167074614810}
   - {fileID: -260194857275750063}
   - {fileID: -3192975167258204891}
   - {fileID: 9216573382811607617}
@@ -324,7 +324,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 2.56
+    m_Value: 2.26
     min: 0
     max: 4
   directLightingStrength:
@@ -445,13 +445,13 @@ MonoBehaviour:
     m_Value: 0
   top:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0.14509805, b: 0.7490196, a: 1}
+    m_Value: {r: 0, g: 0.3684249, b: 1, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   middle:
     m_OverrideState: 1
-    m_Value: {r: 1.0705818, g: 1.755232, b: 2.670157, a: 1}
+    m_Value: {r: 1.0593716, g: 1.9336841, b: 3.5648696, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f077503be6ae942a1e1245dbd53ea9, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   quality:
     m_OverrideState: 1
