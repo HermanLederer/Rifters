@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 30.298544, g: 68.1613, b: 146.45772, a: 1}
+  m_IndirectSpecularColor: {r: 0.2060391, g: 0.46357712, b: 0.9960854, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: df7243cb3636ba94e877381ccc7521e1, type: 2}
   m_StaticLightingSkyUniqueID: 3
-  m_SkySettings: {fileID: 1890675778}
+  m_SkySettings: {fileID: 1839546170}
   m_SkySettingsFromProfile: {fileID: 5432513390165529012, guid: df7243cb3636ba94e877381ccc7521e1,
     type: 2}
 --- !u!4 &215083580
@@ -180,6 +180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 354539488}
   - component: {fileID: 354539487}
+  - component: {fileID: 354539489}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -203,7 +204,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: df7243cb3636ba94e877381ccc7521e1, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 180f87ae39a0fa4498a6d93fb6e26325, type: 2}
 --- !u!4 &354539488
 Transform:
   m_ObjectHideFlags: 0
@@ -212,12 +213,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354539486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -74.12574, z: 0}
+  m_LocalPosition: {x: 7615.2, y: 439, z: 7904.993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &354539489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354539486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 200, y: 200, z: 200}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &384765781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,7 +1773,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823187082}
   m_CullTransparentMesh: 0
---- !u!114 &1890675778
+--- !u!114 &1839546170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1783,7 +1797,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 0
-    m_Value: 8.2
+    m_Value: 1
   multiplier:
     m_OverrideState: 0
     m_Value: 20
