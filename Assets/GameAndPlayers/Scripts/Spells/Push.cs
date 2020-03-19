@@ -70,7 +70,7 @@ public class Push : MonoBehaviour
 
             if(rb != null)
             {
-                rb.AddForce(Camera.main.transform.forward * pushForce);
+                rb.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
             }
         }
 
