@@ -138,7 +138,7 @@ MonoBehaviour:
     m_Bits: 1024
   spellLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8192
 --- !u!114 &6383202012589143670
 MonoBehaviour:
   m_ObjectHideFlags: 0

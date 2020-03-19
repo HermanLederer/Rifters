@@ -5,21 +5,30 @@ using UnityEngine;
 public class Geyser : MonoBehaviour
 {
     public float upForce;
-
+    public float livingTime = 2;
     public float ballTime;
 
     public LayerMask dragonLayer;
 
+    private float lifeTime;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        lifeTime = livingTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (lifeTime > 0)
+        {
+            lifeTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +46,10 @@ public class Geyser : MonoBehaviour
     {
         if (dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer))
         {
+            GameItemBehaviour dragon = other.GetComponent<GameItemBehaviour>();
+
+            dragon.SetNextDragonTime(ballTime);
+            
             if (other.attachedRigidbody)
             {
                 other.attachedRigidbody.AddForce(Vector3.up * upForce);

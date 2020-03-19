@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upForce: 400
-  ballTime: 3
+  livingTime: 2
+  ballTime: 1
   dragonLayer:
     serializedVersion: 2
     m_Bits: 4096
