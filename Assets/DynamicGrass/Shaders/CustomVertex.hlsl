@@ -1,4 +1,4 @@
-﻿// Common vertex utilities for custom lit shaders
+// Common vertex utilities for custom lit shaders
 // https://github.com/keijiro/TestbedHDRP
 
 // Attributes struct has to be redefined to change the type of positionOS to
@@ -41,50 +41,45 @@ struct Attributes
 AttributesMesh ConvertToAttributesMesh(Attributes input)
 {
     AttributesMesh am;
-    am.positionOS = input.positionOS.xyz;
 
+    am.positionOS = input.positionOS.xyz;
     #ifdef ATTRIBUTES_NEED_NORMAL
         am.normalOS = input.normalOS;
     #endif
-
     #ifdef ATTRIBUTES_NEED_TANGENT
         am.tangentOS = input.tangentOS;
     #endif
-
     #ifdef ATTRIBUTES_NEED_TEXCOORD0
         am.uv0 = input.uv0;
     #endif
-
     #ifdef ATTRIBUTES_NEED_TEXCOORD1
         am.uv1 = input.uv1;
     #endif
-
     #ifdef ATTRIBUTES_NEED_TEXCOORD2
         am.uv2 = input.uv2;
     #endif
-
     #ifdef ATTRIBUTES_NEED_TEXCOORD3
         am.uv3 = input.uv3;
     #endif
-
     #ifdef ATTRIBUTES_NEED_COLOR
         am.color = input.color;
     #endif
 
     UNITY_TRANSFER_INSTANCE_ID(input, am);
+
     return am;
 }
 
 // Passthrough vertex shader
 // We do all vertex calculations in the geometry shader.
-void VertexThru(Attributes input)
-{
-    Vert(ConvertToAttributesMesh(input));
-}
+void VertexThru(inout Attributes input) {}
 
 // Vertex data pack function
 // Re-pack the vertex data and apply the original vertex function.
-PackedVaryingsType PackVertexData(AttributesMesh source, float3 position, float3 position_prev, float3 normal, float4 color)
+PackedVaryingsType PackVertexData(
+    AttributesMesh source,
+    float3 position, float3 position_prev, float3 normal, float4 color
+)
 {
     source.positionOS = position;
 
@@ -94,6 +89,37 @@ PackedVaryingsType PackVertexData(AttributesMesh source, float3 position, float3
     #ifdef ATTRIBUTES_NEED_COLOR
         source.color = color;
     #endif
+    #if SHADERPASS == SHADERPASS_VELOCITY
+        AttributesPass attrib;
+        attrib.previousPositionOS = position_prev;
+        return Vert(source, attrib);
+    #else
+        return Vert(source);
+    #endif
+}
 
-    return Vert(source);
+// My packer
+PackedVaryingsType PackVertexDataFull(
+    AttributesMesh source,
+    float3 position, float3 position_prev, float3 normal, float2 uv, float4 color
+)
+{
+    source.positionOS = position;
+
+    #ifdef ATTRIBUTES_NEED_TEXCOORD0
+        source.uv0 = uv;
+    #endif
+    #ifdef ATTRIBUTES_NEED_NORMAL
+        source.normalOS = normal;
+    #endif
+    #ifdef ATTRIBUTES_NEED_COLOR
+        source.color = color;
+    #endif
+    #if SHADERPASS == SHADERPASS_VELOCITY
+        AttributesPass attrib;
+        attrib.previousPositionOS = position_prev;
+        return Vert(source, attrib);
+    #else
+        return Vert(source);
+    #endif
 }

@@ -1,6 +1,6 @@
-﻿Shader "DynamicGrass/PointCloudHDRPLit"
+Shader "Custom/BarebonesPBR"
 {
-	Properties
+    Properties
     {
         // Versioning of material to help for upgrading
         [HideInInspector] _HdrpVersion("_HdrpVersion", Float) = 2
@@ -231,9 +231,6 @@
     #pragma target 4.5
     #pragma only_renderers d3d11 ps4 xboxone vulkan metal switch
 
-	// Custom: Requiring geometry shader features
-    #pragma require geometry
-
     //-------------------------------------------------------------------------------------
     // Variant
     //-------------------------------------------------------------------------------------
@@ -341,6 +338,7 @@
     // LitData.hlsl should be responsible for preparing shading parameters.
     // LitShading.hlsl implements the light loop API.
     // LitData.hlsl is included here, LitShading.hlsl is included below for shading passes only.
+
     ENDHLSL
 
     SubShader
@@ -348,8 +346,35 @@
         // This tags allow to use the shader replacement features
         Tags{ "RenderPipeline"="HDRenderPipeline" "RenderType" = "HDLitShader" }
 
-		// Custom: Omitted SceneSelectionPass
+        Pass
+        {
+            Name "SceneSelectionPass"
+            Tags { "LightMode" = "SceneSelectionPass" }
 
+            Cull Off
+
+            HLSLPROGRAM
+
+            // Note: Require _ObjectId and _PassValue variables
+
+            // We reuse depth prepass for the scene selection, allow to handle alpha correctly as well as tessellation and vertex animation
+            #define SHADERPASS SHADERPASS_DEPTH_ONLY
+            #define SCENESELECTIONPASS // This will drive the output of the scene selection shader
+            #include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+            #include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/Lit.hlsl"
+            #include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/ShaderPass/LitDepthPass.hlsl"
+            #include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitData.hlsl"
+            #include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPassDepthOnly.hlsl"
+
+            #pragma vertex Vert
+            #pragma fragment Frag
+
+            #pragma editor_sync_compilation
+
+            ENDHLSL
+        }
+
+        // Caution: The outline selection in the editor use the vertex shader/hull/domain shader of the first pass declare. So it should not bethe  meta pass.
         Pass
         {
             Name "GBuffer"
@@ -377,11 +402,11 @@
             #pragma multi_compile DECALS_OFF DECALS_3RT DECALS_4RT
             #pragma multi_compile _ LIGHT_LAYERS
 
-        #ifndef DEBUG_DISPLAY
-            // When we have alpha test, we will force a depth prepass so we always bypass the clip instruction in the GBuffer
-            // Don't do it with debug display mode as it is possible there is no depth prepass in this case
-            #define SHADERPASS_GBUFFER_BYPASS_ALPHA_TEST
-        #endif
+            #ifndef DEBUG_DISPLAY
+                // When we have alpha test, we will force a depth prepass so we always bypass the clip instruction in the GBuffer
+                // Don't do it with debug display mode as it is possible there is no depth prepass in this case
+                #define SHADERPASS_GBUFFER_BYPASS_ALPHA_TEST
+            #endif
 
             #define SHADERPASS SHADERPASS_GBUFFER
             #ifdef DEBUG_DISPLAY
@@ -392,39 +417,129 @@
             #include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/ShaderPass/LitSharePass.hlsl"
             #include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitData.hlsl"
 
-            // shaders
-            // Custom: added geometry shader
-            #include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPassGBuffer.hlsl"
-            #include "PointCloudGrassVertex.hlsl"
-            #include "PointCloudGrassGeometry.hlsl"
-            
-            #pragma vertex VertexThru
-            //#pragma geometry PointCloudGeom
+            //
+            //
+            // Custom: Replaced ShaderPassGBuffer include with it's code
+            //#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPassGBuffer.hlsl"
+            #include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/VertMesh.hlsl"
+
+            // Custom: Removed tesellation
+
+            // Original fragment shader
+            void Frag(
+                PackedVaryingsToPS packedInput,
+                OUTPUT_GBUFFER(outGBuffer)
+                #ifdef _DEPTHOFFSET_ON
+                , out float outputDepth : SV_Depth
+                #endif
+            )
+            {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);
+                FragInputs input = UnpackVaryingsMeshToFragInputs(packedInput.vmesh);
+
+                // input.positionSS is SV_Position
+                PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+                #ifdef VARYINGS_NEED_POSITION_WS
+                    float3 V = GetWorldSpaceNormalizeViewDir(input.positionRWS);
+                #else
+                    // Unused
+                    float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+                #endif
+
+                SurfaceData surfaceData;
+                BuiltinData builtinData;
+                GetSurfaceAndBuiltinData(input, V, posInput, surfaceData, builtinData);
+
+                ENCODE_INTO_GBUFFER(surfaceData, builtinData, posInput.positionSS, outGBuffer);
+
+                #ifdef _DEPTHOFFSET_ON
+                    outputDepth = posInput.deviceDepth;
+                #endif
+            }
+
+            // Original vertex shader
+            PackedVaryingsType Vert(AttributesMesh inputMesh)
+            {
+                VaryingsType varyingsType;
+                varyingsType.vmesh = VertMesh(inputMesh);
+                return PackVaryingsType(varyingsType);
+            }
+
+            //
+            //
+            // Custom: Geometry shader
+            [maxvertexcount(4)]
+            void Geom(
+                uint primitiveID : SV_PrimitiveID,
+                point PackedVaryingsType input[1],
+                inout TriangleStream<PackedVaryingsType> outStream
+            )
+            {
+                //AttributesMesh am;
+                // am.positionOS = float3(0, 0, 0);
+
+                // #ifdef ATTRIBUTES_NEED_NORMAL
+                //     am.normalOS = float3(0, 0, 0);
+                // #endif
+                // #ifdef ATTRIBUTES_NEED_TANGENT
+                //     am.tangentOS = float4(0, 0, 0, 0);
+                // #endif
+                // #ifdef ATTRIBUTES_NEED_TEXCOORD0
+                //     am.uv0 = float2(0, 0);
+                // #endif
+                // #ifdef ATTRIBUTES_NEED_TEXCOORD1
+                //     am.uv1 = float2(0, 0);
+                // #endif
+                // #ifdef ATTRIBUTES_NEED_TEXCOORD2
+                //     am.uv2 = float2(0, 0);
+                // #endif
+                // #ifdef ATTRIBUTES_NEED_TEXCOORD3
+                //     am.uv3 = float2(0, 0);
+                // #endif
+                // #ifdef ATTRIBUTES_NEED_COLOR
+                //     am.color = float4(0, 0, 0, 0);
+                // #endif
+                
+                PackedVaryingsType in0 = input[0];
+                //PackedVaryingsMeshToPS in0vmesh = input[0].vmesh;
+                //in0vmesh.positionCS = float4(0, 0, 0, 0);
+                //in0.vmesh = in0vmesh;
+
+                VaryingsType outp;
+                outp.vmesh = input[0].vmesh;
+                outStream.Append(PackVaryingsType(outp));
+                //outStream.RestartStrip();
+            }
+
+            //
+            //
+            // Shaders
+            #pragma vertex Vert
+            #pragma geometry Geom
             #pragma fragment Frag
 
             ENDHLSL
         }
 
-        // Custom: Omitted META pass
+        // Custom: Removed META pass
 
-        // Custom: Omitted ShadowCaster pass
+        // Custom: Removed ShadowCaster pass
 
-        // Custom: Omitted DepthOnly pass
+        // Custom: Removed DepthOnly pass
 
-		// Custom: Omitted MotionVectors pass
+        // Custom: Removed MotionVectors pass
 
-		// Custom: Omitted DistortionVectors pass
-        
-		// Custom: Omitted TransparentDepthPrepass pass
+        // Custom: Removed TransparentDepthPrepass pass
 
-		// Custom: Omitted TransparentBackface pass
+        // Custom: Removed TransparentBackface pass
 
-		// Custom: Omitted Forward pass
+        // Custom: Removed Forward pass
 
-		// Custom: Omitted TransparentDepthPostpass pass
+        // Custom: Removed TransparentDepthPostpass pass
+    }
 
-	}
-    // Custom: Omitted DXR subshader
+    // Custom: Removed DXR subshader
 
-    //CustomEditor "Rendering.HighDefinition.LitGUI"
+    CustomEditor "Rendering.HighDefinition.LitGUI"
 }
