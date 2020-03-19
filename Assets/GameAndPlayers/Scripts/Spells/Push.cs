@@ -42,6 +42,8 @@ public class Push : MonoBehaviour
             Quaternion look = Quaternion.LookRotation(pushStart.forward, pushStart.up);
 
             GameObject tornado = Instantiate(tornadoVFX, pushStart.position, look);
+            tornado.transform.parent = pushStart;
+
             Destroy(tornado, tornadoTime);
             PushObjects();
         }
@@ -68,7 +70,7 @@ public class Push : MonoBehaviour
 
             if(rb != null)
             {
-                rb.AddForce(pushStart.forward * pushForce);
+                rb.AddForce(Camera.main.transform.forward * pushForce);
             }
         }
 
