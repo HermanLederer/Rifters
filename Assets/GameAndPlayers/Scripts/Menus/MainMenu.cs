@@ -8,6 +8,9 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenu;
     public GameObject controlsMenu;
 
+    public GameObject spellImage;
+    public GameObject movementImage;
+
     public Animator mainAnimator;
     public Animator controlsAnimator;
 
@@ -45,5 +48,17 @@ public class MainMenu : MonoBehaviour
     {
         mainMenu.SetActive(true);
         controlsMenu.SetActive(false);
+    }
+
+    public void ViewMovementControls()
+    {
+        movementImage.SetActive(true);
+        spellImage.SetActive(false);
+    }
+
+    public void ViewSpellControls()
+    {
+        spellImage.SetActive(true);
+        movementImage.SetActive(false);
     }
 }

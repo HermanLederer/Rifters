@@ -73,7 +73,7 @@ public class InGameUI : MonoBehaviour
 		returnToMenuPanel.SetActive(true);
 
 		PhotonNetwork.Disconnect();
-		PhotonNetwork.LoadLevel("Menu");
+		PhotonNetwork.LoadLevel("MainMenu");
 	}
 
 	public void ReloadGame()
