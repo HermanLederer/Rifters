@@ -72,7 +72,7 @@ public class RootInvocation : MonoBehaviour
             RaycastHit hit;
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, levelLayer))
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, levelLayer) && Vector3.Angle(hit.normal, Vector3.up) < 10)
             {
                 marker.SetActive(true);
                 marker.transform.position = hit.point;
