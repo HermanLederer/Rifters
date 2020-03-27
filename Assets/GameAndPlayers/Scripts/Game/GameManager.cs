@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		else
 		{
 			GetComponent<PhotonView>().enabled = false;
-			Instantiate(gameBallPrefab, transform.position, transform.rotation);
+			Instantiate(gameBallPrefab, Vector3.zero, Quaternion.identity);
 		}
 
 		localPlayerTeam = GameTeam.Team1;

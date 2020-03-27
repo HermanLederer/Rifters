@@ -112,6 +112,8 @@ public class PlayerMovement : MonoBehaviourPun
 
 		if ((axisV != 0 || axisH != 0))
 		{
+			Debug.DrawRay(transform.position, Vector3.up * 10f) ;
+
 			// rotating the model
 			//player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, player.orientationTransform.rotation, 600f * Time.deltaTime);
 
