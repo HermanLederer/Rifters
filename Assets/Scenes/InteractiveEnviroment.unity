@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 225.24199, g: 427.7193, b: 865.0044, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 4405a7d4d1299b64ebe2a70841e89c76,
+  m_LightingDataAsset: {fileID: 112000000, guid: 3d2e5ce4574ae1a48af2f5381d9e6edf,
     type: 2}
   m_UseShadowmask: 0
 --- !u!196 &4
@@ -720,9 +720,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: df7243cb3636ba94e877381ccc7521e1, type: 2}
-  m_StaticLightingSkyUniqueID: 0
-  m_SkySettings: {fileID: 0}
-  m_SkySettingsFromProfile: {fileID: 0}
+  m_StaticLightingSkyUniqueID: 3
+  m_SkySettings: {fileID: 1226897741}
+  m_SkySettingsFromProfile: {fileID: 5432513390165529012, guid: df7243cb3636ba94e877381ccc7521e1,
+    type: 2}
 --- !u!4 &215083580
 Transform:
   m_ObjectHideFlags: 1
@@ -4283,6 +4284,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 482886659}
+    - target: {fileID: 2587015325436986563, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000000215035
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587015325436986563, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -4.3517377e-11
+      objectReference: {fileID: 0}
     - target: {fileID: 3032208252112468703, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: m_Mesh
@@ -4303,6 +4314,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5451511731707923266, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0000000043007073
+      objectReference: {fileID: 0}
+    - target: {fileID: 5451511731707923266, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -8.7404785e-11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6527438459104171288, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0000000010751642
+      objectReference: {fileID: 0}
+    - target: {fileID: 6527438459104171288, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 2.2603187e-11
+      objectReference: {fileID: 0}
     - target: {fileID: 6690010204202964566, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: levelLayerMask.m_Bits
@@ -4313,6 +4344,21 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 482886659}
+    - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000000010710473
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.062137432
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466826368114906030, guid: ba977945d2c14dd40bd279be3c3b05f5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000017173253
+      objectReference: {fileID: 0}
     - target: {fileID: 8939202200078308960, guid: ba977945d2c14dd40bd279be3c3b05f5,
         type: 3}
       propertyPath: viewIdField
@@ -6137,6 +6183,76 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1182861569}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1226897741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81bcacc415a1f743bfdf703afc52027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  rotation:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+    max: 360
+  skyIntensityMode:
+    m_OverrideState: 0
+    m_Value: 0
+  exposure:
+    m_OverrideState: 0
+    m_Value: 9
+  multiplier:
+    m_OverrideState: 0
+    m_Value: 20
+    min: 0
+  upperHemisphereLuxValue:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  upperHemisphereLuxColor:
+    m_OverrideState: 0
+    m_Value: {x: 0, y: 0, z: 0}
+  desiredLuxValue:
+    m_OverrideState: 0
+    m_Value: 20000
+  updateMode:
+    m_OverrideState: 0
+    m_Value: 0
+  updatePeriod:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  includeSunInBaking:
+    m_OverrideState: 0
+    m_Value: 0
+  top:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0.1551485, b: 1, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 1
+  middle:
+    m_OverrideState: 0
+    m_Value: {r: 1.0593716, g: 1.9336841, b: 3.5648696, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 1
+  bottom:
+    m_OverrideState: 0
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 1
+  gradientDiffusion:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!1 &1238696101
 GameObject:
   m_ObjectHideFlags: 0
@@ -19980,7 +20096,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2095367793}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1809635495
 GameObject:
