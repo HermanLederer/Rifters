@@ -32,6 +32,8 @@ public class PlayerMovement : MonoBehaviourPun
 	public float jumpPower = 8f;
 	public float jumpCooldown = 0.1f;
 
+	[Range(0f, 2f)] public float groundMagnetism = 0.5f;
+
 	[Header("Prefabs")]
 	public GameObject jumpingPlatfiormPrafab = null;
 	#endregion
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviourPun
 	private float nextJumpTime;
 	private Vector3 groundNormal;
 	private bool isGrounded = true;
+	private float groundMagnetismForce = 0f;
 	#endregion
 
 	//--------------------------
@@ -151,6 +154,9 @@ public class PlayerMovement : MonoBehaviourPun
 		float overhead = horizontalVelocity.magnitude - targetSpeed;
 		Decelerate(Mathf.Clamp(overhead, 0, Mathf.Max(deceleration, deceleration * targetSpeed)));
 
+		// Ground magnetism
+		ApplyGroundMagnetism();
+
 		// Jumping
 		if (isGrounded && Time.time >= nextJumpTime && Input.GetButton("Jump")) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 
@@ -197,8 +203,37 @@ public class PlayerMovement : MonoBehaviourPun
 		{
 			isGrounded = true;
 			groundNormal = hit.normal;
-			Debug.DrawLine(transform.position, hit.point);
+			groundMagnetismForce = 0f;
+			//Debug.DrawLine(transform.position, hit.point);
 		}
+	}
+
+	private void ApplyGroundMagnetism()
+	{
+		// Params
+		float castingOffsetLength = 0.1f;
+		float rayLength = castingOffsetLength + 12f;
+
+		Vector3 center = transform.position;
+		center += Vector3.up * castingOffsetLength;
+
+		RaycastHit hit;
+		float downAngle = Vector3.Angle(Vector3.down, rigidbody.velocity);
+		if (downAngle < 90)
+		{
+			float groundMagnetismAmount = 1f;
+
+			if (Physics.Raycast(center, Vector3.down, out hit, rayLength))
+			{
+				//Debug.DrawRay(center, Vector3.down * (1 - hit.distance / rayLength), Color.cyan);
+				groundMagnetismAmount += (1 - hit.distance / rayLength);
+			}
+
+			groundMagnetismForce += groundMagnetismAmount * Time.fixedDeltaTime;
+			rigidbody.AddForce(Vector3.down * groundMagnetismForce * groundMagnetism * rigidbody.mass, ForceMode.Impulse);
+		}
+
+		//Debug.DrawRay(center, Vector3.down * (downAngle / 90), Color.cyan);
 	}
 	
 	private bool Jump()

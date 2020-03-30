@@ -24,7 +24,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663179138094789684}
-  m_LocalRotation: {x: 0.06213745, y: 0.000000017173145, z: -0.0000000010693594, w: 0.9980676}
+  m_LocalRotation: {x: 0.062137432, y: -0.000000017173132, z: 0.0000000010691585,
+    w: 0.9980676}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -446,7 +447,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393719862988174145}
-  m_LocalRotation: {x: 0.020319153, y: 0.0000000021503537, z: -4.3702392e-11, w: 0.9997935}
+  m_LocalRotation: {x: 0.020319153, y: -0.0000000043007073, z: 8.7404785e-11, w: 0.9997935}
   m_LocalPosition: {x: 0, y: 2.5, z: -4}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
@@ -728,7 +729,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5397675396354295238}
-  m_LocalRotation: {x: -0.020956278, y: 0.0000000021503255, z: 4.5072727e-11, w: 0.9997804}
+  m_LocalRotation: {x: -0.020956278, y: -0.0000000021503255, z: -4.5072703e-11, w: 0.9997804}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1061,7 +1062,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7039975947920963318}
-  m_LocalRotation: {x: 0.02031915, y: 0.0000000010751768, z: -2.1851188e-11, w: 0.9997936}
+  m_LocalRotation: {x: 0.02031915, y: -0.0000000010751768, z: 2.1851188e-11, w: 0.9997936}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1165,14 +1166,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1804862892492501761}
   maxSprintingSpeed: 9.48
-  maxWalkingSpeed: 5.58
+  maxWalkingSpeed: 5
   maxFloatingSpeed: 1
   maxGroundAcceleration: 41.2
   maxGroundDeceleration: 38.2
   maxAirAcceleration: 7.8
   maxAirDeceleration: 6.5
-  jumpPower: 9
+  jumpPower: 14
   jumpCooldown: 1
+  groundMagnetism: 0.5
   jumpingPlatfiormPrafab: {fileID: 8518186595361913605, guid: 8dd532029b1b0e1449216aa14f85eb1e,
     type: 3}
   spawnPoint: {x: 7656.008, y: 422, z: 7968.627}
@@ -1185,7 +1187,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7235477998575429613}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 70
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
