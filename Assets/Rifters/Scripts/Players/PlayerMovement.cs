@@ -117,9 +117,6 @@ public class PlayerMovement : MonoBehaviourPun
 		{
 			Debug.DrawRay(transform.position, Vector3.up * 10f) ;
 
-			// rotating the model
-			//player.characterModel.transform.rotation = Quaternion.RotateTowards(player.characterModel.transform.rotation, player.orientationTransform.rotation, 600f * Time.deltaTime);
-
 			// calculating direction vector
 			Vector3 forwardMovement = player.orientationTransform.forward * axisV;
 			Vector3 sidewaysMovement = player.orientationTransform.right * axisH;
@@ -159,7 +156,10 @@ public class PlayerMovement : MonoBehaviourPun
 
 		// Jumping
 		if (isGrounded && Time.time >= nextJumpTime && Input.GetButton("Jump")) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
+	}
 
+	private void LateUpdate()
+	{
 		// Moving the model
 		player.characterModel.transform.position = player.playerOrigin.position + Vector3.down * collider.radius;
 	}
@@ -192,11 +192,8 @@ public class PlayerMovement : MonoBehaviourPun
 		isGrounded = false;
 
 		// Params
-		float castingOffsetLength = 0.1f;
-		float rayLength = castingOffsetLength + collider.radius;
-
-		Vector3 center = transform.position;
-		center -= Vector3.down * castingOffsetLength;
+		float rayLength = collider.radius + 0.1f;
+		Vector3 center = transform.position + Vector3.up * collider.radius;
 
 		RaycastHit hit;
 		if (Physics.SphereCast(center, collider.radius, Vector3.down, out hit, rayLength))
@@ -204,18 +201,19 @@ public class PlayerMovement : MonoBehaviourPun
 			isGrounded = true;
 			groundNormal = hit.normal;
 			groundMagnetismForce = 0f;
-			//Debug.DrawLine(transform.position, hit.point);
+			Debug.DrawLine(transform.position + Vector3.down * collider.radius, hit.point, Color.cyan);
+
+			//if (transform.position.y < hit.point.y + collider.radius)
+			//	if (Vector3.Angle(Vector3.up, hit.normal) < 50)
+			//		transform.position = new Vector3(transform.position.x, hit.point.y + collider.radius, transform.position.z);
 		}
 	}
 
 	private void ApplyGroundMagnetism()
 	{
 		// Params
-		float castingOffsetLength = 0.1f;
-		float rayLength = castingOffsetLength + 12f;
-
-		Vector3 center = transform.position;
-		center += Vector3.up * castingOffsetLength;
+		float rayLength = 12f + 0.1f;
+		Vector3 center = transform.position + Vector3.up * collider.radius;
 
 		RaycastHit hit;
 		float downAngle = Vector3.Angle(Vector3.down, rigidbody.velocity);
@@ -232,12 +230,11 @@ public class PlayerMovement : MonoBehaviourPun
 			groundMagnetismForce += groundMagnetismAmount * Time.fixedDeltaTime;
 			rigidbody.AddForce(Vector3.down * groundMagnetismForce * groundMagnetism * rigidbody.mass, ForceMode.Impulse);
 		}
-
-		//Debug.DrawRay(center, Vector3.down * (downAngle / 90), Color.cyan);
 	}
 	
 	private bool Jump()
 	{
+		groundMagnetism = 0f;
 		rigidbody.AddForce(Vector3.up * jumpPower * rigidbody.mass, ForceMode.Impulse);
 		return true;
 	}
