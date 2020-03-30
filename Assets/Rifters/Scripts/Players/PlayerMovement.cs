@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviourPun
 	public Player player;
 	[Header("Movement")]
 	public float maxSprintingSpeed = 12f;
-	public float maxWalkingSpeed = 5f;
+	//public float maxWalkingSpeed = 5f;
 	public float maxFloatingSpeed = 2f;
 
 	[Range(0f, 50f)] public float maxGroundAcceleration = 20f;
@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviourPun
 			{
 				acceleration = maxGroundAcceleration;
 				targetSpeed = maxSprintingSpeed;
-				if (!Input.GetButton("Sprint")) targetSpeed = maxWalkingSpeed;
+				//if (!Input.GetButton("Sprint")) targetSpeed = maxWalkingSpeed;
 			}
 			else
 			{
