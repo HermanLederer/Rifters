@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1803423315677284345}
-  - component: {fileID: 1803423315677284344}
   - component: {fileID: 796256870}
   - component: {fileID: 3593690715838926410}
   m_Layer: 0
@@ -31,27 +30,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3999486535658137363}
+  - {fileID: 610210545413195215}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1803423315677284344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1803423315677284343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a813479a407f9994ea4be0be8bea4a62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upForce: 400
-  livingTime: 2
-  ballTime: 1
-  dragonLayer:
-    serializedVersion: 2
-    m_Bits: 4096
 --- !u!136 &796256870
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -78,6 +60,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7118175dec9b043a61220333c554ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeOfObject: 3
+  activated: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  upForce: 400
+  livingTime: 5
+  ballTime: 1
+  dragonLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  GeyserPS: {fileID: 7496447439752748608}
 --- !u!1 &7234321678942879752
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,3 +165,84 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &4568180473439810367
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1803423315677284345}
+    m_Modifications:
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299925467043999103, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+        type: 3}
+      propertyPath: m_Name
+      value: GeyserInvocation
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cb8d184d9a104d848a279a4b2ca45c3d, type: 3}
+--- !u!1 &7496447439752748608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6299925467043999103, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4568180473439810367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &610210545413195215 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3968384502451697392, guid: cb8d184d9a104d848a279a4b2ca45c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4568180473439810367}
+  m_PrefabAsset: {fileID: 0}

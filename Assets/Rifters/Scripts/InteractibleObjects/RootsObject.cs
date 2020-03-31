@@ -39,7 +39,6 @@ public class RootsObject : InteractibleLevel
                     holdedObject.GetComponent<Rigidbody>().useGravity = true;
                 }
 
-                lifeTime = 0;
                 activated = false;
                 holding = false;
                 holdedObject = null;

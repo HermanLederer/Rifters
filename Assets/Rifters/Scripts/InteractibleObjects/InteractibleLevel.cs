@@ -41,6 +41,11 @@ public class InteractibleLevel : MonoBehaviour
         }
     }
 
+    public virtual void OnTriggerStay(Collider other)
+    {
+        
+    }
+
     public virtual void OnTriggerExit(Collider other)
     {
         if (playerLayer == (playerLayer.value | 1 << other.gameObject.layer))

@@ -29,7 +29,7 @@ public class Push : MonoBehaviour
 		//Debug.DrawLine(pushStart.position, pushStart.position + right, Color.green);
 		//#endregion
 
-		if (Input.GetButton("Push"))
+		if (Input.GetButton("Fire1"))
 		{
 			Quaternion look = Quaternion.LookRotation(transform.forward, transform.up);
 

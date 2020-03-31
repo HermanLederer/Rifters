@@ -48,7 +48,7 @@ public class PlayerSpells : MonoBehaviour
             DetectInteractibleObjects();
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetButton("Enviroment Spells"))
         {
             if(activableObject != null)
             {

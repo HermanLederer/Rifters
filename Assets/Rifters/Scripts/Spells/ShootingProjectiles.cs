@@ -21,7 +21,7 @@ public class ShootingProjectiles : MonoBehaviour
 	{
 		if (!shooting)
 		{
-			if (Input.GetButton("ShootProjectiles"))
+			if (Input.GetButton("Fire2"))
 			{
 				shooting = true;
 				StartCoroutine(ShootProjectiles());
