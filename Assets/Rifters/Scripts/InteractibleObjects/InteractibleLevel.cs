@@ -27,7 +27,7 @@ public class InteractibleLevel : MonoBehaviour
         rb = GetComponent<Rigidbody>(); //Comun
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if(playerLayer == (playerLayer.value | 1 << other.gameObject.layer))
         {
@@ -41,7 +41,7 @@ public class InteractibleLevel : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         if (playerLayer == (playerLayer.value | 1 << other.gameObject.layer))
         {

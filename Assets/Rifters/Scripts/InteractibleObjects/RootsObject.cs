@@ -63,13 +63,15 @@ public class RootsObject : InteractibleLevel
         }
     }
 
-    /*private void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         if (dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer) && activated)
         {
             SetHoldedObject(other.gameObject);
         }
-    }*/
+    }
 
     private void SetHoldedObject(GameObject other)
     {
@@ -85,6 +87,7 @@ public class RootsObject : InteractibleLevel
         if (rb != null)
         {
             rb.useGravity = false;
+            rb.velocity = Vector3.zero;
             holding = true;
         }
     }
