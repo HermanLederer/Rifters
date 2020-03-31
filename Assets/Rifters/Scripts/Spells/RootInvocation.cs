@@ -21,6 +21,7 @@ public class RootInvocation : MonoBehaviour
     private GameObject markerGeyser;
 
     private GameObject spell;
+
     // Start is called before the first frame update
     void Start()
     {
