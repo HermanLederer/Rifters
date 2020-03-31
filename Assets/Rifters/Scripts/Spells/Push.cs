@@ -4,76 +4,68 @@ using UnityEngine;
 
 public class Push : MonoBehaviour
 {
-    public Transform pushStart;
+	public float radius = 3f;
+	public float pushForce = 50f;
+	public float tornadoTime = 3f;
+	public int angle = 30;
 
-    public float radius = 3f;
-    public float pushForce = 50f;
-    public float tornadoTime = 3f;
-    public int angle = 30;
+	public LayerMask levelLayer;
 
-    public LayerMask levelLayer;
+	public GameObject tornadoVFX;
 
-    public GameObject tornadoVFX;
+	// Update is called once per frame
+	void FixedUpdate()
+	{
+		//#region drawing
+		//Vector3 reference = pushStart.forward * radius;
+		//Vector3 up = Quaternion.AngleAxis(angle, pushStart.right) * reference;
+		//Vector3 down = Quaternion.AngleAxis(-angle, pushStart.right) * reference;
+		//Vector3 left = Quaternion.AngleAxis(angle, pushStart.up) * reference;
+		//Vector3 right = Quaternion.AngleAxis(-angle, pushStart.up) * reference;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+		//Debug.DrawLine(pushStart.position, pushStart.position + up, Color.green);
+		//Debug.DrawLine(pushStart.position, pushStart.position + down, Color.green);
+		//Debug.DrawLine(pushStart.position, pushStart.position + left, Color.green);
+		//Debug.DrawLine(pushStart.position, pushStart.position + right, Color.green);
+		//#endregion
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        #region drawing
-        Vector3 reference = pushStart.forward * radius;
-        Vector3 up = Quaternion.AngleAxis(angle, pushStart.right) * reference;
-        Vector3 down = Quaternion.AngleAxis(-angle, pushStart.right) * reference;
-        Vector3 left = Quaternion.AngleAxis(angle, pushStart.up) * reference;
-        Vector3 right = Quaternion.AngleAxis(-angle, pushStart.up) * reference;
+		if (Input.GetButton("Push"))
+		{
+			Quaternion look = Quaternion.LookRotation(transform.forward, transform.up);
 
-        Debug.DrawLine(pushStart.position, pushStart.position + up, Color.green);
-        Debug.DrawLine(pushStart.position, pushStart.position + down, Color.green);
-        Debug.DrawLine(pushStart.position, pushStart.position + left, Color.green);
-        Debug.DrawLine(pushStart.position, pushStart.position + right, Color.green);
-        #endregion
+			GameObject tornado = Instantiate(tornadoVFX, transform.position, look);
+			tornado.transform.parent = transform;
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Quaternion look = Quaternion.LookRotation(pushStart.forward, pushStart.up);
+			Destroy(tornado, tornadoTime);
+			PushObjects();
+		}
+	}
 
-            GameObject tornado = Instantiate(tornadoVFX, pushStart.position, look);
-            tornado.transform.parent = pushStart;
+	private void PushObjects()
+	{
+		Collider[] pushableObjects = Physics.OverlapSphere(transform.position, radius, levelLayer);
 
-            Destroy(tornado, tornadoTime);
-            PushObjects();
-        }
-    }
+		Debug.Log("Numero de objetos: " + pushableObjects.Length);
 
-    private void PushObjects()
-    {
-        Collider[] pushableObjects = Physics.OverlapSphere(pushStart.position, radius, levelLayer);
+		int contador = 0;
 
-        Debug.Log("Numero de objetos: " + pushableObjects.Length);
+		for (int i = 0; i < pushableObjects.Length; i++)
+		{
+			if (Vector3.Angle(transform.forward, pushableObjects[i].transform.position - transform.position) > angle)
+			{
+				continue;
+			}
 
-        int contador = 0;
+			contador += 1;
 
-        for (int i = 0; i < pushableObjects.Length; i++)
-        {
-            if(Vector3.Angle(pushStart.forward, pushableObjects[i].transform.position - pushStart.position) > angle)
-            {
-                continue;
-            }
+			Rigidbody rb = pushableObjects[i].GetComponent<Rigidbody>();
 
-            contador += 1;
+			if (rb != null)
+			{
+				rb.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
+			}
+		}
 
-            Rigidbody rb = pushableObjects[i].GetComponent<Rigidbody>();
-
-            if(rb != null)
-            {
-                rb.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
-            }
-        }
-
-        Debug.Log("Numero de objetos en el cono: " + contador);
-    }
+		Debug.Log("Numero de objetos en el cono: " + contador);
+	}
 }

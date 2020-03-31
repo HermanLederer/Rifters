@@ -4,65 +4,52 @@ using UnityEngine;
 
 public class ShootingProjectiles : MonoBehaviour
 {
-    public float shootingForce = 30f;
-    public float timeBtwProjectiles = .1f;
+	public float shootingForce = 30f;
+	public float timeBtwProjectiles = .1f;
 
-    public Transform characterModel;
+	public int projectileCount = 6;
 
-    public int projectileCount = 6;
+	public bool shooting;
 
-    public bool shooting;
+	public GameObject projectilePrefab;
 
-    public GameObject projectilePrefab;
+	public float offsetX = 1;
+	public float offsetY = 1;
 
-    public float offsetX = 1;
-    public float offsetY = 1;
+	// Update is called once per frame
+	void FixedUpdate()
+	{
+		if (!shooting)
+		{
+			if (Input.GetButton("ShootProjectiles"))
+			{
+				shooting = true;
+				StartCoroutine(ShootProjectiles());
+			}
+		}
+	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	IEnumerator ShootProjectiles()
+	{
+		Vector3 direction = (transform.right * offsetX + transform.up * offsetY);
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        Vector3 shootingPos = characterModel.position + (characterModel.right * offsetX + characterModel.up * offsetY);
+		float angle = Vector3.Angle(transform.up, direction);
+		float rotationdegrees = (angle * 2) / (projectileCount - 1);
 
-        Debug.DrawLine(transform.position, shootingPos, Color.red);
-        if (!shooting)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                shooting = true;
-                StartCoroutine(ShootProjectiles());
-            }
-        }
-    }
+		for (int i = 0; i < projectileCount; i++)
+		{
+			Debug.DrawRay(transform.position, direction, Color.magenta, 0.5f);
+			Quaternion rotation = Quaternion.LookRotation(direction);
 
-    IEnumerator ShootProjectiles()
-    {
-        Vector3 shootingPos = characterModel.position + (characterModel.right * offsetX + characterModel.up * offsetY);
+			GameObject projectile = Instantiate(projectilePrefab, transform.position + direction, rotation);
+			projectile.GetComponent<Rigidbody>().AddForce(direction * shootingForce);
 
-        Vector3 direction = shootingPos - transform.position;
+			direction = Quaternion.AngleAxis(rotationdegrees, transform.forward) * direction;
 
-        float angle = Vector3.Angle(transform.up, direction);
+			yield return new WaitForSeconds(timeBtwProjectiles);
+		}
 
-        float rotationdegrees = (angle * 2) / (projectileCount - 1);
-
-        for (int i = 0; i < projectileCount; i++)
-        {
-            Quaternion rotation = Quaternion.LookRotation(direction);
-
-            GameObject projectile = Instantiate(projectilePrefab, transform.position + direction, rotation);
-            projectile.GetComponent<Rigidbody>().AddForce(direction * shootingForce);
-
-            direction = Quaternion.AngleAxis(rotationdegrees, characterModel.forward) * direction;
-
-            yield return new WaitForSeconds(timeBtwProjectiles);
-        }
-
-        shooting = false;
-        yield return null;
-    }
+		shooting = false;
+		yield return null;
+	}
 }

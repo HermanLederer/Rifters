@@ -11,20 +11,16 @@ public class Player : MonoBehaviourPun
 	#region Editor variables
 	public bool isOfflinePlayer;
 	[Header("Player components")]
+	public Transform playerOrigin;
+
 	public CinemachineFreeLook cameraRig;
 	public Camera viewCamera;
 	public AudioListener audioListener;
-	public PlayerCharacterModel characterModel;
-	public Transform playerOrigin;
+
+	public PlayerPhysicsWalker playerPhysicsWalker;
 
 	[Header("Camera settings")]
 	public float mouseAcceleration = 100f;
-	#endregion
-
-	//
-	// Public Variables
-	#region Editor variables
-	[HideInInspector] public Transform orientationTransform;
 	#endregion
 
 	//--------------------------
@@ -37,21 +33,19 @@ public class Player : MonoBehaviourPun
 		//if (photonView.IsMine) viewCamera.enabled = true;
 	}
 
-	void Start()
-	{
-		//if (isOfflinePlayer) GameManager.instance.players.Add(GetComponent<Player>());
-		//PhotonNetwork.NickName = Time.fixedTime.ToString();
-	}
-
 	void Update()
 	{
+		// Rotating the camera
 		float mouseX = Input.GetAxis("Mouse X") * mouseAcceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxis("Mouse Y") * mouseAcceleration * Time.fixedDeltaTime;
-
-		// rotating the camera
 		cameraRig.m_XAxis.Value += mouseX;
 		cameraRig.m_YAxis.Value -= mouseY / 180f;
+	}
 
-		orientationTransform.rotation = Quaternion.Euler(0, viewCamera.transform.rotation.eulerAngles.y, 0);
+	private void LateUpdate()
+	{
+		// Updating player origin
+		playerOrigin.position = playerPhysicsWalker.transform.position;
+		playerOrigin.rotation = Quaternion.Euler(0, viewCamera.transform.rotation.eulerAngles.y, 0);
 	}
 }

@@ -12,11 +12,11 @@ public class AudioTest : MonoBehaviour
 
 	private bool Jumped = true;
 
-	private PlayerMovement playerMovement;
+	private PlayerPhysicsWalker playerMovement;
 
 	private void Awake()
 	{
-		playerMovement = FindObjectOfType<PlayerMovement>();
+		playerMovement = FindObjectOfType<PlayerPhysicsWalker>();
 	}
 	private void Start()
 	{
