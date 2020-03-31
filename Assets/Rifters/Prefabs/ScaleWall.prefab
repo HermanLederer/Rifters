@@ -170,6 +170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfObject: 1
   activated: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   scaled: 0
   scaleSpeed: 3
   timeBeingScaled: 5

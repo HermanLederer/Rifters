@@ -7,12 +7,16 @@ public class InteractibleLevel : MonoBehaviour
     public enum TypeOfInteractableObject
     {
         PULL,
-        SCALE
+        SCALE,
+        ROOTS,
+        GEYSER
     }
 
     public TypeOfInteractableObject typeOfObject;
 
     public bool activated; //Comun
+
+    public LayerMask playerLayer;
 
     protected Rigidbody rb; //Comun
     protected PlayerSpells myPlayer; //Comun
@@ -25,17 +29,29 @@ public class InteractibleLevel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == 10)
+        if(playerLayer == (playerLayer.value | 1 << other.gameObject.layer))
         {
-            other.GetComponent<PlayerSpells>().inRangeObjects.Add(this);
+            Transform parent = other.transform.parent;
+            PlayerSpells ps = parent.GetComponentInChildren<PlayerSpells>();
+            if (ps != null)
+            {
+                Debug.Log("Entra Player: " + other.gameObject.name);
+                ps.inRangeObjects.Add(this);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 10)
+        if (playerLayer == (playerLayer.value | 1 << other.gameObject.layer))
         {
-            other.GetComponent<PlayerSpells>().inRangeObjects.Remove(this);
+            Transform parent = other.transform.parent;
+            PlayerSpells ps = parent.GetComponentInChildren<PlayerSpells>();
+            if(ps != null)
+            {
+                Debug.Log("Sale Player: " + other.gameObject.name);
+                ps.inRangeObjects.Remove(this);
+            }
         }
     }
 

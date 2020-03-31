@@ -33,7 +33,7 @@ public class PlayerSpells : MonoBehaviour
     //--------------------------
     void Awake()
     {
-        cam = GetComponentInChildren<Camera>();
+
     }
 
     void Start()
@@ -87,7 +87,7 @@ public class PlayerSpells : MonoBehaviour
 
         if (activableObject != null)
         {
-            if (activableObject.typeOfObject != InteractibleLevel.TypeOfInteractableObject.SCALE || !activableObject.activated)
+            if (activableObject.typeOfObject == InteractibleLevel.TypeOfInteractableObject.PULL || !activableObject.activated)
             {
                 SpellPanel.SetActive(true);
             }

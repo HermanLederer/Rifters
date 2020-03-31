@@ -77,6 +77,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfObject: 0
   activated: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   moveSpeed: 5
   PullPS: {fileID: 6507809815533835416, guid: ac31e4aabfcf2184a803fb823852f8a8, type: 3}
 --- !u!1 &6792415927275157773

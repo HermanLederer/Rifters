@@ -8,7 +8,7 @@ public class RootsObject : InteractibleLevel
     public float holdedObjectSpeed = 5f;
 
     public Transform holdingPosition;
-    public ParticleSystem RootPs;
+    public GameObject RootPs;
 
     public LayerMask dragonLayer;
 
@@ -43,7 +43,7 @@ public class RootsObject : InteractibleLevel
                 activated = false;
                 holding = false;
                 holdedObject = null;
-                RootPs.Stop();
+                RootPs.SetActive(false);
             }
 
             if (holding)
@@ -59,7 +59,7 @@ public class RootsObject : InteractibleLevel
         {
             activated = true;
             lifeTime = livingTime;
-            RootPs.Play();
+            RootPs.SetActive(true);
         }
     }
 
