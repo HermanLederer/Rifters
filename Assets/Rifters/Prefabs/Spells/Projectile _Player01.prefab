@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 3359403492073670649}
   - component: {fileID: 6312728250494109034}
   m_Layer: 13
-  m_Name: Projectile 03
+  m_Name: Projectile _Player01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7129254626778766512}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.143}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 4185788388073356223}
@@ -380,8 +380,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.6173447, g: 0.27144888, b: 0.9433962, a: 0.3529412}
-      maxColor: {r: 0.9528302, g: 0.32809716, b: 0.87105894, a: 0.65882355}
+      minColor: {r: 0.114142045, g: 0.4226238, b: 0.8962264, a: 0.3529412}
+      maxColor: {r: 0.09718761, g: 0.9811321, b: 0.86692965, a: 0.65882355}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1805,7 +1805,7 @@ ParticleSystem:
         m_RotationOrder: 4
     orbitalX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -1858,7 +1858,7 @@ ParticleSystem:
         m_RotationOrder: 4
     orbitalY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -1911,8 +1911,8 @@ ParticleSystem:
         m_RotationOrder: 4
     orbitalZ:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 10
+      minMaxState: 3
+      scalar: 60
       minScalar: 0
       maxCurve:
         serializedVersion: 2
