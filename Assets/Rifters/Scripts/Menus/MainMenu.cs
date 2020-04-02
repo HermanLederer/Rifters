@@ -38,6 +38,17 @@ public class MainMenu : MonoBehaviour
         controlsMenu.SetActive(true);
     }
 
+    public void OpenCharacterSelection()
+    {
+        mainAnimator.SetTrigger("Dissapear");
+        Invoke("ChangeToCharacterSelection", 1f);
+    }
+
+    private void ChangeToCharacterSelection()
+    {
+        SceneManager.LoadScene("Character selection");
+    }
+
     public void MenuFromControls()
     {
         controlsAnimator.SetTrigger("Disappear");
