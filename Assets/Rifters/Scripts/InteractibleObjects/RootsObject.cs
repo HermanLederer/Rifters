@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class RootsObject : InteractibleLevel
 {
+
+    public InteractibleObject rootSO;
+
     public float livingTime = 8f;
     public float holdedObjectSpeed = 5f;
 
     public Transform holdingPosition;
     public GameObject RootPs;
+
+    public MeshRenderer mesh;
 
     public LayerMask dragonLayer;
 
@@ -16,6 +21,7 @@ public class RootsObject : InteractibleLevel
     private bool holding;
 
     private float lifeTime = 0f;
+    
 
     // Start is called before the first frame update
     void Awake()
@@ -89,5 +95,15 @@ public class RootsObject : InteractibleLevel
             rb.velocity = Vector3.zero;
             holding = true;
         }
+    }
+
+    public override void SetNormalMaterial()
+    {
+        mesh.material = rootSO.normalMat;
+    }
+
+    public override void SetFresnelMaterial()
+    {
+        mesh.material = rootSO.fresnelMat;
     }
 }

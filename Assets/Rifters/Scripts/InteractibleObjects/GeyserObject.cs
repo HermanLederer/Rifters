@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class GeyserObject : InteractibleLevel
 {
+    public InteractibleObject geyserSO;
+
     public float upForce;
     public float livingTime = 2;
     public float ballTime;
+
+    public List<MeshRenderer> meshes;
 
     public LayerMask dragonLayer;
 
@@ -59,6 +63,8 @@ public class GeyserObject : InteractibleLevel
 
     public override void OnTriggerStay(Collider other)
     {
+        base.OnTriggerStay(other);
+
         if (dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer))
         {
             GameItemBehaviour dragon = other.GetComponent<GameItemBehaviour>();
@@ -69,6 +75,23 @@ public class GeyserObject : InteractibleLevel
             {
                 other.attachedRigidbody.AddForce(Vector3.up * upForce);
             }
+        }
+    }
+
+    public override void SetNormalMaterial()
+    {
+        foreach (MeshRenderer mesh in meshes)
+        {
+            mesh.material = geyserSO.normalMat;
+        }
+        
+    }
+
+    public override void SetFresnelMaterial()
+    {
+        foreach (MeshRenderer mesh in meshes)
+        {
+            mesh.material = geyserSO.fresnelMat;
         }
     }
 }

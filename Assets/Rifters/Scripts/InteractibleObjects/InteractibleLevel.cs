@@ -35,7 +35,7 @@ public class InteractibleLevel : MonoBehaviour
             PlayerSpells ps = parent.GetComponentInChildren<PlayerSpells>();
             if (ps != null)
             {
-                Debug.Log("Entra Player: " + other.gameObject.name);
+                SetFresnelMaterial();
                 ps.inRangeObjects.Add(this);
             }
         }
@@ -43,7 +43,14 @@ public class InteractibleLevel : MonoBehaviour
 
     public virtual void OnTriggerStay(Collider other)
     {
-        
+        if (activated)
+        {
+            SetNormalMaterial();
+        }
+        else
+        {
+            SetFresnelMaterial();
+        }
     }
 
     public virtual void OnTriggerExit(Collider other)
@@ -54,13 +61,23 @@ public class InteractibleLevel : MonoBehaviour
             PlayerSpells ps = parent.GetComponentInChildren<PlayerSpells>();
             if(ps != null)
             {
-                Debug.Log("Sale Player: " + other.gameObject.name);
+                SetNormalMaterial();
                 ps.inRangeObjects.Remove(this);
             }
         }
     }
 
     public virtual void ActivateObject(PlayerSpells ps)
+    {
+
+    }
+
+    public virtual void SetNormalMaterial()
+    {
+
+    }
+
+    public virtual void SetFresnelMaterial()
     {
 
     }
