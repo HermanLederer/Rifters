@@ -15,9 +15,9 @@ public class GeyserObject : InteractibleLevel
     private float lifeTime = 0;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        GeyserPS.SetActive(false);
     }
 
     // Update is called once per frame

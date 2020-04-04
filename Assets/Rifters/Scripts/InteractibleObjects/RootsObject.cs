@@ -20,7 +20,7 @@ public class RootsObject : InteractibleLevel
     // Start is called before the first frame update
     void Awake()
     {
-        
+        RootPs.SetActive(false);
     }
 
     // Update is called once per frame
