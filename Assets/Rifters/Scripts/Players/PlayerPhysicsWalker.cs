@@ -42,7 +42,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 	#region Private variables
 	private float nextJumpTime;
 	private Vector3 groundNormal;
-	private bool isGrounded = true;
+	public bool isGrounded { get; private set; }
 	private float groundMagnetismForce = 0f;
 	#endregion
 
@@ -57,6 +57,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 		rigidbody = GetComponent<Rigidbody>();
 
 		nextJumpTime = 0f;
+		isGrounded = true;
 
 		rigidbody.centerOfMass = new Vector3(0, -1, 0);
 	}

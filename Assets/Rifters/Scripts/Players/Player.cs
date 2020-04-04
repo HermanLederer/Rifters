@@ -19,6 +19,9 @@ public class Player : MonoBehaviourPun
 
 	public PlayerPhysicsWalker playerPhysicsWalker;
 
+	public Animator animator;
+	public AnimationState state;
+
 	[Header("Camera settings")]
 	public float mouseAcceleration = 100f;
 	#endregion
@@ -47,5 +50,26 @@ public class Player : MonoBehaviourPun
 		// Updating player origin
 		playerOrigin.position = playerPhysicsWalker.transform.position;
 		playerOrigin.rotation = Quaternion.Euler(0, viewCamera.transform.rotation.eulerAngles.y, 0);
+
+		// Updating the animator
+		Vector3 velocity = playerPhysicsWalker.rigidbody.velocity;
+		Vector3 localVelocity = playerOrigin.InverseTransformDirection(velocity);
+
+		Vector2 horizontalVelocity = new Vector2(localVelocity.x, localVelocity.z);
+		float verticalVelocity = playerPhysicsWalker.rigidbody.velocity.y;
+
+		animator.SetBool("IsGrounded", playerPhysicsWalker.isGrounded);		
+		animator.SetFloat("Forward", localVelocity.z / playerPhysicsWalker.maxSprintingSpeed);
+		animator.SetFloat("Sideways", localVelocity.x / playerPhysicsWalker.maxSprintingSpeed);
+		animator.SetFloat("Upward", verticalVelocity);
+		animator.SetFloat("Horizontal", horizontalVelocity.magnitude / playerPhysicsWalker.maxSprintingSpeed);
+		animator.SetBool("IsAccelerating", !(Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0));
+	}
+
+	private void OnDrawGizmos()
+	{
+		//Vector3 center = playerOrigin.position + Vector3.up;
+
+		//if (animator.GetBool("IsAccelerating")) Gizmos.DrawSphere(center, 1f);
 	}
 }
