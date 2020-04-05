@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
 	// Editor variables
 	[SerializeField] private bool offlineMode = false;
+	[SerializeField] private bool respawnPlayersAfterGoal = true;
 	[SerializeField] private GameObject playerPrefab = null;
 	[SerializeField] private GameObject gameBallPrefab = null;
 	[SerializeField] private int playToGoals = 5;
@@ -140,6 +141,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		// debugging
 		Debug.Log("A goal has been scored by " + team);
 		Debug.Log("" + GameTeam.Team1 + ": " + team1score + "; " + GameTeam.Team2 + ": " + team2score + ";");
+		respawnPlayersAndBall();
+		
 	}
 
 	public void DeclareWiner(GameTeam team)
@@ -155,5 +158,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		inGameUI.LoadWinningScreen();
 		isGamePlaying = false;
 		//Time.timeScale = 0.1f;
+	}
+	public void respawnPlayersAndBall()
+	{
+		GameObject.FindGameObjectWithTag("Dragon").GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+		GameObject.FindGameObjectWithTag("Dragon").transform.position = GameObject.Find("BallSpawnPosition").transform.position;
+		if (respawnPlayersAfterGoal)
+		{
+			// going to respawn players based on their team number
+			GameObject.FindGameObjectWithTag("Player").transform.position = GameObject.Find("Team1SpawnPosition").transform.position;
+		}
 	}
 }
