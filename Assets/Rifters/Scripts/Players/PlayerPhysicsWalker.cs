@@ -47,6 +47,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 	private string horizontalKey;
 	private string verticalKey;
 	private string jumpKey;
+	private float spellTime = -1f;
 	#endregion
 
 	//--------------------------
@@ -90,6 +91,10 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 
     #region Getters and Setters
 
+	public void SetSpellTime(float time)
+	{
+		spellTime = time;
+	}
     #endregion
 
     //private void OnCollisionEnter(Collision collision)
@@ -111,8 +116,21 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
     //--------------------------
     private void ControlMovement()
 	{
-		float axisV = Input.GetAxisRaw(verticalKey);
-		float axisH = Input.GetAxisRaw(horizontalKey);
+		float axisV;
+		float axisH;
+
+		if (spellTime > 0)
+		{
+			spellTime -= Time.deltaTime;
+			axisV = 0f;
+			axisH = 0f;
+		}
+		else
+		{
+			axisV = Input.GetAxisRaw(verticalKey);
+			axisH = Input.GetAxisRaw(horizontalKey);
+		}
+		
 		
 
 		// Climbing the ground

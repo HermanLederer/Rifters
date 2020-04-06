@@ -93,6 +93,16 @@ public class Player : MonoBehaviourPun
 		
 	}
 
+	public void SetAnimBool(string valueString, bool valueBool)
+	{
+		animator.SetBool(valueString, valueBool);
+	}
+	public void SetAnimTriggerSpell(string valueString, float time)
+	{
+		animator.SetTrigger(valueString);
+		playerPhysicsWalker.SetSpellTime(time);
+	}
+
 	private void OnDrawGizmos()
 	{
 		//Vector3 center = playerOrigin.position + Vector3.up;

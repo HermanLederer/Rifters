@@ -7,6 +7,7 @@ public class Push : MonoBehaviour
 	public float radius = 3f;
 	public float pushForce = 50f;
 	public float tornadoTime = 3f;
+	public float animationSpellTime;
 	public int angle = 30;
 
 	public LayerMask levelLayer;
@@ -48,6 +49,7 @@ public class Push : MonoBehaviour
 
 		if (Input.GetButton(fireKey))
 		{
+			player.SetAnimTriggerSpell("Push", animationSpellTime);
 			Quaternion look = Quaternion.LookRotation(transform.forward, transform.up);
 
 			GameObject tornado = Instantiate(tornadoVFX, transform.position, look);

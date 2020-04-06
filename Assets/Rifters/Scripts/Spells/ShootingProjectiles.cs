@@ -6,6 +6,7 @@ public class ShootingProjectiles : MonoBehaviour
 {
 	public float shootingForce = 30f;
 	public float timeBtwProjectiles = .1f;
+	public float animationSpellTime;
 
 	public int projectileCount = 6;
 
@@ -40,6 +41,7 @@ public class ShootingProjectiles : MonoBehaviour
 		{
 			if (Input.GetButton(fireKey))
 			{
+				player.SetAnimTriggerSpell("Projectile", animationSpellTime);
 				shooting = true;
 				StartCoroutine(ShootProjectiles());
 			}

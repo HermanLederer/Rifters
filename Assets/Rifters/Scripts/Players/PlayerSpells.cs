@@ -13,6 +13,7 @@ public class PlayerSpells : MonoBehaviour
     public float minAngle = 20;
     public float throwingForce = 10;
     public float raycastDistance = 6;
+    public float spellAnimationTime;
 
     public Camera cam;
 
@@ -63,6 +64,7 @@ public class PlayerSpells : MonoBehaviour
         {
             if(activableObject != null)
             {
+                player.SetAnimTriggerSpell("EnviromentSpell", spellAnimationTime);
                 activableObject.ActivateObject(this);
             }
         }
