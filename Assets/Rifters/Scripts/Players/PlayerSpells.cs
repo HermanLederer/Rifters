@@ -18,7 +18,7 @@ public class PlayerSpells : MonoBehaviour
 
     public bool hasObject = false;
 
-    public GameObject SpellPanel;
+    //public GameObject SpellPanel;
     public Transform ObjectHolder;
     public LayerMask InteractibleLayer;
 
@@ -27,13 +27,24 @@ public class PlayerSpells : MonoBehaviour
 
     // Private variables
     private InteractibleLevel activableObject;
+    private Player player;
+    private string spellKey;
 
     //--------------------------
     // MonoBehaviour events
     //--------------------------
     void Awake()
     {
+        player = GetComponentInParent<Player>();
 
+        if (player.isPlayer1)
+        {
+            spellKey = "Enviroment Spells P1";
+        }
+        else
+        {
+            spellKey = "Enviroment Spells P2";
+        }
     }
 
     void Start()
@@ -48,7 +59,7 @@ public class PlayerSpells : MonoBehaviour
             DetectInteractibleObjects();
         }
 
-        if (Input.GetButton("Enviroment Spells"))
+        if (Input.GetButton(spellKey))
         {
             if(activableObject != null)
             {
@@ -84,6 +95,7 @@ public class PlayerSpells : MonoBehaviour
                 break;
             }
         }
+        /*
 
         if (activableObject != null)
         {
@@ -100,6 +112,6 @@ public class PlayerSpells : MonoBehaviour
         else
         {
             SpellPanel.SetActive(false);
-        }
+        }*/
     }
 }

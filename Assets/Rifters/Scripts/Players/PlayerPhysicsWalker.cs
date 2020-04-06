@@ -44,6 +44,9 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 	private Vector3 groundNormal;
 	public bool isGrounded { get; private set; }
 	private float groundMagnetismForce = 0f;
+	private string horizontalKey;
+	private string verticalKey;
+	private string jumpKey;
 	#endregion
 
 	//--------------------------
@@ -60,6 +63,20 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 		isGrounded = true;
 
 		rigidbody.centerOfMass = new Vector3(0, -1, 0);
+
+		if (player.isPlayer1)
+		{
+			horizontalKey = "Horizontal P1";
+			verticalKey = "Vertical P1";
+			jumpKey = "Jump P1";
+		}
+		else
+		{
+			horizontalKey = "Horizontal P2";
+			verticalKey = "Vertical P2";
+			jumpKey = "Jump P2";
+		}
+
 	}
 
 	private void FixedUpdate()
@@ -71,28 +88,32 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 		//}
 	}
 
-	//private void OnCollisionEnter(Collision collision)
-	//{
-	//	if (!isGrounded)
-	//	{
-	//		Vector3 normal = collision.contacts[0].normal;
+    #region Getters and Setters
 
-	//		if (Vector3.Angle(Vector3.up, normal) >= 90)
-	//		{
-	//			//Debug.DrawRay(collision.contacts[0].point, normal, Color.red, 2f);
-	//			rigidbody.AddForce(normal * rigidbody.velocity.magnitude * rigidbody.mass * collider.material.bounciness, ForceMode.Impulse);
-	//		}
-	//	}
-	//}
+    #endregion
 
-	//--------------------------
-	// PlayerMovement methods
-	//--------------------------
-	private void ControlMovement()
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //	if (!isGrounded)
+    //	{
+    //		Vector3 normal = collision.contacts[0].normal;
+
+    //		if (Vector3.Angle(Vector3.up, normal) >= 90)
+    //		{
+    //			//Debug.DrawRay(collision.contacts[0].point, normal, Color.red, 2f);
+    //			rigidbody.AddForce(normal * rigidbody.velocity.magnitude * rigidbody.mass * collider.material.bounciness, ForceMode.Impulse);
+    //		}
+    //	}
+    //}
+
+    //--------------------------
+    // PlayerMovement methods
+    //--------------------------
+    private void ControlMovement()
 	{
-		// Direction
-		float axisV = Input.GetAxisRaw("Vertical");
-		float axisH = Input.GetAxisRaw("Horizontal");
+		float axisV = Input.GetAxisRaw(verticalKey);
+		float axisH = Input.GetAxisRaw(horizontalKey);
+		
 
 		// Climbing the ground
 		FollowGround();
@@ -142,7 +163,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 		ApplyGroundMagnetism();
 
 		// Jumping
-		if (isGrounded && Time.time >= nextJumpTime && Input.GetButton("Jump")) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
+		if (isGrounded && Time.time >= nextJumpTime && Input.GetButton(jumpKey)) { Jump(); nextJumpTime = Time.time + jumpCooldown; }
 	}
 
 	private void Accelerate(Vector3 direction, float acceleration)

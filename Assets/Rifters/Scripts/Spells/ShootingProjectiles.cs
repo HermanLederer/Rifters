@@ -16,12 +16,29 @@ public class ShootingProjectiles : MonoBehaviour
 	public float offsetX = 1;
 	public float offsetY = 1;
 
+	private Player player;
+	private string fireKey;
+
+	private void Awake()
+	{
+		player = GetComponentInParent<Player>();
+
+		if (player.isPlayer1)
+		{
+			fireKey = "Fire2 P1";
+		}
+		else
+		{
+			fireKey = "Fire2 P2";
+		}
+	}
+
 	// Update is called once per frame
 	void FixedUpdate()
 	{
 		if (!shooting)
 		{
-			if (Input.GetButton("Fire2"))
+			if (Input.GetButton(fireKey))
 			{
 				shooting = true;
 				StartCoroutine(ShootProjectiles());

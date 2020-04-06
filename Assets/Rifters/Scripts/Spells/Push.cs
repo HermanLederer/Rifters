@@ -13,6 +13,23 @@ public class Push : MonoBehaviour
 
 	public GameObject tornadoVFX;
 
+	private Player player;
+	private string fireKey;
+
+	private void Awake()
+	{
+		player = GetComponentInParent<Player>();
+
+		if (player.isPlayer1)
+		{
+			fireKey = "Fire1 P1";
+		}
+		else
+		{
+			fireKey = "Fire1 P2";
+		}
+	}
+
 	// Update is called once per frame
 	void FixedUpdate()
 	{
@@ -29,7 +46,7 @@ public class Push : MonoBehaviour
 		//Debug.DrawLine(pushStart.position, pushStart.position + right, Color.green);
 		//#endregion
 
-		if (Input.GetButton("Fire1"))
+		if (Input.GetButton(fireKey))
 		{
 			Quaternion look = Quaternion.LookRotation(transform.forward, transform.up);
 
