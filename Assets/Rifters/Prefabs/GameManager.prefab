@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8512951221712517388}
   - component: {fileID: 3604560500783926730}
   - component: {fileID: -8164755920007316230}
+  - component: {fileID: 8773410625443920228}
   - component: {fileID: 2375395152340349139}
   m_Layer: 0
   m_Name: GameManager
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offlineMode: 0
+  respawnPlayersAfterGoal: 1
   playerPrefab: {fileID: 886666309173420961, guid: ad6cc318b3df55c4083ba6b94cf89821,
     type: 3}
   gameBallPrefab: {fileID: 8982838994785950291, guid: ceb8f801768c520428df1bf4061d3f83,
@@ -78,6 +80,24 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8773410625443920228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8512951221712517426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d016794ab1bfe42885e5840e83eaaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpOnGrass: {fileID: 0}
+  JumpOnRocks: {fileID: 0}
+  MoveOnGrass: {fileID: 0}
+  MoveOnRocks: {fileID: 0}
+  Environment: {fileID: 0}
+  Goal: {fileID: 0}
 --- !u!114 &2375395152340349139
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,9 +10,12 @@ public class AudioTest : MonoBehaviour
 	[SerializeField] private AudioClip MoveOnRocks;
 	[SerializeField] private AudioClip Environment;
 
+
+
 	private bool Jumped = true;
 
 	private PlayerPhysicsWalker playerMovement;
+	
 
 	private void Awake()
 	{
@@ -28,15 +31,18 @@ public class AudioTest : MonoBehaviour
 		//{
 		//	Jumped = false;
 		//}
-	
+
 		if (Input.GetKeyDown(KeyCode.Space))
+
 			if (Jumped == false)
 			{
+				
 				AudioManager.Instance.PlayJump(JumpOnGrass, 1);
 				Jumped = true;
 			}
 
 		if (Input.GetKeyDown(KeyCode.W))
+			
 			AudioManager.Instance.PlayMusic(MoveOnGrass);
 
 		if (Input.GetKeyUp(KeyCode.W))
