@@ -7,6 +7,7 @@ public class Push : MonoBehaviour
 	public float radius = 3f;
 	public float pushForce = 50f;
 	public float tornadoTime = 3f;
+	public float cooldown = 4f;
 	public float animationSpellTime;
 	public int angle = 30;
 
@@ -16,7 +17,7 @@ public class Push : MonoBehaviour
 
 	private Player player;
 	private string fireKey;
-
+	private float remainingCd = -1;
 	private void Awake()
 	{
 		player = GetComponentInParent<Player>();
@@ -46,18 +47,27 @@ public class Push : MonoBehaviour
 		//Debug.DrawLine(pushStart.position, pushStart.position + left, Color.green);
 		//Debug.DrawLine(pushStart.position, pushStart.position + right, Color.green);
 		//#endregion
-
-		if (Input.GetButton(fireKey))
+		if(remainingCd > 0)
 		{
-			player.SetAnimTriggerSpell("Push", animationSpellTime);
-			Quaternion look = Quaternion.LookRotation(transform.forward, transform.up);
-
-			GameObject tornado = Instantiate(tornadoVFX, transform.position, look);
-			tornado.transform.parent = transform;
-
-			Destroy(tornado, tornadoTime);
-			PushObjects();
+			remainingCd -= Time.deltaTime;
 		}
+		else
+		{
+			if (Input.GetButton(fireKey))
+			{
+				player.SetAnimTriggerSpell("Push", animationSpellTime);
+				Debug.Log("Llamando trigger Push");
+				Quaternion look = Quaternion.LookRotation(transform.forward, transform.up);
+
+				GameObject tornado = Instantiate(tornadoVFX, transform.position, look);
+				tornado.transform.parent = transform;
+
+				Destroy(tornado, tornadoTime);
+				remainingCd = cooldown;
+				PushObjects();
+			}
+		}
+		
 	}
 
 	private void PushObjects()

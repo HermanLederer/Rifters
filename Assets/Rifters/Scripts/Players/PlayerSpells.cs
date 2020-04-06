@@ -14,6 +14,7 @@ public class PlayerSpells : MonoBehaviour
     public float throwingForce = 10;
     public float raycastDistance = 6;
     public float spellAnimationTime;
+    public float cooldown;
 
     public Camera cam;
 
@@ -30,6 +31,7 @@ public class PlayerSpells : MonoBehaviour
     private InteractibleLevel activableObject;
     private Player player;
     private string spellKey;
+    private float remainingCd = -1f;
 
     //--------------------------
     // MonoBehaviour events
@@ -60,14 +62,23 @@ public class PlayerSpells : MonoBehaviour
             DetectInteractibleObjects();
         }
 
-        if (Input.GetButton(spellKey))
+        if(remainingCd > 0)
         {
-            if(activableObject != null)
+            remainingCd -= Time.deltaTime;
+        }
+        else
+        {
+            if (Input.GetButton(spellKey))
             {
-                player.SetAnimTriggerSpell("EnviromentSpell", spellAnimationTime);
-                activableObject.ActivateObject(this);
+                if (activableObject != null)
+                {
+                    player.SetAnimTriggerSpell("EnviromentSpell", spellAnimationTime);
+                    activableObject.ActivateObject(this);
+                    remainingCd = cooldown;
+                }
             }
         }
+        
     }
 
     //--------------------------
