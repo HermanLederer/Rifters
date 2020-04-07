@@ -170,6 +170,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		if (respawnPlayersAfterGoal)
 		{
 			// going to respawn players based on their team number later
+			/*GameObject[] Players = GameObject.FindGameObjectsWithTag("Player");
+			foreach (GameObject p in Players)
+			{
+				Transform spawnPos = GameObject.Find("Team1SpawnPosition").transform;
+				p.transform.position = new Vector3(spawnPos.position.x, spawnPos.position.y, spawnPos.position.z);
+				spawnPos.position.x += 10;
+			}*/
 			GameObject.FindGameObjectWithTag("Player").transform.position = GameObject.Find("Team1SpawnPosition").transform.position;
 		}
 	}

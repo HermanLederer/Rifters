@@ -14,7 +14,10 @@ public class TimeBar : MonoBehaviour
 
     void Update()
     {
-        gameTime -= Time.deltaTime;
-        bar.localScale = new Vector3(gameTime/timeMax, 1f);
+        if(gameTime >= 0)
+        {
+            gameTime -= Time.deltaTime;
+            bar.localScale = new Vector3(gameTime / timeMax, 1f);
+        }
     }
 }
