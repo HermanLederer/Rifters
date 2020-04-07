@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724e99678d533234883892b3954faf82, type: 3}
+  m_Name: PlayerCharacter
+  m_EditorClassIdentifier: 
+  Image: {fileID: 21300000, guid: a12e9fea5d4ea9642826fbf8043ad66f, type: 3}
+  ImageWidth: 402
+  ImageHeight: 250
+  ImageX: -64
+  ImageY: -27
+  CharacterModel: {fileID: 5686001400133356542, guid: 6e33ecd044f61a4449fd0f8571a6e79d,
+    type: 3}
+  id: 0
+  animator: {fileID: 0}
+  locked: 0
+  animationTriggers:
+  - LookAround
+  - Toe
+  - Fight
