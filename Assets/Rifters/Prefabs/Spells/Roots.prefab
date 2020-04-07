@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 727447425663908520}
   - component: {fileID: 8644651929420829172}
   - component: {fileID: 3286378862012809800}
+  - component: {fileID: 8659459291663620033}
   m_Layer: 13
   m_Name: Tree
   m_TagString: Untagged
@@ -203,6 +204,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!136 &8659459291663620033
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9177190903729873982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.75
+  m_Height: 7.66
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7847011835652527157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,6 +308,11 @@ PrefabInstance:
     - target: {fileID: 7847011834429412933, guid: cdeb19aa4f027c049a1dfea4ac45136b,
         type: 3}
       propertyPath: ShapeModule.radius.value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7847011834429412955, guid: cdeb19aa4f027c049a1dfea4ac45136b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8104917844524151255, guid: cdeb19aa4f027c049a1dfea4ac45136b,

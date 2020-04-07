@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	[SerializeField] private GameObject playerPrefab = null;
 	[SerializeField] private GameObject gameBallPrefab = null;
 	[SerializeField] private int playToGoals = 5;
+	[SerializeField] private Transform ballSpawn;
 
 	[SerializeField] private AudioClip Goal;
 
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		else
 		{
 			GetComponent<PhotonView>().enabled = false;
-			Instantiate(gameBallPrefab, Vector3.zero, Quaternion.identity);
+			Instantiate(gameBallPrefab, ballSpawn.position, Quaternion.identity);
 		}
 
 		localPlayerTeam = GameTeam.Team1;

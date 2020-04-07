@@ -74,8 +74,6 @@ public class Push : MonoBehaviour
 	{
 		Collider[] pushableObjects = Physics.OverlapSphere(transform.position, radius, levelLayer);
 
-		Debug.Log("Numero de objetos: " + pushableObjects.Length);
-
 		int contador = 0;
 
 		for (int i = 0; i < pushableObjects.Length; i++)
@@ -91,7 +89,7 @@ public class Push : MonoBehaviour
 
 			if (rb != null)
 			{
-				rb.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
+				rb.AddForce(transform.forward * pushForce, ForceMode.Impulse);
 			}
 		}
 

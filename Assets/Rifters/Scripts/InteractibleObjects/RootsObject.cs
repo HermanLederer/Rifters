@@ -72,9 +72,23 @@ public class RootsObject : InteractibleLevel
     {
         base.OnTriggerEnter(other);
 
+        Debug.Log("Hola ha entrado: " + other.gameObject.name);
         if (dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer) && activated)
         {
             SetHoldedObject(other.gameObject);
+        }
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        base.OnTriggerStay(other);
+
+        if (activated)
+        {
+            if(holdedObject == null)
+            {
+                SetHoldedObject(other.gameObject);
+            }
         }
     }
 
