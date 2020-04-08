@@ -35,6 +35,9 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 	[Range(0f, 2f)] public float groundMagnetism = 0.5f;
 
 	public LayerMask levelLayerMask;
+
+	[HideInInspector] public float axisV;
+	[HideInInspector] public float axisH;
 	#endregion
 
 	//
@@ -48,6 +51,8 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 	private string verticalKey;
 	private string jumpKey;
 	private float spellTime = -1f;
+
+	
 	#endregion
 
 	//--------------------------
@@ -116,8 +121,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
     //--------------------------
     private void ControlMovement()
 	{
-		float axisV;
-		float axisH;
+		
 
 		if (spellTime > 0)
 		{

@@ -15,7 +15,7 @@ public class AudioTest : MonoBehaviour
 	private bool Jumped = true;
 
 	private PlayerPhysicsWalker playerMovement;
-	
+
 
 	private void Awake()
 	{
@@ -25,27 +25,29 @@ public class AudioTest : MonoBehaviour
 	{
 		AudioManager.Instance.PlayBackgroundMusic(Environment, 0.5f);
 	}
-	private void Update()
+	private void FixedUpdate()
 	{
-		//if (playerMovement.isGrounded)
-		//{
-		//	Jumped = false;
-		//}
+		if (playerMovement.isGrounded)
+		{
+			Jumped = false;
+		}
 
 		if (Input.GetKeyDown(KeyCode.Space))
 
 			if (Jumped == false)
 			{
-				
+				Debug.Log("jumop");
 				AudioManager.Instance.PlayJump(JumpOnGrass, 1);
 				Jumped = true;
 			}
 
-		if (Input.GetKeyDown(KeyCode.W))
-			
+		if (Input.GetKeyDown(KeyCode.W) && playerMovement.isGrounded)
+		{
 			AudioManager.Instance.PlayMusic(MoveOnGrass);
+		}
+			
 
-		if (Input.GetKeyUp(KeyCode.W))
+		if (Input.GetKeyUp(KeyCode.W) || Jumped == true)
 			AudioManager.Instance.StopMusic(MoveOnGrass);
 	}
 }
