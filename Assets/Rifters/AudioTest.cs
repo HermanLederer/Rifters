@@ -15,6 +15,7 @@ public class AudioTest : MonoBehaviour
 	private bool Jumped = true;
 
 	private PlayerPhysicsWalker playerMovement;
+	private Player player;
 
 
 	private void Awake()
@@ -36,7 +37,6 @@ public class AudioTest : MonoBehaviour
 
 			if (Jumped == false)
 			{
-				Debug.Log("jumop");
 				AudioManager.Instance.PlayJump(JumpOnGrass, 1);
 				Jumped = true;
 			}
@@ -45,9 +45,10 @@ public class AudioTest : MonoBehaviour
 		{
 			AudioManager.Instance.PlayMusic(MoveOnGrass);
 		}
-			
 
-		if (Input.GetKeyUp(KeyCode.W) || Jumped == true)
+		Vector3 velocity = playerMovement.rigidbody.velocity;
+		Vector3 localVelocity = player.playerOrigin.InverseTransformDirection(velocity);
+		if (Input.GetKeyUp(KeyCode.W) || Jumped == true)// || localVelocity.magnitude == 0)
 			AudioManager.Instance.StopMusic(MoveOnGrass);
 	}
 }

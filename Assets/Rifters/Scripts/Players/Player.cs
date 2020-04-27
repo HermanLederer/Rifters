@@ -82,15 +82,16 @@ public class Player : MonoBehaviourPun
 		animator.SetFloat("Sideways", localVelocity.x / playerPhysicsWalker.maxSprintingSpeed);
 		animator.SetFloat("Upward", verticalVelocity);
 		animator.SetFloat("Horizontal", horizontalVelocity.magnitude / playerPhysicsWalker.maxSprintingSpeed);
+		//animator.SetBool("IsAccelerating", (localVelocity.magnitude > 0));
+		
 		if (isPlayer1)
 		{
-			animator.SetBool("IsAccelerating", !(Input.GetAxisRaw("Vertical P1") == 0 && Input.GetAxisRaw("Horizontal P1") == 0));
+			animator.SetBool("IsAccelerating", (Input.GetAxisRaw("Vertical P1") != 0 || Input.GetAxisRaw("Horizontal P1") != 0));
 		}
 		else
 		{
-			animator.SetBool("IsAccelerating", !(Input.GetAxisRaw("Vertical P2") == 0 && Input.GetAxisRaw("Horizontal P2") == 0));
+			animator.SetBool("IsAccelerating", (Input.GetAxisRaw("Vertical P2") != 0 || Input.GetAxisRaw("Horizontal P2") != 0));
 		}
-		
 	}
 
 	public void SetAnimBool(string valueString, bool valueBool)

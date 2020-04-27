@@ -121,8 +121,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
     //--------------------------
     private void ControlMovement()
 	{
-		
-
+		//If the player is casting the spell he can't move
 		if (spellTime > 0)
 		{
 			spellTime -= Time.deltaTime;
@@ -134,8 +133,6 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 			axisV = Input.GetAxisRaw(verticalKey);
 			axisH = Input.GetAxisRaw(horizontalKey);
 		}
-		
-		
 
 		// Climbing the ground
 		FollowGround();
@@ -222,6 +219,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 		RaycastHit hit;
 		if (Physics.SphereCast(center, collider.radius, Vector3.down, out hit, rayLengthHalf * 2, levelLayerMask))
 		{
+			Debug.Log("Is grounded entra");
 			isGrounded = true;
 			groundNormal = hit.normal;
 			groundMagnetismForce = 0f;
@@ -230,6 +228,7 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 			//	if (Vector3.Angle(Vector3.up, hit.normal) < 50)
 			//		transform.position = new Vector3(transform.position.x, hit.point.y + collider.radius, transform.position.z);
 		}
+		Debug.Log("Is grounded: " + isGrounded);
 	}
 
 	private void ApplyGroundMagnetism()
