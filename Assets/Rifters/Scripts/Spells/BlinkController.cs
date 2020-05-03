@@ -41,7 +41,7 @@ public class BlinkController : MonoBehaviour
 
         slider.value = currentEnergy / maxEnergy;
 
-        if (Input.GetKeyDown(KeyCode.Q) && currentEnergy >= maxEnergy/2)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && currentEnergy >= maxEnergy/2)
         {
             anim.SetTrigger(blinkTrigger);
             Blink(blinkDistance);
@@ -87,6 +87,7 @@ public class BlinkController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        /*
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * (blinkDistance + offsetWidthPlayer));
         Gizmos.color = Color.green;
@@ -95,5 +96,6 @@ public class BlinkController : MonoBehaviour
         Gizmos.DrawLine(transform.position - offsetHeightPlayer * transform.up, transform.position - offsetHeightPlayer * transform.up + transform.forward * (blinkDistance + offsetWidthPlayer));
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * blinkDistance);
+        */
     }
 }

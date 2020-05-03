@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using DG.Tweening;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -31,6 +32,9 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 
 	public float jumpPower = 8f;
 	public float jumpCooldown = 0.1f;
+	public float stepDistance;
+	public float stepRayDistance;
+	public float stepVelocity;
 
 	[Range(0f, 2f)] public float groundMagnetism = 0.5f;
 
@@ -219,7 +223,6 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 		RaycastHit hit;
 		if (Physics.SphereCast(center, collider.radius, Vector3.down, out hit, rayLengthHalf * 2, levelLayerMask))
 		{
-			Debug.Log("Is grounded entra");
 			isGrounded = true;
 			groundNormal = hit.normal;
 			groundMagnetismForce = 0f;
@@ -228,7 +231,6 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 			//	if (Vector3.Angle(Vector3.up, hit.normal) < 50)
 			//		transform.position = new Vector3(transform.position.x, hit.point.y + collider.radius, transform.position.z);
 		}
-		Debug.Log("Is grounded: " + isGrounded);
 	}
 
 	private void ApplyGroundMagnetism()
@@ -254,8 +256,29 @@ public class PlayerPhysicsWalker : MonoBehaviourPun
 				rigidbody.AddForce(Vector3.down * groundMagnetismForce * groundMagnetism * rigidbody.mass, ForceMode.Impulse);
 			}
 		}
+
+		RaycastHit _hit;
+		if(Physics.Raycast(transform.position + Vector3.up * 0.05f, transform.forward, out _hit, stepRayDistance, levelLayerMask))
+		{
+			Debug.Log("Punto maximo del obstaculo: " + _hit.collider.bounds.max.y);
+			if(_hit.collider.bounds.max.y - transform.position.y < stepDistance)
+			{
+				Debug.Log("El objeto es lo suficientemente pequeño");
+				Vector3 dir = _hit.point - (transform.position + Vector3.up * 0.05f);
+				//transform.DOMove(transform.position + Vector3.up * stepDistance, 0.05f);
+				//rigidbody.velocity += Vector3.up * stepVelocity;
+			}
+		}
 	}
-	
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawLine(transform.position + Vector3.up * 0.05f, transform.position + transform.forward * stepRayDistance + Vector3.up * 0.05f);
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(transform.position + Vector3.up * stepDistance, transform.position + transform.forward * .6f + Vector3.up * stepDistance);
+	}
+
 	private bool Jump()
 	{
 		groundMagnetismForce = 0f;
