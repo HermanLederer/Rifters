@@ -14,13 +14,13 @@ public class AudioTest : MonoBehaviour
 
 	private bool Jumped = true;
 
-	private PlayerPhysicsWalker playerMovement = null;
+	private RigidbodyController playerMovement = null;
 	private Player player = null;
 
 
 	private void Awake()
 	{
-		playerMovement = FindObjectOfType<PlayerPhysicsWalker>();
+		playerMovement = FindObjectOfType<RigidbodyController>();
 	}
 	private void Start()
 	{
@@ -46,9 +46,9 @@ public class AudioTest : MonoBehaviour
 			AudioManager.Instance.PlayMusic(MoveOnGrass);
 		}
 
-		Vector3 velocity = playerMovement.rigidbody.velocity;
-		Vector3 localVelocity = player.playerOrigin.InverseTransformDirection(velocity);
-		if (Input.GetKeyUp(KeyCode.W) || Jumped == true)// || localVelocity.magnitude == 0)
-			AudioManager.Instance.StopMusic(MoveOnGrass);
+		//Vector3 velocity = playerMovement.rigidbody.velocity;
+		//Vector3 localVelocity = player.playerOrigin.InverseTransformDirection(velocity);
+		//if (Input.GetKeyUp(KeyCode.W) || Jumped == true)// || localVelocity.magnitude == 0)
+		//	AudioManager.Instance.StopMusic(MoveOnGrass);
 	}
 }

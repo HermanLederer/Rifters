@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
 	private static AudioManager instance;
-	private PlayerPhysicsWalker playerMovement;
+	private RigidbodyController playerMovement;
 	public static AudioManager Instance
 	{
 		get
@@ -55,7 +55,7 @@ public class AudioManager : MonoBehaviour
 	{
 		DontDestroyOnLoad(this.gameObject);
 
-		playerMovement = FindObjectOfType<PlayerPhysicsWalker>();
+		playerMovement = FindObjectOfType<RigidbodyController>();
 		// Create audio sources, and save them as references
 		musicSource = this.gameObject.AddComponent<AudioSource>();
 		musicSource2 = this.gameObject.AddComponent<AudioSource>();

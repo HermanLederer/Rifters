@@ -1,0 +1,2 @@
+The modules folder contains modular sub-systems that do not rely on anything outside their own folder.
+A module is a collection of assets that can be easily cut out and reused in any other unity project.
