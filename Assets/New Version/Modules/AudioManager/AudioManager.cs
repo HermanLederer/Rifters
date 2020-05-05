@@ -28,9 +28,10 @@ public class AudioManager : MonoBehaviour
 	#region Editor variables
 	[Header("Audio sources")]
 	[SerializeField] private AudioSource musicSource = null;
-	[Header("Audio clips")]
+	[SerializeField] private AudioSource drumSource = null;
+	[SerializeField] private AudioSource tribeSource = null;
+	[Header("Music")]
 	[SerializeField] private AudioClip[] music = null;
-	[SerializeField] private AudioClip Goal = null;
 	#endregion
 
 	private bool firstMusicSourceIsPlaying;
@@ -78,6 +79,16 @@ public class AudioManager : MonoBehaviour
 	public void StopMusic(AudioClip musicClip)
 	{
 		musicSource.Stop();
+	}
+
+	public void PlayDrum(AudioClip drumClip)
+	{
+		drumSource.PlayOneShot(drumClip);
+	}
+
+	public void PlayTribeVoc(AudioClip vocClip)
+	{
+		tribeSource.PlayOneShot(vocClip);
 	}
 
 	// Omitted some methods

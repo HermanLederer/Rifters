@@ -37,6 +37,9 @@ public class Player : MonoBehaviourPun
 	private string cameraY;
 	private float acceleration;
 
+	private string chargeKey;
+	private string fireKey;
+
 	//--------------------------
 	// MonoBehaviour events
 	//--------------------------
@@ -67,10 +70,19 @@ public class Player : MonoBehaviourPun
 			cameraY = "P2 Camera Y";
 			acceleration = joystickAcceleration;
 		}
+
+		chargeKey = "Fire2 P1";
+		fireKey = "Fire1 P1";
 	}
 
 	void FixedUpdate()
 	{
+		if (Input.GetButton(chargeKey))
+		{
+			viewCamera.fieldOfView = 60;
+		}
+		else viewCamera.fieldOfView = 80;
+
 		float mouseX = Input.GetAxis(cameraX) * acceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxis(cameraY) * acceleration * Time.fixedDeltaTime;
 		

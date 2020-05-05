@@ -106,11 +106,7 @@ public class GameItemBehaviour : MonoBehaviour
 		state.Update();
 	}
 
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (playerLayer == (playerLayer | (1 << collision.gameObject.layer))) Kick(collision.contacts[0].normal * 10f + Vector3.up * 0.36f);
-	}
-
+	// TODO: check for that in Update instead
 	private void OnTriggerEnter(Collider other)
 	{
 		if (spellLayer == (spellLayer & 1 << other.gameObject.layer))
@@ -167,7 +163,6 @@ public class GameItemBehaviour : MonoBehaviour
 
 	public void Kick(Vector3 direction)
 	{
-		Debug.Log("kick");
 		rigidbody.AddForce(direction * rigidbody.mass, ForceMode.Impulse);
 	}
 
