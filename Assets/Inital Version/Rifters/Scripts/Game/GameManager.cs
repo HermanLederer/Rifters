@@ -21,18 +21,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	[SerializeField] private int playToGoals = 5;
 	[SerializeField] private Transform ballSpawn = null;
 
-	[SerializeField] private AudioClip Goal = null;
-
 	// Public variables
 	[HideInInspector] public int team1score = 0;
 	[HideInInspector] public int team2score = 0;
 	[HideInInspector] public GameTeam localPlayerTeam = GameTeam.Team1;
 	[HideInInspector] public List<Player> players;
 
-
-
 	// Private variables
 	private bool isGamePlaying;
+	private GameObject gameBall;
 
 	//--------------------------
 	// MonoBehaviour methods
@@ -67,7 +64,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		else
 		{
 			GetComponent<PhotonView>().enabled = false;
-			Instantiate(gameBallPrefab, ballSpawn.position, Quaternion.identity);
+			gameBall = Instantiate(gameBallPrefab, ballSpawn.position, Quaternion.identity);
 		}
 
 		localPlayerTeam = GameTeam.Team1;
@@ -165,9 +162,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	}
 	public void respawnPlayersAndBall()
 	{
-		AudioManager.Instance.PlayJump(Goal);
-		GameObject.FindGameObjectWithTag("Dragon").transform.position = GameObject.Find("BallSpawnPoint").transform.position;
-		GameObject.FindGameObjectWithTag("Dragon").GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+		//AudioManager.instance.PlayJump(Goal);
+		gameBall.transform.position = ballSpawn.position;
+		gameBall.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 		
 		if (respawnPlayersAfterGoal)
 		{
@@ -179,8 +176,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 				p.transform.position = new Vector3(spawnPos.position.x, spawnPos.position.y, spawnPos.position.z);
 				spawnPos.position.x += 10;
 			}*/
-			GameObject.Find("Player").transform.position = GameObject.Find("Team1SpawnPosition").transform.position;
-			GameObject.Find("Player 2").transform.position = GameObject.Find("Team2SpawnPosition").transform.position;
+			//GameObject.Find("Player").transform.position = GameObject.Find("Team1SpawnPosition").transform.position;
+			//GameObject.Find("Player 2").transform.position = GameObject.Find("Team2SpawnPosition").transform.position;
 		}
 	}
 }
