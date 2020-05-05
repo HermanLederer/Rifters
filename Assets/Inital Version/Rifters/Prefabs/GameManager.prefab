@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8512951221712517388}
   - component: {fileID: 3604560500783926730}
   - component: {fileID: -8164755920007316230}
-  - component: {fileID: 8773410625443920228}
   - component: {fileID: 2375395152340349139}
   m_Layer: 0
   m_Name: GameManager
@@ -28,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8512951221712517426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4, y: 0, z: 5.67}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1114090536839019614}
@@ -81,23 +80,6 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8773410625443920228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8512951221712517426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d016794ab1bfe42885e5840e83eaaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  JumpOnGrass: {fileID: 8300000, guid: 640c889ae2fccf948a2b847b3d6f5257, type: 3}
-  JumpOnRocks: {fileID: 8300000, guid: d96961aa32e0fac4bb64308194f23b12, type: 3}
-  MoveOnGrass: {fileID: 8300000, guid: 1af0314b30ab1d84e8d244b7940eef51, type: 3}
-  MoveOnRocks: {fileID: 8300000, guid: 9cea2c1c3a1b5394d84de7156167c0e5, type: 3}
-  Environment: {fileID: 8300000, guid: 079cfbe4bba8d974cbead72a21670dce, type: 3}
 --- !u!114 &2375395152340349139
 MonoBehaviour:
   m_ObjectHideFlags: 0
