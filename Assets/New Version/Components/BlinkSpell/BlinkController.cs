@@ -41,23 +41,28 @@ public class BlinkController : MonoBehaviour
 
         slider.value = currentEnergy / maxEnergy;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && currentEnergy >= maxEnergy/2)
+        /*if (Input.GetKeyDown(KeyCode.LeftShift) && currentEnergy >= maxEnergy/2)
         {
             anim.SetTrigger(blinkTrigger);
             Blink(blinkDistance);
-        }
+        }*/
     }
 
-    private void Blink(float distance)
+    public bool CheckEnergy()
+    {
+        return currentEnergy >= maxEnergy / 2;
+    }
+
+    public void Blink()
     {
         RaycastHit hit;
-        float tpDistance = distance;
+        float tpDistance = blinkDistance;
 
         for (int i = -1; i < 2; i++)
         {
             Vector3 raycastOrigin = transform.position + (offsetHeightPlayer * transform.up * i);
 
-            if(Physics.Raycast(raycastOrigin, transform.forward, out hit, distance + offsetWidthPlayer, layermask))
+            if(Physics.Raycast(raycastOrigin, transform.forward, out hit, blinkDistance + offsetWidthPlayer, layermask))
             {
                 float dist = Mathf.Infinity;
 
@@ -86,8 +91,7 @@ public class BlinkController : MonoBehaviour
     }
 
     private void OnDrawGizmos()
-    {
-        /*
+    {   
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * (blinkDistance + offsetWidthPlayer));
         Gizmos.color = Color.green;
@@ -96,6 +100,5 @@ public class BlinkController : MonoBehaviour
         Gizmos.DrawLine(transform.position - offsetHeightPlayer * transform.up, transform.position - offsetHeightPlayer * transform.up + transform.forward * (blinkDistance + offsetWidthPlayer));
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * blinkDistance);
-        */
     }
 }

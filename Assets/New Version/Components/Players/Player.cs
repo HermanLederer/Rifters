@@ -21,6 +21,8 @@ public class Player : MonoBehaviourPun
 
 	[Header("Spell components")]
 	public ExploderSpell exploderSpell;
+	public BlinkController blinkSpell;
+	public AimIceWall iceWallSpell;
 
 	[Header("Camera settings")]
 	public float mouseAcceleration = 100f;
@@ -92,6 +94,42 @@ public class Player : MonoBehaviourPun
 			// engage the wall spell here
 
 		}
+
+		// Blink Management
+		if (Input.GetKeyDown(KeyCode.LeftShift) && blinkSpell.CheckEnergy())
+		{
+			blinkSpell.Blink();
+		}
+
+		// Ice wall management
+		if (iceWallSpell.CheckCooldown())
+		{
+			if (!iceWallSpell.IsAiming())
+			{
+				if (Input.GetKeyDown(KeyCode.LeftControl))
+				{
+					iceWallSpell.SetAiming(true);
+				}
+			}
+			else
+			{
+				if (iceWallSpell.Aim())
+				{
+					if (Input.GetKeyUp(KeyCode.LeftControl))
+					{
+						iceWallSpell.PlaceWall();
+					}
+				}
+				else
+				{
+					if (Input.GetKeyUp(KeyCode.LeftControl))
+					{
+						iceWallSpell.SetAiming(false);
+					}
+				}
+			}
+		}
+
 
 		float mouseX = Input.GetAxis(cameraX) * acceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxis(cameraY) * acceleration * Time.fixedDeltaTime;
