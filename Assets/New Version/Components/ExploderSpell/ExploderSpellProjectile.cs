@@ -21,6 +21,7 @@ public class ExploderSpellProjectile : MonoBehaviour
 	public AudioClip fireballExplode = null;
 	public AudioClip fireballExplodeDrum = null;
 	public AudioClip fireballExplodeVoc = null;
+	public LayerMask explosionLayer = 0;
 	#endregion
 
 	//
@@ -52,6 +53,20 @@ public class ExploderSpellProjectile : MonoBehaviour
 		audioSource.PlayOneShot(fireballExplode);
 		AudioManager.instance.PlayDrum(fireballExplodeDrum);
 		AudioManager.instance.PlayTribeVoc(fireballExplodeVoc);
+
+		Collider[] colliders = Physics.OverlapSphere(transform.position, 9, explosionLayer);
+		foreach (Collider other in colliders)
+		{
+			Rigidbody rb;
+			if (other.TryGetComponent<Rigidbody>(out rb))
+			{
+				if (other.gameObject.GetInstanceID() == GetInstanceID()) continue;
+				rb.AddExplosionForce(700, transform.position, 5, 0, ForceMode.Impulse);
+			}
+		}
+
+		gameObject.GetComponentsInChildren<Light>()[0].enabled = false;
+		// TODO: Spawn fx
 		//Destroy(gameObject);
 	}
 }

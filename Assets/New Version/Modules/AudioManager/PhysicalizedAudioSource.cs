@@ -17,6 +17,7 @@ public class PhysicalizedAudioSource : MonoBehaviour
 	#region Editor variables
 	[Header("Audio clips")]
 	[SerializeField] private AudioClip[] clips = null;
+	[SerializeField] private Vector2 randomPitch = Vector2.one;
 	[SerializeField] private float cooldown = 0f;
 	#endregion
 
@@ -39,6 +40,7 @@ public class PhysicalizedAudioSource : MonoBehaviour
 	{
 		if (Time.time >= nextSound)
 		{
+			source.pitch = Random.Range(randomPitch.x, randomPitch.y);
 			source.PlayOneShot(clips[Random.Range(0, clips.Length)]);
 			nextSound = Time.time + cooldown;
 		}

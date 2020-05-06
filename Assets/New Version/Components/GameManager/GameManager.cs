@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 	[SerializeField] private GameObject gameBallPrefab = null;
 	[SerializeField] private int playToGoals = 5;
 	[SerializeField] private Transform ballSpawn = null;
+	[Header("Audio")]
+	//[SerializeField] private AudioClip goal = null;
+	[SerializeField] private AudioClip goalDrums = null;
+	[SerializeField] private AudioClip goalVoc = null;
 
 	// Public variables
 	[HideInInspector] public int team1score = 0;
@@ -75,7 +79,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 			inGameUI.yourTeam2.gameObject.SetActive(true);
 	}
 
-	void FixedUpdate()
+	void Update()
 	{
 		// winning conditions
 		if (isGamePlaying)
@@ -140,9 +144,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 		inGameUI.score1.text = "" + team1score;
 		inGameUI.score2.text = "" + team2score;
 
-		// debugging
-		Debug.Log("A goal has been scored by " + team);
-		Debug.Log("" + GameTeam.Team1 + ": " + team1score + "; " + GameTeam.Team2 + ": " + team2score + ";");
+		//Debug.Log("A goal has been scored by " + team);
+		//Debug.Log("" + GameTeam.Team1 + ": " + team1score + "; " + GameTeam.Team2 + ": " + team2score + ";");
+
+		AudioManager.instance.PlayDrum(goalDrums);
+		AudioManager.instance.PlayTribeVoc(goalVoc);
+
 		respawnPlayersAndBall();
 	}
 

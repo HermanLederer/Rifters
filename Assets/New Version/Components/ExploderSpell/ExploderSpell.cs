@@ -26,9 +26,7 @@ public class ExploderSpell : MonoBehaviour
 	//
 	// Private variables
 	#region Private variables
-	private string chargeKey;
-	private string fireKey;
-	private bool hasShot = false;
+	private bool isCharged = false;
 	#endregion
 
 	//--------------------------
@@ -37,32 +35,30 @@ public class ExploderSpell : MonoBehaviour
 
 	private void Awake()
 	{
-		chargeKey = "Fire2 P1";
-		fireKey = "Fire1 P1";
-
 		audioSource = GetComponent<AudioSource>();
 	}
 
-	void Update()
+	public bool Charge()
 	{
-		if (Input.GetButtonDown(chargeKey))
-		{
-			audioSource.PlayOneShot(fireballCrarge);
-			AudioManager.instance.PlayTribeVoc(fireballCrargeVoc);
-			hasShot = false;
-		}
+		audioSource.PlayOneShot(fireballCrarge);
+		AudioManager.instance.PlayTribeVoc(fireballCrargeVoc);
+		isCharged = true;
 
-		if (Input.GetButtonDown(fireKey))
-		{
-			if (!Input.GetButton(chargeKey)) return;
-			if (hasShot) return;
+		
+		return true;
+	}
 
-			Instantiate(fireballPrefab, fireballSpawnpoint.position, fireballSpawnpoint.rotation);
+	public bool Shoot()
+	{
+		if (!isCharged) return false; // not shooting because 
 
-			audioSource.PlayOneShot(fireballThrow);
-			AudioManager.instance.PlayDrum(fireballThrowDrum);
-			AudioManager.instance.PlayTribeVoc(fireballThrowVoc);
-			hasShot = true;
-		}
+		Instantiate(fireballPrefab, fireballSpawnpoint.position, fireballSpawnpoint.rotation);
+
+		audioSource.PlayOneShot(fireballThrow);
+		AudioManager.instance.PlayDrum(fireballThrowDrum);
+		AudioManager.instance.PlayTribeVoc(fireballThrowVoc);
+		isCharged = false;
+
+		return true;
 	}
 }

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 1af0314b30ab1d84e8d244b7940eef51, type: 3}
+  randomPitch: {x: 0.8, y: 1.2}
   cooldown: 0.1
 --- !u!82 &6243722684522638711
 AudioSource:

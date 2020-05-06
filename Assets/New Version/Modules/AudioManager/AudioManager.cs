@@ -28,8 +28,8 @@ public class AudioManager : MonoBehaviour
 	#region Editor variables
 	[Header("Audio sources")]
 	[SerializeField] private AudioSource musicSource = null;
-	[SerializeField] private AudioSource drumSource = null;
-	[SerializeField] private AudioSource tribeSource = null;
+	[SerializeField] private AudioSource drumSource = null; // TODO: use object pool instead
+	[SerializeField] private AudioSource tribeSource = null; // TODO: use object pool instead
 	[Header("Music")]
 	[SerializeField] private AudioClip[] music = null;
 	#endregion
@@ -64,12 +64,19 @@ public class AudioManager : MonoBehaviour
 
 	private void Start()
 	{
+		// TODO: do this in Update instead
 		PlayMusic(music[0]);
+	}
+
+	private void Update()
+	{
+		// TODO: check if music is playing and if it's not randomly start one of the tracks
 	}
 
 	//--------------------------
 	// AudioManager methods
 	//--------------------------
+	// Audio sources
 	public void PlayMusic(AudioClip musicClip)
 	{
 		musicSource.clip = musicClip;
@@ -84,12 +91,28 @@ public class AudioManager : MonoBehaviour
 	public void PlayDrum(AudioClip drumClip)
 	{
 		drumSource.PlayOneShot(drumClip);
+		// TODO: use PlayIn3D() instead
+		// TODO: make it so there are multiple locations the drum can play at and randomly select one each time
 	}
 
 	public void PlayTribeVoc(AudioClip vocClip)
 	{
 		tribeSource.PlayOneShot(vocClip);
+		// TODO: use PlayIn3D() instead
+		// TODO: make it so there are multiple locations the vocal can play at and randomly select one each time
 	}
 
-	// Omitted some methods
+	// Object pool
+	// TODO: implement the object pool methods under here
+	public void PlayIn2D(AudioClip clip, float volume)
+	{
+		// get an object that would play the clip without any spacial effects
+	}
+
+	public void PlayIn3D(AudioClip clip, float volume, Vector3 position, float minRadius, float maxRadius)
+	{
+		// get an object that would play the clip in 3d space
+	}
+
+	// Omitted some overly complicated methods we were not using
 }

@@ -57,7 +57,8 @@ public class GameItemBehaviour : MonoBehaviour
 
 	void Start()
 	{
-		BecomeDragon();
+		//BecomeDragon();
+		BecomeBall();
 
 		state = new GameItemState();
 		nextRandomDecision = Time.time;
@@ -75,7 +76,7 @@ public class GameItemBehaviour : MonoBehaviour
 		{
 			if (Time.time >= nextDragonTime && rigidbody.velocity.magnitude <= 1f)
 			{
-				BecomeDragon();
+				//BecomeDragon();
 			}
 		}
 

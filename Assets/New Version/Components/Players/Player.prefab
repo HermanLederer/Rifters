@@ -143,8 +143,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 1
-  MaxDistance: 4
+  MinDistance: 2
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -243,7 +243,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663179138094789684}
-  m_LocalRotation: {x: 0.07437619, y: 0.00000002971978, z: -0.0000000022165831, w: 0.9972303}
+  m_LocalRotation: {x: 0.07437622, y: -1.7665169e-15, z: 2.6423735e-16, w: 0.9972303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -354,11 +354,12 @@ MonoBehaviour:
   audioListener: {fileID: 6852894992033738332}
   rigidbodyController: {fileID: 4797708737368086524}
   animator: {fileID: 3166231814227968679}
+  exploderSpell: {fileID: 1998154570103415680}
+  mouseAcceleration: 115
+  joystickAcceleration: 120
   horizontalKey: Horizontal
   verticalKey: Vertical
   jumpKey: Jump
-  mouseAcceleration: 115
-  joystickAcceleration: 120
 --- !u!1 &1800554037624007680
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,8 +669,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393719862988174145}
-  m_LocalRotation: {x: 0.07437622, y: 0.000000029719779, z: -0.000000002216584, w: 0.99723023}
-  m_LocalPosition: {x: -0.2, y: 2, z: -2}
+  m_LocalRotation: {x: 0.07437622, y: -2.3536817e-12, z: 3.1597124e-11, w: 0.99723023}
+  m_LocalPosition: {x: 1.3293372, y: 1.5, z: -2.389413}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 6266250536905422023}
@@ -889,7 +890,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5397675396354295238}
-  m_LocalRotation: {x: 0.07437622, y: 1.7665169e-15, z: -2.6423735e-16, w: 0.9972303}
+  m_LocalRotation: {x: 0.07437619, y: -0.00000002971978, z: 0.0000000022165831, w: 0.9972303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

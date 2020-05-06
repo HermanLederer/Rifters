@@ -15,16 +15,12 @@ public class Player : MonoBehaviourPun
 	public CinemachineFreeLook cameraRig;
 	public Camera viewCamera;
 	public AudioListener audioListener;
-
 	public RigidbodyController rigidbodyController;
-
 	public Animator animator;
 	public AnimationState state;
 
-	[Header("Input")]
-	public string horizontalKey = "Horizontal";
-	public string verticalKey = "Vertical";
-	public string jumpKey = "Jump";
+	[Header("Spell components")]
+	public ExploderSpell exploderSpell;
 
 	[Header("Camera settings")]
 	public float mouseAcceleration = 100f;
@@ -33,12 +29,17 @@ public class Player : MonoBehaviourPun
 
 	//
 	// Private variables
+	#region Private variables
 	private string cameraX;
 	private string cameraY;
 	private float acceleration;
 
-	private string chargeKey;
-	private string fireKey;
+	public string horizontalKey = "Horizontal";
+	public string verticalKey = "Vertical";
+	public string jumpKey = "Jump";
+	private string chargeKey = "Fire2";
+	private string fireKey = "Fire1";
+	#endregion
 
 	//--------------------------
 	// MonoBehaviour events
@@ -71,41 +72,47 @@ public class Player : MonoBehaviourPun
 			acceleration = joystickAcceleration;
 		}
 
+		// TODO: multiplayer input thingy?
 		chargeKey = "Fire2 P1";
 		fireKey = "Fire1 P1";
 	}
 
-	void FixedUpdate()
+	private void Update()
 	{
-		if (Input.GetButton(chargeKey))
+		// Mouse clicks
+		if (Input.GetButtonDown(chargeKey))
 		{
-			viewCamera.fieldOfView = 60;
+			exploderSpell.Charge();
 		}
-		else viewCamera.fieldOfView = 80;
+
+		if (Input.GetButtonDown(fireKey))
+		{
+			if (Input.GetButton(chargeKey)) exploderSpell.Shoot();
+			//else
+			// engage the wall spell here
+
+		}
 
 		float mouseX = Input.GetAxis(cameraX) * acceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxis(cameraY) * acceleration * Time.fixedDeltaTime;
-		
+
 		cameraRig.m_XAxis.Value += mouseX;
 		cameraRig.m_YAxis.Value -= mouseY / 180f;
 
-		// Using input in rigidbody cntroller
+		// Controlling the RigidbodyController
 		rigidbodyController.axisV = Input.GetAxisRaw(verticalKey);
 		rigidbodyController.axisH = Input.GetAxisRaw(horizontalKey);
 		rigidbodyController.transform.rotation = Quaternion.Euler(0, viewCamera.transform.rotation.eulerAngles.y, 0);
-		if (Input.GetButton(jumpKey)) rigidbodyController.Jump();
-	}
+		if (Input.GetButtonDown(jumpKey)) rigidbodyController.Jump();
 
-	private void LateUpdate()
-	{
 		// Updating the animator
 		Vector3 velocity = rigidbodyController.rigidbody.velocity;
 		Vector3 localVelocity = rigidbodyController.transform.InverseTransformDirection(velocity);
 
-		animator.SetBool("IsGrounded", rigidbodyController.isGrounded);		
+		animator.SetBool("IsGrounded", rigidbodyController.isGrounded);
 		animator.SetFloat("Forward", localVelocity.z / rigidbodyController.maxSprintingSpeed);
 		animator.SetFloat("Sideways", localVelocity.x / rigidbodyController.maxSprintingSpeed);
-		animator.SetBool("IsAccelerating", !((Input.GetAxisRaw(verticalKey) + Input.GetAxisRaw(horizontalKey)) == 0));
+		animator.SetBool("IsAccelerating", Mathf.Abs(Input.GetAxisRaw(verticalKey) + Mathf.Abs(Input.GetAxisRaw(horizontalKey))) > 0);
 	}
 
 	public void SetAnimBool(string valueString, bool valueBool)

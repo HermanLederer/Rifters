@@ -23,11 +23,11 @@ public class RigidbodyController : MonoBehaviour
 	//public float maxWalkingSpeed = 5f;
 	public float maxFloatingSpeed = 2f;
 
-	[Range(0f, 50f)] public float maxGroundAcceleration = 20f;
-	[Range(0f, 50f)] public float maxGroundDeceleration = 10f;
+	[Range(0f, 200f)] public float maxGroundAcceleration = 20f;
+	[Range(0f, 200f)] public float maxGroundDeceleration = 10f;
 
-	[Range(0f, 50f)] public float maxAirAcceleration = 5f;
-	[Range(0f, 50f)] public float maxAirDeceleration = 5f;
+	[Range(0f, 200f)] public float maxAirAcceleration = 5f;
+	[Range(0f, 200f)] public float maxAirDeceleration = 5f;
 
 	public float jumpPower = 8f;
 	public float stepDistance;

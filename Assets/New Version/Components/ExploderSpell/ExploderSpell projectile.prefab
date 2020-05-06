@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 9112791472121447263}
   - component: {fileID: 5885442274980003806}
   - component: {fileID: 7429649632693652865}
+  - component: {fileID: 7260782603482640792}
   - component: {fileID: 1376854845470131873}
   - component: {fileID: 7561728781864283579}
   - component: {fileID: 3895643104805152910}
-  - component: {fileID: 7260782603482640792}
   m_Layer: 0
   m_Name: ExploderSpell projectile
   m_TagString: Untagged
@@ -84,6 +84,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7260782603482640792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896346109625938319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad133c2985b15146b485a62f19529f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 30
+  fireballExplode: {fileID: 8300000, guid: 3f541d001ac94d042938faca08116c44, type: 3}
+  fireballExplodeDrum: {fileID: 8300000, guid: 6baaad7a741156645a058717b4203788, type: 3}
+  fireballExplodeVoc: {fileID: 8300000, guid: e178de17c3c25f54783f707807eb6739, type: 3}
+  explosionLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!135 &1376854845470131873
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -118,7 +137,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 0
   MinDistance: 5
-  MaxDistance: 50
+  MaxDistance: 70
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -204,27 +223,11 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &7260782603482640792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1896346109625938319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ad133c2985b15146b485a62f19529f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 40
-  fireballExplode: {fileID: 8300000, guid: 3f541d001ac94d042938faca08116c44, type: 3}
-  fireballExplodeDrum: {fileID: 8300000, guid: 6baaad7a741156645a058717b4203788, type: 3}
-  fireballExplodeVoc: {fileID: 8300000, guid: e178de17c3c25f54783f707807eb6739, type: 3}
+  m_CollisionDetection: 2
 --- !u!1 &3526250171884786901
 GameObject:
   m_ObjectHideFlags: 0

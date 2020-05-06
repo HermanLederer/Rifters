@@ -47,18 +47,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSprintingSpeed: 9.48
   maxFloatingSpeed: 1
-  maxGroundAcceleration: 41.2
-  maxGroundDeceleration: 50
+  maxGroundAcceleration: 186
+  maxGroundDeceleration: 171
   maxAirAcceleration: 7.8
   maxAirDeceleration: 6.5
   jumpPower: 14
-  jumpCooldown: 0
   stepDistance: 0
   stepRayDistance: 0
   stepVelocity: 0
-  horizontalKey: Horizontal
-  verticalKey: Vertical
-  jumpKey: Jump
   groundMagnetism: 0.5
   levelLayerMask:
     serializedVersion: 2
