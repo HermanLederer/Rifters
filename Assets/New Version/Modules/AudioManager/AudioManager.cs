@@ -55,22 +55,20 @@ public class AudioManager : MonoBehaviour
 
 		DontDestroyOnLoad(this.gameObject);
 
-		// I find this a bad idea because we can't change any parameters this way, instead we're gonna have the sources in the prefab;
-		// Create audio sources, and save them as references
-		//musicSource = this.gameObject.AddComponent<AudioSource>();
-		//musicSource2 = this.gameObject.AddComponent<AudioSource>(); // also we don't need another source
 		//sfxSource = this.gameObject.AddComponent<AudioSource>(); // and this is going to be offloaded off this component
 	}
 
 	private void Start()
 	{
-		// TODO: do this in Update instead
-		PlayMusic(music[0]);
 	}
 
 	private void Update()
 	{
-		// TODO: check if music is playing and if it's not randomly start one of the tracks
+		//check if music is playing and if it's not randomly start one of the tracks
+		if (!musicSource.isPlaying)
+		{
+			PlayMusic(music[Random.Range(0,music.Length)]);
+		}
 	}
 
 	//--------------------------
@@ -113,6 +111,4 @@ public class AudioManager : MonoBehaviour
 	{
 		// get an object that would play the clip in 3d space
 	}
-
-	// Omitted some overly complicated methods we were not using
 }
