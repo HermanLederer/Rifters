@@ -106,6 +106,10 @@
               </e>
             </e>
             <e p="Modules.txt" t="Include" />
+            <e p="ObjectPooling" t="Include">
+              <e p="IPooledObject.cs" t="Include" />
+              <e p="ObjectPooler.cs" t="Include" />
+            </e>
             <e p="RigidbodyController" t="Include">
               <e p="RigidbodyController.cs" t="Include" />
             </e>

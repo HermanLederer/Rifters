@@ -52,7 +52,8 @@ public class ExploderSpell : MonoBehaviour
 	{
 		if (!isCharged) return false; // not shooting because 
 
-		Instantiate(fireballPrefab, fireballSpawnpoint.position, fireballSpawnpoint.rotation);
+		ObjectPooler.Instance.SpawnFromPool("Spell_Exploder", fireballSpawnpoint.position, fireballSpawnpoint.rotation);
+		//Instantiate(fireballPrefab, fireballSpawnpoint.position, fireballSpawnpoint.rotation);
 
 		audioSource.PlayOneShot(fireballThrow);
 		AudioManager.instance.PlayDrum(fireballThrowDrum);

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(Rigidbody))]
-public class ExploderSpellProjectile : MonoBehaviour
+public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 {
 	//
 	// Other components
@@ -40,9 +40,12 @@ public class ExploderSpellProjectile : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 	}
 
-	void Start()
-    {
+	public void OnObjectSpawn()
+	{
+		isDead = false;
+		rigidbody.velocity = Vector3.zero;
 		rigidbody.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+		gameObject.GetComponentsInChildren<Light>()[0].enabled = true;
 	}
 
 	private void OnCollisionEnter(Collision collision)

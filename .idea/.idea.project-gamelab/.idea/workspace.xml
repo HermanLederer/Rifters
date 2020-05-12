@@ -29,6 +29,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/New Version/Components/ExploderSpell/ExploderSpell.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/New Version/Components/Players/Player.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/New Version/Components/ExploderSpell/ExploderSpellProjectile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/New Version/Components/Players/PlayerSpells.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/New Version/Components/IceWallSpell/IceWallController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/New Version/Modules/AudioManager/AudioManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/New Version/Components/IceWallSpell/AimIceWall.cs" root0="FORCE_HIGHLIGHTING" />
@@ -38,6 +42,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/New Version/Modules/AudioManager/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/IPooledObject.cs" />
+        <option value="$PROJECT_DIR$/Assets/ObjectPooler.cs" />
+        <option value="$PROJECT_DIR$/Assets/New Version/Components/ExploderSpell/ExploderSpell.cs" />
+        <option value="$PROJECT_DIR$/Assets/New Version/Components/ExploderSpell/ExploderSpellProjectile.cs" />
       </list>
     </option>
   </component>
@@ -80,6 +88,7 @@
       <workItem from="1588857409405" duration="76000" />
       <workItem from="1589033680458" duration="299000" />
       <workItem from="1589034082661" duration="1873000" />
+      <workItem from="1589306435834" duration="4039000" />
     </task>
     <servers />
   </component>
@@ -104,9 +113,9 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="633" y="295" width="551" height="273" key="#Notifications" timestamp="1589035728222">
+    <state x="633" y="295" width="551" height="273" key="#Notifications" timestamp="1589307100938">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="633" y="295" width="551" height="273" key="#Notifications/0.0.1536.864@0.0.1536.864" timestamp="1589035728222" />
+    <state x="633" y="295" width="551" height="273" key="#Notifications/0.0.1536.864@0.0.1536.864" timestamp="1589307100938" />
   </component>
 </project>
