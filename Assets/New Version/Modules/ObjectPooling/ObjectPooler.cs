@@ -5,64 +5,94 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    [System.Serializable]
-    public class Pool
-    {
-        public string tag;
-        public GameObject prefab;
-        public int size;
-    }
+	[System.Serializable]
+	public class Pool
+	{
+		public string tag;
+		public GameObject prefab;
+		public int size;
+	}
 
-    public static ObjectPooler Instance;
+	public static ObjectPooler instance;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+	private void Awake()
+	{
+		instance = this;
 
-    public List<Pool> pools;
-    public Dictionary<string, Queue<GameObject>> poolDictionary;
-    void Start()
-    {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+		poolDictionary = new Dictionary<string, Queue<GameObject>>();
+	}
 
-        foreach (Pool pool in pools)
-        {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
+	public List<Pool> pools;
+	public Dictionary<string, Queue<GameObject>> poolDictionary;
+	void Start()
+	{
+		foreach (Pool pool in pools)
+		{
+			CreateNewPool(pool.tag, pool.prefab, pool.size);
+		}
+	}
 
-            for (int i = 0; i < pool.size; i++)
-            {
-                GameObject obj = Instantiate(pool.prefab);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-            
-            poolDictionary.Add(pool.tag,objectPool);
-        }
-    }
+	public void CreateNewPool(string tag, GameObject prefab, int size)
+	{
+		Queue<GameObject> objectPool = new Queue<GameObject>();
 
-    public GameObject SpawnFromPool (string tag, Vector3 position, Quaternion rotation)
-    {
-        if (!poolDictionary.ContainsKey(tag))
-        {
-            Debug.LogWarning("Pool with tag " + tag + " Doesn't exist.");
-            return null;
-        }
-        GameObject objectToSpawn = poolDictionary[tag].Dequeue();
-        
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
+		for (int i = 0; i < size; i++)
+		{
+			GameObject obj = Instantiate(prefab);
+			obj.SetActive(false);
+			objectPool.Enqueue(obj);
+		}
 
-        IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
+		poolDictionary.Add(tag, objectPool);
+	}
 
-        if (pooledObj != null)
-        {
-            pooledObj.OnObjectSpawn();
-        }
-        
-        poolDictionary[tag].Enqueue(objectToSpawn);
+	public GameObject SpawnFromPool(string tag)
+	{
+		if (!poolDictionary.ContainsKey(tag))
+		{
+			Debug.LogWarning("Pool with tag " + tag + " Doesn't exist.");
+			return null;
+		}
+		GameObject objectToSpawn = poolDictionary[tag].Dequeue();
 
-        return objectToSpawn;
-    }
+		objectToSpawn.SetActive(true);
+		objectToSpawn.transform.position = Vector3.zero;
+		objectToSpawn.transform.rotation = Quaternion.identity;
+
+		IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
+
+		if (pooledObj != null)
+		{
+			pooledObj.OnObjectSpawn();
+		}
+
+		poolDictionary[tag].Enqueue(objectToSpawn);
+
+		return objectToSpawn;
+	}
+
+	public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+	{
+		if (!poolDictionary.ContainsKey(tag))
+		{
+			Debug.LogWarning("Pool with tag " + tag + " Doesn't exist.");
+			return null;
+		}
+		GameObject objectToSpawn = poolDictionary[tag].Dequeue();
+
+		objectToSpawn.SetActive(true);
+		objectToSpawn.transform.position = position;
+		objectToSpawn.transform.rotation = rotation;
+
+		IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
+
+		if (pooledObj != null)
+		{
+			pooledObj.OnObjectSpawn();
+		}
+
+		poolDictionary[tag].Enqueue(objectToSpawn);
+
+		return objectToSpawn;
+	}
 }

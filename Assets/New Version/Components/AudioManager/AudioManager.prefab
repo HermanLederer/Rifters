@@ -301,10 +301,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1532603418728673535}
-  drumSource: {fileID: 3172994211300821990}
-  tribeSource: {fileID: 8286714899004637959}
+  drumLocations: []
+  tribeLocations: []
+  tribeVolume: 1
+  tribeMinDistance: 3
+  tribeMaxDistance: 200
+  drumVolume: 0.888
+  drumMinDistance: 3
+  drumMaxDistance: 200
   music:
   - {fileID: 8300000, guid: 6e3afafc2835e99418e8143f284ca8b2, type: 3}
+  soundObject2dPrefab: {fileID: 2107483185020531613, guid: d42d0817dd4d4b64fb714e3c5274388a,
+    type: 3}
+  soundObject3dPrefab: {fileID: 3953020189241135493, guid: 0785a0ee1f8d38b49b7208b893489720,
+    type: 3}
 --- !u!1 &5247462018909376730
 GameObject:
   m_ObjectHideFlags: 0
