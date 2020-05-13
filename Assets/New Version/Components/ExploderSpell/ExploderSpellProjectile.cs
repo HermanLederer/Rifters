@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(Rigidbody))]
-public class ExploderSpellProjectile : MonoBehaviour
+public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 {
 	//
 	// Other components
 	#region Other components
-	private AudioSource audioSource = null;
 	new private Rigidbody rigidbody = null;
 	#endregion
 
@@ -35,14 +33,15 @@ public class ExploderSpellProjectile : MonoBehaviour
 	//--------------------------
 	private void Awake()
 	{
-		audioSource = GetComponent<AudioSource>();
 		rigidbody = GetComponent<Rigidbody>();
-		audioSource = GetComponent<AudioSource>();
 	}
 
-	void Start()
-    {
+	public void OnObjectSpawn()
+	{
+		isDead = false;
+		rigidbody.velocity = Vector3.zero;
 		rigidbody.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+		gameObject.GetComponentsInChildren<Light>()[0].enabled = true;
 	}
 
 	private void OnCollisionEnter(Collision collision)
@@ -50,7 +49,7 @@ public class ExploderSpellProjectile : MonoBehaviour
 		if (isDead) return;
 
 		isDead = true;
-		audioSource.PlayOneShot(fireballExplode);
+		AudioManager.instance.PlayIn3D(fireballExplode, 1, transform.position, 5, 70);
 		AudioManager.instance.PlayDrum(fireballExplodeDrum);
 		AudioManager.instance.PlayTribeVoc(fireballExplodeVoc);
 
@@ -65,8 +64,7 @@ public class ExploderSpellProjectile : MonoBehaviour
 			}
 		}
 
-		gameObject.GetComponentsInChildren<Light>()[0].enabled = false;
 		// TODO: Spawn fx
-		//Destroy(gameObject);
+		gameObject.SetActive(false);
 	}
 }

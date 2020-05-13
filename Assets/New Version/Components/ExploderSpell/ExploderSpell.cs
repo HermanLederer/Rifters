@@ -2,15 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 public class ExploderSpell : MonoBehaviour
 {
-	//
-	// Other components
-	#region Other components
-	private AudioSource audioSource;
-	#endregion
-
 	//
 	// Editor variables
 	#region Editor variables
@@ -21,6 +14,10 @@ public class ExploderSpell : MonoBehaviour
 	public AudioClip fireballThrow = null;
 	public AudioClip fireballThrowDrum = null;
 	public AudioClip fireballThrowVoc = null;
+	[Header("Audio")]
+	public float volume = 1;
+	public float minDistance = 0;
+	public float maxDistance = 0;
 	#endregion
 
 	//
@@ -30,20 +27,13 @@ public class ExploderSpell : MonoBehaviour
 	#endregion
 
 	//--------------------------
-	// MonoBehaviour events
+	// ExploderSpell methods
 	//--------------------------
-
-	private void Awake()
-	{
-		audioSource = GetComponent<AudioSource>();
-	}
-
 	public bool Charge()
 	{
-		audioSource.PlayOneShot(fireballCrarge);
+		AudioManager.instance.PlayIn3D(fireballCrarge, volume, transform.position, minDistance, maxDistance);
 		AudioManager.instance.PlayTribeVoc(fireballCrargeVoc);
 		isCharged = true;
-
 		
 		return true;
 	}
@@ -52,9 +42,9 @@ public class ExploderSpell : MonoBehaviour
 	{
 		if (!isCharged) return false; // not shooting because 
 
-		Instantiate(fireballPrefab, fireballSpawnpoint.position, fireballSpawnpoint.rotation);
+		ObjectPooler.instance.SpawnFromPool("Spell_Exploder", fireballSpawnpoint.position, fireballSpawnpoint.rotation);
 
-		audioSource.PlayOneShot(fireballThrow);
+		AudioManager.instance.PlayIn3D(fireballThrow, volume, transform.position, minDistance, maxDistance);
 		AudioManager.instance.PlayDrum(fireballThrowDrum);
 		AudioManager.instance.PlayTribeVoc(fireballThrowVoc);
 		isCharged = false;
