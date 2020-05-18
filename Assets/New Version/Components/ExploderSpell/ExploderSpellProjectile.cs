@@ -29,7 +29,7 @@ public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 	#endregion
 
 	//--------------------------
-	// MonoBehaviourPunCallbacks events
+	// MonoBehaviour events
 	//--------------------------
 	private void Awake()
 	{

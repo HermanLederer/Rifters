@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8512951221712517388}
   - component: {fileID: 3604560500783926730}
-  - component: {fileID: -8164755920007316230}
   - component: {fileID: 2375395152340349139}
   m_Layer: 0
   m_Name: GameManager
@@ -54,35 +53,12 @@ MonoBehaviour:
     type: 3}
   playToGoals: 5
   ballSpawn: {fileID: 0}
-  goal: {fileID: 0}
   goalDrums: {fileID: 8300000, guid: 721dce8331e5f554bb47e7dbd4b8184c, type: 3}
   goalVoc: {fileID: 8300000, guid: 40f7e9189e05b9b409d66beccc5b485b, type: 3}
   team1score: 0
   team2score: 0
   localPlayerTeam: 0
   players: []
---- !u!114 &-8164755920007316230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8512951221712517426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &2375395152340349139
 MonoBehaviour:
   m_ObjectHideFlags: 0

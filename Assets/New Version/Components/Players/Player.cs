@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Photon.Pun;
 
-public class Player : MonoBehaviourPun
+public class Player : MonoBehaviour
 {
 	//
 	// Editor variables

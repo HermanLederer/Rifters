@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Photon.Pun;
 
 [RequireComponent(typeof(InGameUI))]
-public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
+public class GameManager : MonoBehaviour
 {
 	// Singleton
 	public static GameManager instance;
@@ -54,22 +53,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
 	void Start()
     {
-		if (!offlineMode) // online mode
-		{
-			// instantiating local player
-			players.Add(PhotonNetwork.Instantiate(playerPrefab.name, transform.position + Vector3.one * Random.Range(-2, 2), transform.rotation).GetComponent<Player>());
-
-			// instantiating online game objects
-			if (PhotonNetwork.LocalPlayer.IsMasterClient)
-			{
-				PhotonNetwork.Instantiate(gameBallPrefab.name, transform.position, transform.rotation);
-			}
-		}
-		else
-		{
-			GetComponent<PhotonView>().enabled = false;
-			gameBall = Instantiate(gameBallPrefab, ballSpawn.position, Quaternion.identity);
-		}
+		gameBall = Instantiate(gameBallPrefab, ballSpawn.position, Quaternion.identity);
 
 		localPlayerTeam = GameTeam.Team1;
 
@@ -97,38 +81,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 			if (Input.GetButton("Cancel"))
 			{
 				Time.timeScale = 1f;
-				if (!offlineMode)
-					PhotonNetwork.LoadLevel("Game");
-				else
-					SceneManager.LoadScene("Game");
+				SceneManager.LoadScene("Game");
 			}
-		}
-	}
-
-	//--------------------------
-	// MonoBehaviourPunCallbacks events
-	//--------------------------
-	public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
-	{
-		Debug.Log("Opponent left the room");
-		//PhotonNetwork.LeaveRoom();
-		//PhotonNetwork.LoadLevel("Menu");
-	}
-
-	//--------------------------
-	// IPunObservable methods
-	//--------------------------
-	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-	{
-		if (stream.IsWriting) // stream is writing
-		{
-			stream.SendNext(team1score);
-			stream.SendNext(team2score);
-		}
-		else // stream is reading
-		{
-			team1score = (int)stream.ReceiveNext();
-			team2score = (int)stream.ReceiveNext();
 		}
 	}
 

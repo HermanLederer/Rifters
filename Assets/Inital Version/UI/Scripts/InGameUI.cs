@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Photon.Pun;
-using Photon.Realtime;
 
 public class InGameUI : MonoBehaviour
 {
@@ -72,8 +70,7 @@ public class InGameUI : MonoBehaviour
 	{
 		returnToMenuPanel.SetActive(true);
 
-		PhotonNetwork.Disconnect();
-		PhotonNetwork.LoadLevel("MainMenu");
+		SceneManager.LoadScene("MainMenu");
 	}
 
 	public void ReloadGame()
