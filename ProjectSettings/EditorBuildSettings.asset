@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Inital Version/Scenes/MainMenu.unity
-    guid: 7926d4044abf2f344b5855316406aad7
+    path: Assets/Inital Version/Scenes/MainMenuNetwork.unity
+    guid: b65a5407b862f0c4cac43b49c41b17e1
   - enabled: 1
-    path: Assets/Inital Version/Scenes/Character selection.unity
-    guid: c29d0be9bd62580468da52a4ce46062d
+    path: Assets/Rifters/Scenes/Online_RoomScene.unity
+    guid: 3d1054c0aa1691a4091dfe4b4e43f79a
   - enabled: 1
-    path: Assets/Inital Version/Scenes/Gate 3 Game.unity
-    guid: d6b0ef6409d54db4495404c172bcf574
+    path: Assets/Inital Version/Scenes/TestSceneNetwork.unity
+    guid: f52b9b3ab8afd514e90ea681addd5761
   m_configObjects: {}
