@@ -49,10 +49,16 @@ public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 		if (isDead) return;
 
 		isDead = true;
+
+		// SFX
 		AudioManager.instance.PlayIn3D(fireballExplode, 1, transform.position, 5, 70);
 		AudioManager.instance.PlayDrum(fireballExplodeDrum);
 		AudioManager.instance.PlayTribeVoc(fireballExplodeVoc);
 
+		// VFX
+		VFXManager.instance.SpawnExplosionVFX(transform.position, Quaternion.FromToRotation(transform.forward, collision.contacts[0].normal));
+
+		// Explosion force
 		Collider[] colliders = Physics.OverlapSphere(transform.position, 9, explosionLayer);
 		foreach (Collider other in colliders)
 		{
@@ -60,11 +66,10 @@ public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 			if (other.TryGetComponent<Rigidbody>(out rb))
 			{
 				if (other.gameObject.GetInstanceID() == GetInstanceID()) continue;
-				rb.AddExplosionForce(700, transform.position, 5, 0, ForceMode.Impulse);
+				rb.AddExplosionForce(700, transform.position, 9, 0, ForceMode.Impulse);
 			}
 		}
-
-		// TODO: Spawn fx
+		
 		gameObject.SetActive(false);
 	}
 }
