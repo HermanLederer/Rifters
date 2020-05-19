@@ -310,7 +310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0.00024414062, y: 0}
   m_SizeDelta: {x: 1018.4, y: 282.6}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &163681218
@@ -1985,7 +1985,7 @@ PrefabInstance:
     - target: {fileID: 4684884206581770892, guid: b0b43453f281e8b4cb4ff19afdad1f5e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartClient
+      value: JoinLobby
       objectReference: {fileID: 0}
     - target: {fileID: 4684884207220177049, guid: b0b43453f281e8b4cb4ff19afdad1f5e,
         type: 3}
@@ -2428,6 +2428,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 937572143073601471, guid: c1584a5a68306d143854bc5bc7faaa5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 852412184}
+    - target: {fileID: 937572143073601471, guid: c1584a5a68306d143854bc5bc7faaa5b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 937572143254382519, guid: c1584a5a68306d143854bc5bc7faaa5b,
         type: 3}
@@ -3234,7 +3244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.00012207031, y: -91.5}
+  m_AnchoredPosition: {x: 0.00024414062, y: -91.5}
   m_SizeDelta: {x: 1018.4, y: 697.4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!95 &1247014114
@@ -3917,25 +3927,25 @@ MonoBehaviour:
   startOnHeadless: 1
   showDebugMessages: 0
   serverTickRate: 30
-  offlineScene: 
-  onlineScene: 
+  offlineScene: Assets/Inital Version/Scenes/MainMenuNetwork.unity
+  onlineScene: Assets/Rifters/Scenes/Online_RoomScene.unity
   transport: {fileID: 1879820770}
   networkAddress: localhost
   maxConnections: 4
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 713815406499392055, guid: f448ccfa20746d84384657522b52381b,
+  playerPrefab: {fileID: 886666309173420961, guid: 222d50838afad5d44acd2621017dc907,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
   showRoomGUI: 0
-  minPlayers: 1
+  minPlayers: 2
   roomPlayerPrefab: {fileID: 1351375821629330459, guid: f448ccfa20746d84384657522b52381b,
     type: 3}
   RoomScene: Assets/Rifters/Scenes/Online_RoomScene.unity
-  GameplayScene: Assets/Inital Version/Scenes/TestSceneNetwork.unity
+  GameplayScene: Assets/New Version/Scenes/NetworkGame.unity
   allPlayersReady: 0
   roomSlots: []
   ipAddressInputField: {fileID: 953910324}

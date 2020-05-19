@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlinkController : MonoBehaviour
+public class BlinkController1 : MonoBehaviour
 {
     public float blinkDuration;
     public float blinkDistance;
@@ -39,7 +39,7 @@ public class BlinkController : MonoBehaviour
             }
         }
 
-        //slider.value = currentEnergy / maxEnergy;
+        slider.value = currentEnergy / maxEnergy;
 
         /*if (Input.GetKeyDown(KeyCode.LeftShift) && currentEnergy >= maxEnergy/2)
         {

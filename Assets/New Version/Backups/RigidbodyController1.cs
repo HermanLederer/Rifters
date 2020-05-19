@@ -5,7 +5,7 @@ using DG.Tweening;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class RigidbodyController : MonoBehaviour
+public class RigidbodyController1 : MonoBehaviour
 {
 	//
 	// Other components
