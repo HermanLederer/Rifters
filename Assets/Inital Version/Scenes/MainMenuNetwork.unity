@@ -1178,7 +1178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602961725}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 483.9505, y: 215.3874, z: -118.875}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3723,7 +3723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671052421}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 483.9505, y: 215.3874, z: -118.875}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3753,7 +3753,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770968785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 483.9505, y: 215.3874, z: -118.875}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3935,7 +3935,7 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 886666309173420961, guid: 222d50838afad5d44acd2621017dc907,
+  playerPrefab: {fileID: 3898076493871459826, guid: 6f113b42fe1f1af44b6c46b81ed13f1a,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
@@ -3949,6 +3949,10 @@ MonoBehaviour:
   allPlayersReady: 0
   roomSlots: []
   ipAddressInputField: {fileID: 953910324}
+  gamePlayerPrefab: {fileID: 2729146466592421322, guid: 2f116d6e159fa5e4f9bd736bdde9dcc5,
+    type: 3}
+  playerSpawnSystem: {fileID: 662149683748510705, guid: ec257bd6ef16de84e9be30d1b1b556c1,
+    type: 3}
 --- !u!1 &1909102202
 GameObject:
   m_ObjectHideFlags: 0

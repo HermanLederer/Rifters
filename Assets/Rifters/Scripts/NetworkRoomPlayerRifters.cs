@@ -26,7 +26,7 @@ public class NetworkRoomPlayerRifters : NetworkRoomPlayer
     [SerializeField] private Sprite m_avatar;
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
-    private string DisplayName = "PlaceHolder...";
+    public string DisplayName = "PlaceHolder...";
 
     [SyncVar(hook = nameof(HandleAvatarColorChanged))]
     private Color AvatarColor = Color.white;

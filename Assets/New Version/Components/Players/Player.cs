@@ -43,11 +43,12 @@ public class Player : NetworkBehaviour
 	private string fireKey = "Fire1";
 	#endregion
 
+
 	//-- We activate the camera rig of the player so the main camera follows him --
 	//-- This will only affect the instance of the client --
-	public override void OnStartLocalPlayer()
+	public override void OnStartAuthority()
 	{
-		base.OnStartLocalPlayer();
+		base.OnStartAuthority();
 
 		cameraRig.gameObject.SetActive(true);
 
@@ -108,7 +109,7 @@ public class Player : NetworkBehaviour
 
 	private void Update()
 	{
-		if (!isLocalPlayer)
+		if (!hasAuthority)
 			return;
 
 		// Mouse clicks
