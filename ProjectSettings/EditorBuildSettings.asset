@@ -6,14 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Inital Version/Scenes/MainMenuNetwork.unity
+    path: Assets/New Version/Scenes/MainMenuNetwork.unity
     guid: b65a5407b862f0c4cac43b49c41b17e1
-  - enabled: 1
-    path: Assets/Rifters/Scenes/Online_RoomScene.unity
-    guid: 3d1054c0aa1691a4091dfe4b4e43f79a
-  - enabled: 0
-    path: Assets/Inital Version/Scenes/TestSceneNetwork.unity
-    guid: f52b9b3ab8afd514e90ea681addd5761
   - enabled: 1
     path: Assets/New Version/Scenes/NetworkGame.unity
     guid: 27dc67ad8d1d32040b0cfe32af410d01

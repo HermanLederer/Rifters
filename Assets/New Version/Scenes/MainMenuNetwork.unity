@@ -412,13 +412,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555662963}
-  m_LocalRotation: {x: -0.0054449835, y: -0.94119656, z: 0.016572703, w: 0.33740887}
-  m_LocalPosition: {x: 7683.5, y: 462.3, z: 7952.1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 1.577, y: -140.539, z: 1.2290001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &602961725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,7 +1245,7 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
-  minPlayers: 2
+  minPlayers: 1
   menuScene: Assets/Inital Version/Scenes/MainMenuNetwork.unity
   gameScene: Assets/New Version/Scenes/NetworkGame.unity
   roomPlayerPrefab: {fileID: 3822662797838347437, guid: f448ccfa20746d84384657522b52381b,
