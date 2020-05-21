@@ -21,10 +21,15 @@ public class PlayerSpawnSystem : NetworkBehaviour
 
     public static void RemoveSpawnPoint(Transform transform) => spawnPoints.Remove(transform);
 
-    public override void OnStartServer() => NetworkRoomManagerRifters.OnServerReadied += SpawnPlayer;
+    public override void OnStartServer() => NetworkManagerRifter.OnServerReadied += SpawnPlayer;
+
+    public override void OnStartClient()
+    {
+
+    }
 
     [ServerCallback]
-    private void OnDestroy() => NetworkRoomManagerRifters.OnServerReadied -= SpawnPlayer;
+    private void OnDestroy() => NetworkManagerRifter.OnServerReadied -= SpawnPlayer;
 
     [Server]
     public void SpawnPlayer(NetworkConnection conn)

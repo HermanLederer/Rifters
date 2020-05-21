@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Mirror;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class RigidbodyController : MonoBehaviour
+public class RigidbodyController : NetworkBehaviour
 {
 	//
 	// Other components

@@ -8,6 +8,8 @@ using System;
 
 public class NetworkRoomManagerRifters : NetworkRoomManager
 {
+    #region Old Network Manager
+    /*
     [Header("Offline UI")]
     [SerializeField] private InputField ipAddressInputField = null;
 
@@ -57,7 +59,7 @@ public class NetworkRoomManagerRifters : NetworkRoomManager
             return;
         }
 
-        if (IsSceneActive(RoomScene))
+        if(!IsSceneActive(RoomScene))
         {
             conn.Disconnect();
             return;
@@ -66,6 +68,7 @@ public class NetworkRoomManagerRifters : NetworkRoomManager
 
     public override void OnServerDisconnect(NetworkConnection conn)
     {
+        Debug.Log("Soy: " + conn.identity.gameObject);
         if(conn != null)
         {
             var player = conn.identity.GetComponent<NetworkRoomPlayerRifters>();
@@ -123,9 +126,10 @@ public class NetworkRoomManagerRifters : NetworkRoomManager
 
     public override void ServerChangeScene(string newSceneName)
     {
-        if (IsSceneActive(RoomScene))
+        if (IsSceneActive(RoomScene) && newSceneName.Contains("Game"))
         {
             for (int i = roomPlayers.Count - 1; i >= 0; i--)
+            //for (int i = 0; i < roomPlayers.Count; i++)
             {
                 var conn = roomPlayers[i].connectionToClient;
                 var gamePlayerInstance = Instantiate(gamePlayerPrefab);
@@ -147,4 +151,6 @@ public class NetworkRoomManagerRifters : NetworkRoomManager
             NetworkServer.Spawn(playerSpawnSystemInstance);
         }
     }
+    */
+    #endregion
 }

@@ -86,8 +86,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7355086515963854752}
-  - component: {fileID: 1351375821629330459}
   - component: {fileID: 3208129568498339223}
+  - component: {fileID: 3822662797838347437}
   m_Layer: 0
   m_Name: RoomPlayerRIfters
   m_TagString: Untagged
@@ -110,47 +110,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1351375821629330459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713815406499392055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 159ff1eaa98e5bd4ea7db54cee329fd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  showRoomGUI: 0
-  readyToBegin: 0
-  index: 0
-  RoomUI: {fileID: 6094213299081074814}
-  PlayerCards:
-  - {fileID: 1614523148720206812}
-  - {fileID: 8171460520652763046}
-  - {fileID: 8531875931380599466}
-  - {fileID: 9107388542973226580}
-  PlayerAvatars:
-  - {fileID: 1614523148720206825}
-  - {fileID: 7196838342274680619}
-  - {fileID: 4437886662086981683}
-  - {fileID: 1267754776385393779}
-  PlayerNames:
-  - {fileID: 1614523148720206823}
-  - {fileID: 5027044468224347386}
-  - {fileID: 1220902162312946852}
-  - {fileID: 7305598204099203921}
-  PlayerStates:
-  - {fileID: 1614523148720206838}
-  - {fileID: 1279591899952768949}
-  - {fileID: 2090862520890970967}
-  - {fileID: 2280074085692398051}
-  startButton: {fileID: 7960499917019272536}
-  GameUI: {fileID: 6599071680891820637}
-  m_avatar: {fileID: 21300000, guid: 808ee1e305d0d7d428d8870e93b6dce7, type: 3}
 --- !u!114 &3208129568498339223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +126,45 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &3822662797838347437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713815406499392055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159ff1eaa98e5bd4ea7db54cee329fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  roomUI: {fileID: 6094213299081074814}
+  playerCards:
+  - {fileID: 1614523148720206812}
+  - {fileID: 8171460520652763046}
+  - {fileID: 8531875931380599466}
+  - {fileID: 9107388542973226580}
+  playerAvatars:
+  - {fileID: 1614523148720206825}
+  - {fileID: 7196838342274680619}
+  - {fileID: 4437886662086981683}
+  - {fileID: 1267754776385393779}
+  playerNameTexts:
+  - {fileID: 1614523148720206823}
+  - {fileID: 5027044468224347386}
+  - {fileID: 1220902162312946852}
+  - {fileID: 7305598204099203921}
+  playerReadyTexts:
+  - {fileID: 1614523148720206838}
+  - {fileID: 1279591899952768949}
+  - {fileID: 2090862520890970967}
+  - {fileID: 2280074085692398051}
+  startGameButton: {fileID: 7960499917019272536}
+  m_avatar: {fileID: 21300000, guid: 808ee1e305d0d7d428d8870e93b6dce7, type: 3}
+  DisplayName: PlaceHolder...
+  IsReady: 0
 --- !u!1 &780434038381535150
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +579,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 240, y: -390.29126}
+  m_AnchoredPosition: {x: 959.7254, y: -389.31348}
   m_SizeDelta: {x: 350, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1614523148720206795
@@ -1100,7 +1098,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1351375821629330459}
+      - m_Target: {fileID: 3822662797838347437}
         m_MethodName: CmdStartGame
         m_Mode: 1
         m_Arguments:
@@ -1611,8 +1609,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1351375821629330459}
-        m_MethodName: ReadyUp
+      - m_Target: {fileID: 3822662797838347437}
+        m_MethodName: CmdReadyUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -31,7 +31,7 @@ public class PlayerNameAndAvatar : MonoBehaviour
 
         if (CheckHasNameAndAvatar())
         {
-            SetUserLayoutValues();
+            SavePlayerPreferences();
             mainMenuUI.SetActive(true);
             playerInputUI.SetActive(false);
         }

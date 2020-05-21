@@ -52,8 +52,8 @@ public class Player : NetworkBehaviour
 
 		cameraRig.gameObject.SetActive(true);
 
-		Camera.main.orthographic = false;
-		Camera.main.transform.SetParent(gameObject.transform);
+		//Camera.main.orthographic = false;
+		//Camera.main.transform.SetParent(gameObject.transform);
 		viewCamera = Camera.main;
 		audioListener = Camera.main.GetComponent<AudioListener>();
 	}
@@ -160,19 +160,15 @@ public class Player : NetworkBehaviour
 				}
 			}
 		}
-		Debug.Log("Mouse X: " + cameraX);
-		Debug.Log("Mouse Y: " + cameraY);
+
+		Debug.Log("Soy: " + connectionToClient + " y he llegado hasta aquí");
+
 
 		float mouseX = Input.GetAxis(cameraX) * acceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxis(cameraY) * acceleration * Time.fixedDeltaTime;
 
-		
-
 		cameraRig.m_XAxis.Value += mouseX;
 		cameraRig.m_YAxis.Value -= mouseY / 180f;
-
-		if (viewCamera == null)
-			viewCamera = Camera.main;
 
 		// Controlling the RigidbodyController
 		rigidbodyController.axisV = Input.GetAxisRaw(verticalKey);
