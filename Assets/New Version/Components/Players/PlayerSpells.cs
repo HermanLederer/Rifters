@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerSpells : MonoBehaviour
+public class PlayerSpells : NetworkBehaviour
 {
 	// Other variables
 
