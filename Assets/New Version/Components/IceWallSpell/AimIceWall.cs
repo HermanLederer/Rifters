@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class AimIceWall : MonoBehaviour
+public class AimIceWall : NetworkBehaviour
 {
     public GameObject IcePS; //Marker that will show how the wall will behave
     public GameObject iceWall; //Ice Wall
@@ -19,9 +20,12 @@ public class AimIceWall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         marker = Instantiate(IcePS) as GameObject;
+
         marker.SetActive(false);
         _cooldown = 0;
+        */
     }
 
     void Update()
@@ -52,6 +56,14 @@ public class AimIceWall : MonoBehaviour
         _cooldown = cooldown;
     }
 
+    public void StartAimWallSystem(GameObject wall)
+    {
+        marker = wall;
+        marker.SetActive(false);
+
+        _cooldown = 0;
+    }
+
     public bool Aim()
     {
         RaycastHit hit;
@@ -77,7 +89,7 @@ public class AimIceWall : MonoBehaviour
     public void PlaceWall()
     {
         //--Instantiate the wall--
-        Instantiate(iceWall, marker.transform.position, rotation);
+        GameObject iceWallInstance = Instantiate(iceWall, marker.transform.position, rotation);
 
         //--Disabling the marker--
         aiming = false;
@@ -85,6 +97,8 @@ public class AimIceWall : MonoBehaviour
 
         //--Setting the cooldown--
         _cooldown = cooldown;
+
+        NetworkServer.Spawn(iceWallInstance);
     }
 
     // Update is called once per frame

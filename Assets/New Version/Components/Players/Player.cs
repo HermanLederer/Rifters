@@ -56,6 +56,12 @@ public class Player : NetworkBehaviour
 		//Camera.main.transform.SetParent(gameObject.transform);
 		viewCamera = Camera.main;
 		audioListener = Camera.main.GetComponent<AudioListener>();
+
+		GameObject Marker = Instantiate(iceWallSpell.IcePS);
+
+		iceWallSpell.StartAimWallSystem(Marker);
+
+		//NetworkServer.Spawn(Marker);
 	}
 
 	//--------------------------
@@ -161,14 +167,14 @@ public class Player : NetworkBehaviour
 			}
 		}
 
-		Debug.Log("Soy: " + connectionToClient + " y he llegado hasta aquí");
 
-
-		float mouseX = Input.GetAxis(cameraX) * acceleration * Time.fixedDeltaTime;
+		/*float mouseX = Input.GetAxis(cameraX) * acceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxis(cameraY) * acceleration * Time.fixedDeltaTime;
 
+		Debug.Log("Valores Mouse X: " + mouseX + ", Y: " + mouseY);
+
 		cameraRig.m_XAxis.Value += mouseX;
-		cameraRig.m_YAxis.Value -= mouseY / 180f;
+		cameraRig.m_YAxis.Value -= mouseY / 180f;*/
 
 		// Controlling the RigidbodyController
 		rigidbodyController.axisV = Input.GetAxisRaw(verticalKey);
