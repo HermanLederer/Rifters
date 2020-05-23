@@ -38,7 +38,7 @@ public class ObjectPooler : MonoBehaviour
 
 		for (int i = 0; i < size; i++)
 		{
-			GameObject obj = Instantiate(prefab);
+			GameObject obj = Instantiate(prefab, transform);
 			obj.SetActive(false);
 			objectPool.Enqueue(obj);
 		}
@@ -50,22 +50,36 @@ public class ObjectPooler : MonoBehaviour
 	{
 		if (!poolDictionary.ContainsKey(tag))
 		{
-			Debug.LogWarning("Pool with tag " + tag + " Doesn't exist.");
+			Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
 			return null;
 		}
-		GameObject objectToSpawn = poolDictionary[tag].Dequeue();
+
+		GameObject objectToSpawn = poolDictionary[tag].Peek();
+
+		// Checking if an object is available to take
+		if (!objectToSpawn.gameObject.activeSelf)
+		{
+			// taking an existing object
+			poolDictionary[tag].Dequeue();
+			objectToSpawn.transform.position = Vector3.zero;
+			objectToSpawn.transform.rotation = Quaternion.identity;
+		}
+		else
+		{
+			// creating a new object because all enqueued objects are in use
+			objectToSpawn = Instantiate(objectToSpawn, Vector3.zero, Quaternion.identity, transform);
+		}
 
 		objectToSpawn.SetActive(true);
-		objectToSpawn.transform.position = Vector3.zero;
-		objectToSpawn.transform.rotation = Quaternion.identity;
 
+		// Do we need this?
 		IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
-
 		if (pooledObj != null)
 		{
 			pooledObj.OnObjectSpawn();
 		}
 
+		// putting the object in the queue
 		poolDictionary[tag].Enqueue(objectToSpawn);
 
 		return objectToSpawn;
@@ -75,22 +89,36 @@ public class ObjectPooler : MonoBehaviour
 	{
 		if (!poolDictionary.ContainsKey(tag))
 		{
-			Debug.LogWarning("Pool with tag " + tag + " Doesn't exist.");
+			Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
 			return null;
 		}
-		GameObject objectToSpawn = poolDictionary[tag].Dequeue();
+
+		GameObject objectToSpawn = poolDictionary[tag].Peek();
+
+		// Checking if an object is available to take
+		if (!objectToSpawn.gameObject.activeSelf)
+		{
+			// taking an existing object
+			poolDictionary[tag].Dequeue();
+			objectToSpawn.transform.position = position;
+			objectToSpawn.transform.rotation = rotation;
+		}
+		else
+		{
+			// creating a new object because all enqueued objects are in use
+			objectToSpawn = Instantiate(objectToSpawn, position, rotation, transform);
+		}		
 
 		objectToSpawn.SetActive(true);
-		objectToSpawn.transform.position = position;
-		objectToSpawn.transform.rotation = rotation;
 
+		// Do we need this?
 		IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
-
 		if (pooledObj != null)
 		{
 			pooledObj.OnObjectSpawn();
 		}
 
+		// putting the object in the queue
 		poolDictionary[tag].Enqueue(objectToSpawn);
 
 		return objectToSpawn;
