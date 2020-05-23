@@ -31,24 +31,16 @@ public class Spell : MonoBehaviour
 
 	private void Update()
 	{
-		if (Time.time >= nextChargeTime)
+		if (Time.time >= nextChargeTime && charges < maxCharges)
 		{
 			nextChargeTime = Time.time + cooldown;
-			AddCharge();
+			++charges;
 		}
 	}
 
 	//--------------------------
 	// ExploderSpell methods
 	//--------------------------
-	private void AddCharge()
-	{
-		if (charges < maxCharges)
-		{
-			++charges;
-		}
-	}
-
 	public bool hasCharge()
 	{
 		return charges > 0;
