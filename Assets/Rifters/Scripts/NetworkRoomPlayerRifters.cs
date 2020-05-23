@@ -204,7 +204,7 @@ public class NetworkRoomPlayerRifters : NetworkBehaviour//NetworkRoomPlayer
     [SerializeField] private Button startGameButton = null;
 
     [Header("Player Settings")]
-    [SerializeField] private Sprite m_avatar;
+    [SerializeField] private Sprite m_avatar = null;
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string DisplayName = "PlaceHolder...";

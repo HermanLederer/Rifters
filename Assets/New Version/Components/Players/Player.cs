@@ -13,16 +13,14 @@ public class Player : NetworkBehaviour
 	public bool isPlayer1;
 	[Header("Player components")]
 	public CinemachineFreeLook cameraRig;
-	public Camera viewCamera;
-	public AudioListener audioListener;
 	public RigidbodyController rigidbodyController;
 	public Animator animator;
 	public AnimationState state;
 
 	[Header("Spell components")]
 	public ExploderSpell exploderSpell;
-	public BlinkController blinkSpell;
-	public AimIceWall iceWallSpell;
+	public WallSpell wallSpell;
+	public BlinkSpell blinkSpell;
 
 	[Header("Camera settings")]
 	public float mouseAcceleration = 100f;
@@ -39,29 +37,18 @@ public class Player : NetworkBehaviour
 	public string horizontalKey = "Horizontal";
 	public string verticalKey = "Vertical";
 	public string jumpKey = "Jump";
-	private string chargeKey = "Fire2";
-	private string fireKey = "Fire1";
+	private string aimKey = "Fire2";
+	private string triggerKey = "Fire1";
+	private string blinkKey = "Fire3";
+
+	private float nextControlTime = 0f;
 	#endregion
 
-
-	//-- We activate the camera rig of the player so the main camera follows him --
-	//-- This will only affect the instance of the client --
 	public override void OnStartAuthority()
 	{
 		base.OnStartAuthority();
 
 		cameraRig.gameObject.SetActive(true);
-
-		//Camera.main.orthographic = false;
-		//Camera.main.transform.SetParent(gameObject.transform);
-		viewCamera = Camera.main;
-		audioListener = Camera.main.GetComponent<AudioListener>();
-
-		GameObject Marker = Instantiate(iceWallSpell.IcePS);
-
-		iceWallSpell.StartAimWallSystem(Marker);
-
-		//NetworkServer.Spawn(Marker);
 	}
 
 	//--------------------------
@@ -100,6 +87,7 @@ public class Player : NetworkBehaviour
 		}*/
 		#endregion
 
+		// TODO: multiplayer input thingy?
 		horizontalKey = "Horizontal P1";
 		verticalKey = "Vertical P1";
 		jumpKey = "Jump P1";
@@ -108,78 +96,45 @@ public class Player : NetworkBehaviour
 		cameraY = "P1 Camera Y";
 		acceleration = mouseAcceleration;
 
-		// TODO: multiplayer input thingy?
-		chargeKey = "Fire2 P1";
-		fireKey = "Fire1 P1";
+		aimKey = "Fire2 P1";
+		triggerKey = "Fire1 P1";
+		blinkKey = "Fire3 P1";
 	}
 
 	private void Update()
 	{
-		if (!hasAuthority)
-			return;
+		// Multiplayer check
+		if (!hasAuthority) return;
 
-		// Mouse clicks
-		if (Input.GetButtonDown(chargeKey))
+		// Control freeze check
+		if (Time.time < nextControlTime) return;
+
+		// Spells
+		if (Input.GetButton(aimKey))
 		{
-			exploderSpell.Charge();
+			wallSpell.Aim(); // wall aim
+			if (Input.GetButtonDown(triggerKey)) wallSpell.Trigger(); // wall trigger
+		}
+		else if(Input.GetButtonDown(triggerKey))
+			exploderSpell.Trigger(); // exploder
+
+		// blink
+		if (Input.GetButtonDown(blinkKey))
+		{
+			blinkSpell.Trigger();
 		}
 
-		if (Input.GetButtonDown(fireKey))
-		{
-			if (Input.GetButton(chargeKey)) exploderSpell.Shoot();
-			//else
-			// engage the wall spell here
-
-		}
-
-		// Blink Management
-		if (Input.GetKeyDown(KeyCode.LeftShift) && blinkSpell.CheckEnergy())
-		{
-			blinkSpell.Blink();
-		}
-
-		// Ice wall management
-		if (iceWallSpell.CheckCooldown())
-		{
-			if (!iceWallSpell.IsAiming())
-			{
-				if (Input.GetKeyDown(KeyCode.LeftControl))
-				{
-					iceWallSpell.SetAiming(true);
-				}
-			}
-			else
-			{
-				if (iceWallSpell.Aim())
-				{
-					if (Input.GetKeyUp(KeyCode.LeftControl))
-					{
-						iceWallSpell.PlaceWall();
-					}
-				}
-				else
-				{
-					if (Input.GetKeyUp(KeyCode.LeftControl))
-					{
-						iceWallSpell.SetAiming(false);
-					}
-				}
-			}
-		}
-
-
-		/*float mouseX = Input.GetAxis(cameraX) * acceleration * Time.fixedDeltaTime;
-		float mouseY = Input.GetAxis(cameraY) * acceleration * Time.fixedDeltaTime;
-
-		Debug.Log("Valores Mouse X: " + mouseX + ", Y: " + mouseY);
+		float mouseX = Input.GetAxisRaw(cameraX) * acceleration * Time.fixedDeltaTime;
+		float mouseY = Input.GetAxisRaw(cameraY) * acceleration * Time.fixedDeltaTime;
 
 		cameraRig.m_XAxis.Value += mouseX;
-		cameraRig.m_YAxis.Value -= mouseY / 180f;*/
+		cameraRig.m_YAxis.Value -= mouseY / 180f;
 
 		// Controlling the RigidbodyController
+		Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+		rigidbodyController.transform.rotation = Quaternion.Euler(newRotation);
 		rigidbodyController.axisV = Input.GetAxisRaw(verticalKey);
 		rigidbodyController.axisH = Input.GetAxisRaw(horizontalKey);
-		rigidbodyController.transform.rotation = Quaternion.Euler(0, viewCamera.transform.rotation.eulerAngles.y, 0);
 		if (Input.GetButtonDown(jumpKey)) rigidbodyController.Jump();
 
 		// Updating the animator
@@ -199,7 +154,6 @@ public class Player : NetworkBehaviour
 	public void SetAnimTriggerSpell(string valueString, float time)
 	{
 		animator.SetTrigger(valueString);
-		//playerPhysicsWalker.SetSpellTime(time); // we don't need to freeze the player
 	}
 
 	private void OnDrawGizmos()
@@ -207,5 +161,22 @@ public class Player : NetworkBehaviour
 		//Vector3 center = playerOrigin.position + Vector3.up;
 
 		//if (animator.GetBool("IsAccelerating")) Gizmos.DrawSphere(center, 1f);
+	}
+
+	//--------------------------
+	// Player events
+	//--------------------------
+	public void FreezeControls(float duration)
+	{
+		float nextTime = Time.time + duration;
+		if (nextTime > nextControlTime) nextControlTime = Time.time + duration;
+
+		rigidbodyController.axisV = 0f;
+		rigidbodyController.axisH = 0f;
+	}
+
+	public void UnfreezeControls()
+	{
+		nextControlTime = 0f;
 	}
 }

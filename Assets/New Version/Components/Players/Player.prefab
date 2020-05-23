@@ -9,9 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 456956107658361589}
-  - component: {fileID: 2604329999697886174}
-  - component: {fileID: 5915953019482919483}
-  - component: {fileID: 3387785703474424491}
   - component: {fileID: 1998154570103415680}
   - component: {fileID: 754938376483321424}
   - component: {fileID: 876224509}
@@ -37,74 +34,6 @@ Transform:
   m_Father: {fileID: 7409537743577015581}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2604329999697886174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626244580706013244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0376f9be6da3a8e479bad1515490ef8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingForce: 30
-  timeBtwProjectiles: 0.1
-  animationSpellTime: 2.2
-  projectileCount: 6
-  shooting: 0
-  projectilePrefab: {fileID: 7082647631796819266, guid: e455071aad30ab84da37b447baca814e,
-    type: 3}
-  offsetX: 1
-  offsetY: 1
---- !u!114 &5915953019482919483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626244580706013244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 897a0ae4167d96a4fba3b021aeb5f5da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 6
-  pushForce: 500
-  tornadoTime: 3
-  cooldown: 4
-  animationSpellTime: 3.3
-  angle: 20
-  levelLayer:
-    serializedVersion: 2
-    m_Bits: 4608
-  tornadoVFX: {fileID: 6909615154828749742, guid: 31535cc802fc90b40bc744a69834a742,
-    type: 3}
---- !u!114 &3387785703474424491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626244580706013244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad7f2365168ff1a4bb340c19d99dfbd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minAngle: 20
-  throwingForce: 10
-  raycastDistance: 6
-  spellAnimationTime: 1.63
-  cooldown: 1
-  cam: {fileID: 9077333305292208265}
-  hasObject: 0
-  ObjectHolder: {fileID: 0}
-  InteractibleLayer:
-    serializedVersion: 2
-    m_Bits: 8192
-  inRangeObjects: []
 --- !u!114 &1998154570103415680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cf7bfa43dcca346b65422a171c1dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 1
+  maxCharges: 1
+  volume: 1
+  minDistance: 0
+  maxDistance: 0
+  player: {fileID: 0}
   fireballPrefab: {fileID: 1896346109625938319, guid: 6290b6621ba3a7c49bc18b19d0a85cc7,
     type: 3}
   fireballSpawnpoint: {fileID: 6266250536905422023}
@@ -125,9 +60,6 @@ MonoBehaviour:
   fireballThrow: {fileID: 8300000, guid: 9c0be11f3e8aaa84aa69cbfe946d7b1a, type: 3}
   fireballThrowDrum: {fileID: 8300000, guid: 681b4a998cdc7f545936fbf84a45f3dc, type: 3}
   fireballThrowVoc: {fileID: 8300000, guid: 26ff7d959d133884b8c716f1b69c3a3f, type: 3}
-  volume: 1
-  minDistance: 0
-  maxDistance: 0
 --- !u!82 &754938376483321424
 AudioSource:
   m_ObjectHideFlags: 0
@@ -236,12 +168,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e7973fba2c2d546b65ce6a159eecf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 2
+  maxCharges: 1
+  volume: 1
+  minDistance: 0
+  maxDistance: 0
+  player: {fileID: 0}
   IcePS: {fileID: 4689338660518945456, guid: 0e2b07b351836f940979fc9ec32824b8, type: 3}
   iceWall: {fileID: 1403816118238559167, guid: 831e17ac9bf5af248a5858e91750ef01, type: 3}
   levelLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  cooldown: 2
 --- !u!114 &876224515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,19 +191,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807855fe602031a4b98a20f79dd0d9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 1
+  maxCharges: 1
+  volume: 1
+  minDistance: 0
+  maxDistance: 0
+  player: {fileID: 0}
   blinkDuration: 0.1
   blinkDistance: 6
-  offsetHeightPlayer: 0.65
-  offsetWidthPlayer: 0.5
+  raycastHeight: 1
+  raycastRadius: 1
   easeType: 15
   layermask:
     serializedVersion: 2
     m_Bits: 512
-  slider: {fileID: 0}
-  maxEnergy: 12
-  playerOrigin: {fileID: 7409537743577015581}
-  anim: {fileID: 3166231814227968679}
-  blinkTrigger: Blink
 --- !u!1 &663179138094789684
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +229,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663179138094789684}
-  m_LocalRotation: {x: 0.07437622, y: 5.0447526e-13, z: -6.745091e-12, w: 0.9972303}
+  m_LocalRotation: {x: 0.07437619, y: -0.000000029719278, z: 0.0000000022098383, w: 0.9972303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -394,16 +332,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9797b6d7e2e3a7e4e9a2d4f5c3a5b40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   isOfflinePlayer: 1
   isPlayer1: 1
   cameraRig: {fileID: 405889881398491006}
-  viewCamera: {fileID: 9077333305292208265}
-  audioListener: {fileID: 6852894992033738332}
   rigidbodyController: {fileID: 4797708737368086524}
   animator: {fileID: 3166231814227968679}
   exploderSpell: {fileID: 1998154570103415680}
+  wallSpell: {fileID: 0}
   blinkSpell: {fileID: 876224515}
-  iceWallSpell: {fileID: 876224509}
   mouseAcceleration: 115
   joystickAcceleration: 120
   horizontalKey: Horizontal
@@ -718,7 +656,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4393719862988174145}
-  m_LocalRotation: {x: 0.07437622, y: -2.346576e-12, z: 3.1490765e-11, w: 0.99723023}
+  m_LocalRotation: {x: 0.07437622, y: -2.345956e-12, z: 3.149072e-11, w: 0.99723023}
   m_LocalPosition: {x: 0.65, y: 2, z: -1.86}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
@@ -1193,7 +1131,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7039975947920963318}
-  m_LocalRotation: {x: 0.07437619, y: -0.000000029720427, z: 0.0000000022252655, w: 0.9972303}
+  m_LocalRotation: {x: 0.07437622, y: -6.4482713e-13, z: 8.682124e-12, w: 0.9972303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

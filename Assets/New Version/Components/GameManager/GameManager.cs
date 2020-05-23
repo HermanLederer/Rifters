@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
 	private InGameUI inGameUI;
 
 	// Editor variables
-	[SerializeField] private bool offlineMode = false;
+	//[SerializeField] private bool offlineMode = false;
 	[SerializeField] private bool respawnPlayersAfterGoal = true;
-	[SerializeField] private GameObject playerPrefab = null;
+	//[SerializeField] private GameObject playerPrefab = null;
 	[SerializeField] private GameObject gameBallPrefab = null;
 	[SerializeField] private int playToGoals = 5;
 	[SerializeField] private Transform ballSpawn = null;
