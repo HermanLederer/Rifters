@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e7973fba2c2d546b65ce6a159eecf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyChargeRate: 0.4
+  energyChargeRate: 0.2
   energyCharges: 1
   volume: 1
   minDistance: 0
