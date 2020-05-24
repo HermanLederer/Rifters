@@ -10,6 +10,7 @@ public class WallSpell : Spell
 	[Header("Wall parameters")]
 	public GameObject markerPrefab; // Marker that will show how the wall will behave
 	public LayerMask levelLayerMask; // Level Layer
+	public Transform fireballSpawnpoint = null;
 
 	//
 	// Public variables
@@ -42,22 +43,34 @@ public class WallSpell : Spell
 	//--------------------------
 
 	/// <summary>
-	/// Raycasts player aim into the scene and if the player is aiming at a flat surface enables the aiming marker and moves it to the raycast hit point.
+	/// Raycasts player aim into the scene, enables the aiming marker and moves it to the raycast hit point.
 	/// </summary>
 	public void Aim()
 	{
+		// TODO: raycast from hand?
 		RaycastHit hit;
 		Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-		// Checking if the ray hits the level and the normal of the level point is pointing up
-		if (Physics.Raycast(ray, out hit, 50, levelLayerMask) && Vector3.Angle(hit.normal, Vector3.up) < 10)
+		// Checking if the ray hits something
+		if (Physics.Raycast(ray, out hit, 150f, levelLayerMask))
 		{
-			marker.SetActive(true); // enable the marker
-			marker.transform.position = hit.point;
-			Quaternion rotation = Quaternion.LookRotation(transform.forward); // orientation of the player
-			marker.transform.rotation = rotation;
+			// TODO: use different markers depending on where the player is aiming
+			//if (Vector3.Angle(Vector3.up, hit.normal) < 10)
+			//{
+				// flat marker for ground
+
+				marker.transform.position = hit.point;
+				// CHANGE: making it parallel to the ground instead
+				Quaternion rotation = transform.rotation;
+				marker.transform.rotation = rotation;
+				marker.SetActive(true); // enable the marker
+			//}
+			//else
+			//{
+				// spherical market for walls and objects mid air?
+			//}
 		}
-		else //--If the ray does not hit the level or the normal of the point is not pointing upwards
+		else //--If the ray does not hit anything
 		{
 			Unaim();
 		}
@@ -80,11 +93,11 @@ public class WallSpell : Spell
 		if (!base.Trigger()) return false; // does cooldown
 
 		// Instantiate the wall
-		Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-		ObjectPooler.instance.SpawnFromPool("Spell_Wall", marker.transform.position, Quaternion.Euler(newRotation));
+		//Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+		ObjectPooler.instance.SpawnFromPool("Spell_Wall", marker.transform.position, marker.transform.rotation);
 
 		// Spawn VFX
-		VFXManager.instance.SpawnFrostVFX(marker.transform.position, Quaternion.Euler(newRotation));
+		//VFXManager.instance.SpawnFrostVFX(marker.transform.position, marker.transform.rotation);
 
 		return true;
 	}

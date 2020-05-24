@@ -9,10 +9,6 @@ public class Spell : MonoBehaviour
 	#region Editor variables
 	public float energyChargeRate = 1f;
 	public int energyCharges = 1;
-	[Header("Audio")]
-	public float volume = 1;
-	public float minDistance = 0;
-	public float maxDistance = 0;
 	[Header("References")]
 	public Player player;
 	#endregion
@@ -30,24 +26,34 @@ public class Spell : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		// Charging energy
-		energy += Time.deltaTime * (energyChargeRate / energyCharges);
-		if (energy > 1f) energy = 1f;
+		// Quite a lot of checks for what it is, but makes the UI implementation easy and allows for OnFullRecharge event to pay sounds
+		if (energy < 1f)
+		{
+			// Charging energy
+			energy += Time.deltaTime * (energyChargeRate / energyCharges);
+			if (energy > 1f)
+			{
+				energy = 1f;
+				OnFullyRecharged();
+			}
+		}
 	}
 
 	//--------------------------
-	// ExploderSpell methods
+	// Spell methods
 	//--------------------------
-	public bool hasCharge()
+	public virtual void OnFullyRecharged() { }
+
+	public bool HasCharge()
 	{
-		return energy >= 1 / energyCharges;
+		return energy >= 1f / energyCharges;
 	}
 
 	public virtual bool Trigger()
 	{
-		if (!hasCharge()) return false;
+		if (!HasCharge()) return false;
 
-		energy -= 1 / energyCharges;
+		energy -= 1f / energyCharges;
 		return true;
 	}
 }

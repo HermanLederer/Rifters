@@ -9,7 +9,6 @@ public class Player : NetworkBehaviour
 	//
 	// Editor variables
 	#region Editor variables
-	public bool isOfflinePlayer;
 	public bool isPlayer1;
 	[Header("Player components")]
 	public CinemachineFreeLook cameraRig;

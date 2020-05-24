@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1403816118238559164}
-  - component: {fileID: 1403816118238559162}
   - component: {fileID: 1403816118238559165}
   m_Layer: 0
   m_Name: Wall
@@ -33,19 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1403816118238559162
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403816118238559167}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 7, y: 8, z: 5}
-  m_Center: {x: 0, y: 4, z: 0}
 --- !u!114 &1403816118238559165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +47,8 @@ MonoBehaviour:
   lifeTime: 1.4
   objectsLayerMask:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 5120
+  radius: 6
 --- !u!1001 &6676026028999575756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,7 +84,7 @@ PrefabInstance:
     - target: {fileID: 1403816118238559167, guid: 45eb65a466563e647ad465e96f57143f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45eb65a466563e647ad465e96f57143f, type: 3}

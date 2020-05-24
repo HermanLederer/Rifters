@@ -116,6 +116,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IceWall
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 112ce564aec72254fa74f97050d4e751,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 112ce564aec72254fa74f97050d4e751, type: 3}
 --- !u!4 &6741585618564108973 stripped
@@ -246,6 +251,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Frost PS
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408810933139240627, guid: f538a035fdaad0f4da204cef1e980ad7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6023458488468036889, guid: f538a035fdaad0f4da204cef1e980ad7,
         type: 3}

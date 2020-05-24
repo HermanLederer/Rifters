@@ -29,36 +29,42 @@ public class BlinkSpell : Spell
 	{
 		if (!base.Trigger()) return false; // does cooldown
 
-		Vector3 direction = player.rigidbodyController.rigidbody.velocity.normalized;
-		if (Vector3.Angle(direction, transform.forward) < 46) direction = Camera.main.transform.forward;
+		//Vector3 direction = player.rigidbodyController.rigidbody.velocity.normalized;
+		//if (Vector3.Angle(direction, transform.forward) < 46) direction = Camera.main.transform.forward;
 
-		// Original destination
-		Vector3 destination = transform.position + direction * blinkDistance;
+		//// Original destination
+		//Vector3 destination = transform.position + direction * blinkDistance;
 
-		// Looking for obstacles
-		Vector3 raycastOrigin1 = transform.position + transform.up * raycastRadius;
-		Vector3 raycastOrigin2 = transform.position + transform.up * (raycastHeight - raycastRadius);
-		RaycastHit wallHit;
+		//// Looking for obstacles
+		//Vector3 raycastOrigin1 = transform.position + transform.up * raycastRadius;
+		//Vector3 raycastOrigin2 = transform.position + transform.up * (raycastHeight - raycastRadius);
+		//RaycastHit wallHit;
 
-		// Looking for ground
-		if (Physics.CapsuleCast(raycastOrigin1, raycastOrigin2, raycastRadius, direction, out wallHit, blinkDistance, layermask))
+		//// Looking for ground
+		//if (Physics.CapsuleCast(raycastOrigin1, raycastOrigin2, raycastRadius, direction, out wallHit, blinkDistance, layermask))
+		//{
+		//	// changing the destination to the position at the wall
+		//	destination = wallHit.point - direction * raycastRadius;
+		//	RaycastHit groundHit;
+
+		//	if (Physics.Raycast(destination, Vector3.down, out groundHit, raycastHeight, layermask))
+		//	{
+		//		// changing the destionation to the postion at the ground
+		//		destination = groundHit.point;
+		//	}
+		//}
+
+		RaycastHit hit;
+		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 50f))
 		{
-			// changing the destination to the position at the wall
-			destination = wallHit.point - direction * raycastRadius;
-			RaycastHit groundHit;
-
-			if (Physics.Raycast(destination, Vector3.down, out groundHit, raycastHeight, layermask))
-			{
-				// changing the destionation to the postion at the ground
-				destination = groundHit.point;
-			}
+			// Twean
+			originalVelocity = player.rigidbodyController.rigidbody.velocity;
+			player.FreezeControls(blinkDuration);
+			player.rigidbodyController.transform.DOMove(hit.point, blinkDuration).SetEase(easeType).OnComplete(RestoreVelocity);
+			return true;
 		}
 
-		// Twean
-		originalVelocity = player.rigidbodyController.rigidbody.velocity;
-		player.FreezeControls(blinkDuration);
-		player.rigidbodyController.transform.DOMove(destination, blinkDuration).SetEase(easeType).OnComplete(RestoreVelocity);
-		return true;
+		return false;
 	}
 
 	private void RestoreVelocity()

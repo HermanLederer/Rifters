@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class ExploderSpell : Spell
 {
+	//
+	// Other components
+	#region Editor variables
+	[Header("Exploder parameters")]
+	private AudioSource audioSource = null;
+	#endregion
+
 	//
 	// Editor variables
 	#region Editor variables
@@ -17,30 +25,54 @@ public class ExploderSpell : Spell
 	public AudioClip fireballThrowVoc = null;
 	#endregion
 
+	//
+	// Private variables
+	#region Editor variables
+	[Header("Exploder parameters")]
+	private GameObject lastFireball = null;
+	#endregion
+
 	//--------------------------
-	// ExploderSpell methods
+	// MonoBehaviour events
 	//--------------------------
-	/*public override void OnRecharged()
+	private void Awake()
 	{
-		AudioManager.instance.PlayIn3D(fireballCrarge, volume, transform.position, minDistance, maxDistance);
-		AudioManager.instance.PlayTribeVoc(fireballCrargeVoc);
-	}*/
+		audioSource = GetComponent<AudioSource>();
+	}
+
+	//--------------------------
+	// Spell methods
+	//--------------------------
+	public override void OnFullyRecharged()
+	{
+		// SFX
+		//audioSource.PlayOneShot(fireballCrarge);
+		//AudioManager.instance.PlayTribeVoc(fireballCrargeVoc);
+	}
 
 	public override bool Trigger()
 	{
-		if (!base.Trigger()) return false; // does cooldown
-
-		// Get the direction vector
-		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 100f))
+		if (lastFireball != null && lastFireball.activeSelf) // explode the last fireball
 		{
-			Vector3 direction = hit.point - fireballSpawnpoint.position;
-			//Debug.DrawRay(fireballSpawnpoint.position, direction, Color.red, 1f);
-			ObjectPooler.instance.SpawnFromPool("Spell_Exploder", fireballSpawnpoint.position, Quaternion.LookRotation(direction));
+			lastFireball.GetComponent<ExploderSpellProjectile>().Explode();
+		}
+		else // shoot a fireball
+		{
+			if (!base.Trigger()) return false; // does cooldown
 
-			AudioManager.instance.PlayIn3D(fireballThrow, volume, transform.position, minDistance, maxDistance);
-			AudioManager.instance.PlayDrum(fireballThrowDrum);
-			AudioManager.instance.PlayTribeVoc(fireballThrowVoc);
+			// Get the direction vector
+			RaycastHit hit;
+			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 150f))
+			{
+				// projectile
+				Vector3 direction = hit.point - fireballSpawnpoint.position;
+				lastFireball = ObjectPooler.instance.SpawnFromPool("Spell_Exploder", fireballSpawnpoint.position, Quaternion.LookRotation(direction));
+
+				// SFX
+				audioSource.PlayOneShot(fireballThrow);
+				AudioManager.instance.PlayDrum(fireballThrowDrum);
+				AudioManager.instance.PlayTribeVoc(fireballThrowVoc);
+			}
 		}
 
 		return true;

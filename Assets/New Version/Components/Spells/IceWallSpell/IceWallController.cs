@@ -8,8 +8,9 @@ public class IceWallController : MonoBehaviour
 	//
 	// Editor variables
 	#region Editor variables
-	public float lifeTime = 2f; // Time the wall will be placed if does not hit anything
-	public LayerMask objectsLayerMask; // Objects the wall can freeze
+	public float lifeTime = 2f; // The longevity of the spell
+	public LayerMask objectsLayerMask; // Objects we can freeze
+	public float radius;
 	#endregion
 
 	//
@@ -20,48 +21,28 @@ public class IceWallController : MonoBehaviour
 
 	void OnEnable()
 	{
-		//--Parameters for the box cast--
-		//Vector3 boxCastPosition = transform.position + Vector3.up * (wallHeight / 2); //Box position
-		//Quaternion dir = Quaternion.LookRotation(transform.forward); //Box orientation
+		// Resetting the death time
+		deathTime = Time.time + lifeTime;
 
-		//--Box Cast--
-		//Collider[] colls = Physics.OverlapBox(boxCastPosition, new Vector3(4.5f, 4f, 1f), dir, objectsLayerMask);
+		// CHANGE: sphere cast instead of box cast
+		Vector3 sphereCastOrigin = transform.position;
+		Collider[] colliders = Physics.OverlapSphere(sphereCastOrigin, radius, objectsLayerMask);
 
+		// CHANGE: doing something different
 		//--If the cast hits something--
-		//if (colls.Length > 0)
-		//{
-		//somethingIsTrapped = true;
-		//	_lifeTime = .5f;
-		//}
-		//--If the cast does not hit anything--
-		//else
+		foreach (Collider collider in colliders)
 		{
-			deathTime = Time.time + lifeTime;
+			Rigidbody colliderRB;
+			if (collider.TryGetComponent<Rigidbody>(out colliderRB))
+			{
+				colliderRB.velocity = Vector3.zero;
+			}
 		}
 	}
 
 	void Update()
 	{
 		if (Time.time >= deathTime)
-			gameObject.SetActive(false);
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		Rigidbody otherRB;
-		if (other.TryGetComponent<Rigidbody>(out otherRB))
-		{
-			otherRB.velocity = Vector3.zero;
-		}
-
-		// SFX
-		//AudioManager.instance.PlayIn3D(fireballExplode, 1, transform.position, 5, 70);
-		//AudioManager.instance.PlayDrum(fireballExplodeDrum);
-		//AudioManager.instance.PlayTribeVoc(fireballExplodeVoc);
-
-		// VFX
-		//VFXManager.instance.SpawnExplosionVFX(transform.position, Quaternion.FromToRotation(transform.forward, collision.contacts[0].normal));
-
-		gameObject.SetActive(false);
+			gameObject.SetActive(false); // using set active to be compatible with object pool
 	}
 }
