@@ -66,6 +66,14 @@ public class GameItemBehaviour : MonoBehaviour
 
 	void Update()
 	{
+		// Ground retraction
+		RaycastHit hit;
+		if (Physics.SphereCast(transform.position, collider.radius, Vector3.down, out hit, 5))
+		{
+			float dist =  1 - Vector3.Distance(transform.position, hit.point) / 5;
+			rigidbody.AddForce(Vector3.up * dist * 20, ForceMode.Impulse);
+		}
+
 		// Modes
 		if (Physics.OverlapSphere(transform.position, 6f, playerLayer).Length > 0)
 		{
