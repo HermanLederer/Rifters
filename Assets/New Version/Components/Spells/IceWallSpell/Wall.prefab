@@ -94,6 +94,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IceWallVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 1403816118238559167, guid: 45eb65a466563e647ad465e96f57143f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45eb65a466563e647ad465e96f57143f, type: 3}
 --- !u!4 &5754853888534229872 stripped
