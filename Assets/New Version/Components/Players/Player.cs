@@ -110,10 +110,10 @@ public class Player : NetworkBehaviour
 		if (Time.time < nextControlTime) return;
 
 		// Spells
-		if (Input.GetButton(aimKey))
+		wallSpell.isAiming = Input.GetButton(aimKey);
+		if (wallSpell.isAiming)
 		{
-			wallSpell.Aim(); // wall aim
-			if (Input.GetButtonDown(triggerKey)) wallSpell.Trigger(); // wall trigger
+			if (Input.GetButtonDown(triggerKey)) wallSpell.Trigger();
 		}
 		else if(Input.GetButtonDown(triggerKey))
 			exploderSpell.Trigger(); // exploder
@@ -154,13 +154,6 @@ public class Player : NetworkBehaviour
 	public void SetAnimTriggerSpell(string valueString, float time)
 	{
 		animator.SetTrigger(valueString);
-	}
-
-	private void OnDrawGizmos()
-	{
-		//Vector3 center = playerOrigin.position + Vector3.up;
-
-		//if (animator.GetBool("IsAccelerating")) Gizmos.DrawSphere(center, 1f);
 	}
 
 	//--------------------------

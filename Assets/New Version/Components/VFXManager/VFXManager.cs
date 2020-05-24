@@ -12,10 +12,12 @@ public class VFXManager : MonoBehaviour
 	#region Editor variables
 	[Header("Pool prefabs")]
 	[SerializeField] private GameObject explosionVFXPrefab = null;
+	[SerializeField] private GameObject frostVFXPrefab = null;
 	#endregion
 
 	private bool firstMusicSourceIsPlaying;
-	private const string explosionVFXPool = "VFXPool";
+	private const string explosionVFXPool = "ExplosionVFXPool";
+	private const string frostVFXPool = "FrostVFXPool";
 
 	//--------------------------
 	// MonoBehaviour methods
@@ -40,6 +42,7 @@ public class VFXManager : MonoBehaviour
 	private void Start()
 	{
 		ObjectPooler.instance.CreateNewPool(explosionVFXPool, explosionVFXPrefab, 10);
+		ObjectPooler.instance.CreateNewPool(frostVFXPool, frostVFXPrefab, 10);
 	}
 
 	//--------------------------
@@ -48,5 +51,10 @@ public class VFXManager : MonoBehaviour
 	public void SpawnExplosionVFX(Vector3 position, Quaternion rotation)
 	{
 		ObjectPooler.instance.SpawnFromPool(explosionVFXPool, position, rotation);
+	}
+
+	public void SpawnFrostVFX(Vector3 position, Quaternion rotation)
+	{
+		ObjectPooler.instance.SpawnFromPool(frostVFXPool, position, rotation);
 	}
 }

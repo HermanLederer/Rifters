@@ -7,8 +7,8 @@ public class Spell : MonoBehaviour
 	//
 	// Editor variables
 	#region Editor variables
-	public float cooldown = 1f;
-	public int maxCharges = 1;
+	public float energyChargeRate = 1f;
+	public int energyCharges = 1;
 	[Header("Audio")]
 	public float volume = 1;
 	public float minDistance = 0;
@@ -20,22 +20,19 @@ public class Spell : MonoBehaviour
 	//
 	// Private variables
 	#region Private variables
-	private float nextChargeTime = 0;
-	private int charges = 0;
+	private float energy = 0f;
 	#endregion
 
-	private void Start()
+	protected virtual void Start()
 	{
-		charges = maxCharges;
+		energy = 1;
 	}
 
-	private void Update()
+	protected virtual void Update()
 	{
-		if (Time.time >= nextChargeTime && charges < maxCharges)
-		{
-			nextChargeTime = Time.time + cooldown;
-			++charges;
-		}
+		// Charging energy
+		energy += Time.deltaTime * (energyChargeRate / energyCharges);
+		if (energy > 1f) energy = 1f;
 	}
 
 	//--------------------------
@@ -43,14 +40,14 @@ public class Spell : MonoBehaviour
 	//--------------------------
 	public bool hasCharge()
 	{
-		return charges > 0;
+		return energy >= 1 / energyCharges;
 	}
 
 	public virtual bool Trigger()
 	{
 		if (!hasCharge()) return false;
 
-		--charges;
+		energy -= 1 / energyCharges;
 		return true;
 	}
 }

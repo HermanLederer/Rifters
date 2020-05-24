@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cf7bfa43dcca346b65422a171c1dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 1
-  maxCharges: 1
+  energyChargeRate: 1.2
+  energyCharges: 1
   volume: 1
   minDistance: 0
   maxDistance: 0
@@ -183,8 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e7973fba2c2d546b65ce6a159eecf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 5
-  maxCharges: 1
+  energyChargeRate: 0.4
+  energyCharges: 1
   volume: 1
   minDistance: 0
   maxDistance: 0
@@ -194,6 +194,7 @@ MonoBehaviour:
   levelLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  isAiming: 0
 --- !u!114 &876224515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,8 +207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807855fe602031a4b98a20f79dd0d9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 5
-  maxCharges: 2
+  energyChargeRate: 0.4
+  energyCharges: 2
   volume: 1
   minDistance: 0
   maxDistance: 0
