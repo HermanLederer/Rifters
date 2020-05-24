@@ -80,12 +80,17 @@ public class WallSpell : Spell
 		if (!base.Trigger()) return false; // does cooldown
 
 		//--Instantiate the wall--
-		Debug.Log(1);
-		Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-		ObjectPooler.instance.SpawnFromPool("Spell_Wall", marker.transform.position, Quaternion.Euler(newRotation));
+		//Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+		//ObjectPooler.instance.SpawnFromPool("Spell_Wall", marker.transform.position, Quaternion.Euler(newRotation));
 
 		// Spawn VFX
-		VFXManager.instance.SpawnFrostVFX(marker.transform.position, Quaternion.Euler(newRotation));
+		//VFXManager.instance.SpawnFrostVFX(marker.transform.position, Quaternion.Euler(newRotation));
+
+		ObjectPooler.instance.SpawnFromPool("Spell_Exploder", marker.transform.position, Quaternion.LookRotation(transform.forward));
+
+		//AudioManager.instance.PlayIn3D(fireballThrow, volume, transform.position, minDistance, maxDistance);
+		//AudioManager.instance.PlayDrum(fireballThrowDrum);
+		//AudioManager.instance.PlayTribeVoc(fireballThrowVoc);
 
 		return true;
 	}
