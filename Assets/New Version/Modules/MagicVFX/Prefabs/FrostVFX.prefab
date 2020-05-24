@@ -49,7 +49,7 @@ MonoBehaviour:
   particleSystems:
   - {fileID: 2573934756519948465}
   - {fileID: 2842973305237943768}
-  lifeTime: 7
+  lifeTime: 4
 --- !u!1 &1746415848864737239
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,8 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxIntensity: 600000
-  minLifeTime: 5
-  maxLifeTime: 5
+  minLifeTime: 1.4
+  maxLifeTime: 1.4
 --- !u!1001 &6513794062509502250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -355,7 +355,7 @@ PrefabInstance:
     - target: {fileID: 9012230726238427890, guid: f538a035fdaad0f4da204cef1e980ad7,
         type: 3}
       propertyPath: lengthInSec
-      value: 4.5
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 9012230726238427890, guid: f538a035fdaad0f4da204cef1e980ad7,
         type: 3}
@@ -766,7 +766,7 @@ PrefabInstance:
     - target: {fileID: 4732329474164707267, guid: 49c72db09ef302d46850d87093fb9392,
         type: 3}
       propertyPath: lengthInSec
-      value: 4.5
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 4732329474164707267, guid: 49c72db09ef302d46850d87093fb9392,
         type: 3}

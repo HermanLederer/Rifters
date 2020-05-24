@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad133c2985b15146b485a62f19529f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 60
   fireballExplode: {fileID: 8300000, guid: 3f541d001ac94d042938faca08116c44, type: 3}
   fireballExplodeDrum: {fileID: 8300000, guid: 6baaad7a741156645a058717b4203788, type: 3}
   fireballExplodeVoc: {fileID: 8300000, guid: e178de17c3c25f54783f707807eb6739, type: 3}
