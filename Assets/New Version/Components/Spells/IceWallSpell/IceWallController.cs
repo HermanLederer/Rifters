@@ -48,8 +48,6 @@ public class IceWallController : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log(1);
-
 		// SFX
 		//AudioManager.instance.PlayIn3D(fireballExplode, 1, transform.position, 5, 70);
 		//AudioManager.instance.PlayDrum(fireballExplodeDrum);
@@ -58,6 +56,6 @@ public class IceWallController : MonoBehaviour
 		// VFX
 		//VFXManager.instance.SpawnExplosionVFX(transform.position, Quaternion.FromToRotation(transform.forward, collision.contacts[0].normal));
 
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
 	}
 }

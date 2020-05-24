@@ -44,6 +44,9 @@ public class Player : NetworkBehaviour
 	private float nextControlTime = 0f;
 	#endregion
 
+	//--------------------------
+	// NetworkBehaviour events
+	//--------------------------
 	public override void OnStartAuthority()
 	{
 		base.OnStartAuthority();
@@ -56,9 +59,9 @@ public class Player : NetworkBehaviour
 	//--------------------------
 	private void Awake()
 	{
+		#region Check Player 1 or 2
 		//-- We don't need to check anymore if it's player one or two --
 		//-- Will leave it here if we wan't to make local multi some day --
-		#region Check Player 1 or 2
 		/*
 		if (isPlayer1)
 		{
@@ -118,26 +121,26 @@ public class Player : NetworkBehaviour
 		else if(Input.GetButtonDown(triggerKey))
 			exploderSpell.Trigger(); // exploder
 
-		// blink
 		if (Input.GetButtonDown(blinkKey))
 		{
 			blinkSpell.Trigger();
 		}
 
+		// Camera rotation
 		float mouseX = Input.GetAxisRaw(cameraX) * acceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxisRaw(cameraY) * acceleration * Time.fixedDeltaTime;
 
 		cameraRig.m_XAxis.Value += mouseX;
 		cameraRig.m_YAxis.Value -= mouseY / 180f;
 
-		// Controlling the RigidbodyController
+		// RigidbodyController
 		Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
 		rigidbodyController.transform.rotation = Quaternion.Euler(newRotation);
 		rigidbodyController.axisV = Input.GetAxisRaw(verticalKey);
 		rigidbodyController.axisH = Input.GetAxisRaw(horizontalKey);
 		if (Input.GetButtonDown(jumpKey)) rigidbodyController.Jump();
 
-		// Updating the animator
+		// Animator
 		Vector3 velocity = rigidbodyController.rigidbody.velocity;
 		Vector3 localVelocity = rigidbodyController.transform.InverseTransformDirection(velocity);
 
