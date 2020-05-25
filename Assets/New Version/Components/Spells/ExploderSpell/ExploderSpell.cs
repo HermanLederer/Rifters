@@ -15,14 +15,15 @@ public class ExploderSpell : Spell
 	//
 	// Editor variables
 	#region Editor variables
-	[Header("Exploder parameters")]
-	public GameObject fireballPrefab = null;
-	public Transform fireballSpawnpoint = null;
-	public AudioClip fireballCrarge = null;
-	public AudioClip fireballCrargeVoc = null;
-	public AudioClip fireballThrow = null;
-	public AudioClip fireballThrowDrum = null;
-	public AudioClip fireballThrowVoc = null;
+	[Header("Projectile")]
+	public GameObject exploderProjectilePrefab = null;
+	public Transform exploderSpawnpoint = null;
+	[Header("Sounds")]
+	public AudioClip exploderCrarge = null;
+	public AudioClip exploderCrargeVoc = null;
+	public AudioClip exploderThrow = null;
+	public AudioClip exploderThrowDrum = null;
+	public AudioClip exploderThrowVoc = null;
 	#endregion
 
 	//
@@ -30,6 +31,7 @@ public class ExploderSpell : Spell
 	#region Editor variables
 	[Header("Exploder parameters")]
 	private GameObject lastFireball = null;
+	private string poolName = "Exploder_Spell_Projectiles";
 	#endregion
 
 	//--------------------------
@@ -38,6 +40,7 @@ public class ExploderSpell : Spell
 	private void Awake()
 	{
 		audioSource = GetComponent<AudioSource>();
+		ObjectPooler.instance.CreateNewPool(poolName, exploderProjectilePrefab, 8);
 	}
 
 	//--------------------------
@@ -65,13 +68,13 @@ public class ExploderSpell : Spell
 			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 150f))
 			{
 				// projectile
-				Vector3 direction = hit.point - fireballSpawnpoint.position;
-				lastFireball = ObjectPooler.instance.SpawnFromPool("Spell_Exploder", fireballSpawnpoint.position, Quaternion.LookRotation(direction));
+				Vector3 direction = hit.point - exploderSpawnpoint.position;
+				lastFireball = ObjectPooler.instance.SpawnFromPool(poolName, exploderSpawnpoint.position, Quaternion.LookRotation(direction));
 
 				// SFX
-				audioSource.PlayOneShot(fireballThrow);
-				AudioManager.instance.PlayDrum(fireballThrowDrum);
-				AudioManager.instance.PlayTribeVoc(fireballThrowVoc);
+				audioSource.PlayOneShot(exploderThrow);
+				AudioManager.instance.PlayDrum(exploderThrowDrum);
+				AudioManager.instance.PlayTribeVoc(exploderThrowVoc);
 			}
 		}
 

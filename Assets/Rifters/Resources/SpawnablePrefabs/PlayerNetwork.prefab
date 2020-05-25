@@ -868,14 +868,14 @@ MonoBehaviour:
   energyChargeRate: 1.2
   energyCharges: 1
   player: {fileID: 1804862892492501761}
-  fireballPrefab: {fileID: 1896346109625938319, guid: 0bbe84793d148a648bc523cb14bf4f6b,
+  exploderProjectilePrefab: {fileID: 1896346109625938319, guid: 6290b6621ba3a7c49bc18b19d0a85cc7,
     type: 3}
-  fireballSpawnpoint: {fileID: 6266250536905422023}
-  fireballCrarge: {fileID: 8300000, guid: ca919b8c738a0fe4d97ced46c2f15fcd, type: 3}
-  fireballCrargeVoc: {fileID: 8300000, guid: 49b94b0e1e2cc574da9858171b74c02c, type: 3}
-  fireballThrow: {fileID: 8300000, guid: 9c0be11f3e8aaa84aa69cbfe946d7b1a, type: 3}
-  fireballThrowDrum: {fileID: 8300000, guid: 681b4a998cdc7f545936fbf84a45f3dc, type: 3}
-  fireballThrowVoc: {fileID: 8300000, guid: 26ff7d959d133884b8c716f1b69c3a3f, type: 3}
+  exploderSpawnpoint: {fileID: 6266250536905422023}
+  exploderCrarge: {fileID: 8300000, guid: ca919b8c738a0fe4d97ced46c2f15fcd, type: 3}
+  exploderCrargeVoc: {fileID: 8300000, guid: 49b94b0e1e2cc574da9858171b74c02c, type: 3}
+  exploderThrow: {fileID: 8300000, guid: 9c0be11f3e8aaa84aa69cbfe946d7b1a, type: 3}
+  exploderThrowDrum: {fileID: 8300000, guid: 681b4a998cdc7f545936fbf84a45f3dc, type: 3}
+  exploderThrowVoc: {fileID: 8300000, guid: 26ff7d959d133884b8c716f1b69c3a3f, type: 3}
 --- !u!82 &432386248274482564
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1113,12 +1113,13 @@ MonoBehaviour:
   energyChargeRate: 0.8
   energyCharges: 1
   player: {fileID: 1804862892492501761}
-  markerPrefab: {fileID: 8653616022254516482, guid: 5a8beff100d339f4bbe53efbf8fbdcf6,
+  markerObjectPrefab: {fileID: 8653616022254516482, guid: 5a8beff100d339f4bbe53efbf8fbdcf6,
+    type: 3}
+  stopperObjectPrefab: {fileID: 1403816118238559167, guid: 831e17ac9bf5af248a5858e91750ef01,
     type: 3}
   levelLayerMask:
     serializedVersion: 2
     m_Bits: 6656
-  fireballSpawnpoint: {fileID: 0}
   isAiming: 0
 --- !u!1 &8952736320589113810
 GameObject:

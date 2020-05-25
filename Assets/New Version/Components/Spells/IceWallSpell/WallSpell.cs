@@ -8,26 +8,33 @@ public class WallSpell : Spell
 	//
 	// Editor variables
 	[Header("Wall parameters")]
-	public GameObject markerPrefab; // Marker that will show how the wall will behave
-	public LayerMask levelLayerMask; // Level Layer
-	public Transform fireballSpawnpoint = null;
+	public GameObject markerObjectPrefab = null; // Marker that will show how the wall will behave
+	public GameObject stopperObjectPrefab = null;
+	public LayerMask levelLayerMask = 1; // Level Layer
 
 	//
 	// Public variables
+	[System.NonSerialized]
 	public bool isAiming = false;
 
 	//
 	// Private variables
 	private GameObject marker;
+	private string poolName = "Stopper_Spell_Projectiles";
 
 	//--------------------------
 	// MonoBehaviour events
 	//--------------------------
+	private void Awake()
+	{
+		ObjectPooler.instance.CreateNewPool(poolName, stopperObjectPrefab, 8);
+	}
+
 	protected override void Start()
 	{
 		base.Start();
 
-		marker = Instantiate(markerPrefab);
+		marker = Instantiate(markerObjectPrefab);
 	}
 
 	protected override void Update()
@@ -94,10 +101,7 @@ public class WallSpell : Spell
 
 		// Instantiate the wall
 		//Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-		ObjectPooler.instance.SpawnFromPool("Spell_Wall", marker.transform.position, marker.transform.rotation);
-
-		// Spawn VFX
-		//VFXManager.instance.SpawnFrostVFX(marker.transform.position, marker.transform.rotation);
+		ObjectPooler.instance.SpawnFromPool(poolName, marker.transform.position, marker.transform.rotation);
 
 		return true;
 	}
