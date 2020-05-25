@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-	[System.Serializable]
+	//
+	// Pool class
 	public class Pool
 	{
 		public string tag;
@@ -13,25 +14,50 @@ public class ObjectPooler : MonoBehaviour
 		public int size;
 	}
 
-	public static ObjectPooler instance;
+	//
+	// Singleton
+	private static ObjectPooler instance;
+	public static ObjectPooler Instance
+	{
+		get
+		{
+			if (instance == null)
+			{
+				GameObject singletonObject = new GameObject();
+				singletonObject.name = "ObjectPooler";
+				instance = singletonObject.AddComponent<ObjectPooler>();
+			}
 
+			return instance;
+		}
+	}
+
+	//
+	// Public variables
+	public List<Pool> pools;
+	public Dictionary<string, Queue<GameObject>> poolDictionary;
+
+	/// <summary>
+	/// Ensures singleton functionality and initializes poolDictionary
+	/// </summary>
 	private void Awake()
 	{
-		instance = this;
+		if (instance != null)
+		{
+			Debug.LogError("Only one instance of ObjectPooler is allowed. Destroying the new instance...");
+		}
+		else
+			instance = this;
 
 		poolDictionary = new Dictionary<string, Queue<GameObject>>();
 	}
 
-	public List<Pool> pools;
-	public Dictionary<string, Queue<GameObject>> poolDictionary;
-	void Start()
-	{
-		foreach (Pool pool in pools)
-		{
-			CreateNewPool(pool.tag, pool.prefab, pool.size);
-		}
-	}
-
+	/// <summary>
+	/// Creates a new object pool
+	/// </summary>
+	/// <param name="tag">Identificator of the pool</param>
+	/// <param name="prefab">Prefab the pool is going to create clones of</param>
+	/// <param name="size">Amount of clones created on initialiation</param>
 	public void CreateNewPool(string tag, GameObject prefab, int size)
 	{
 		Queue<GameObject> objectPool = new Queue<GameObject>();
@@ -46,6 +72,11 @@ public class ObjectPooler : MonoBehaviour
 		poolDictionary.Add(tag, objectPool);
 	}
 
+	/// <summary>
+	/// Spawns a game object using pool optimization
+	/// </summary>
+	/// <param name="tag">Identificator of the pool to get the an object from</param>
+	/// <returns>The spawned game object</returns>
 	public GameObject SpawnFromPool(string tag)
 	{
 		if (!poolDictionary.ContainsKey(tag))
@@ -85,6 +116,11 @@ public class ObjectPooler : MonoBehaviour
 		return objectToSpawn;
 	}
 
+	/// <summary>
+	/// Spawns a game object using pool optimization
+	/// </summary>
+	/// <param name="tag">Identificator of the pool to get the an object from</param>
+	/// <returns>The spawned game object</returns>
 	public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
 	{
 		if (!poolDictionary.ContainsKey(tag))

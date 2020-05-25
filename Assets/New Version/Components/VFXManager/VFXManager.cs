@@ -41,8 +41,8 @@ public class VFXManager : MonoBehaviour
 
 	private void Start()
 	{
-		ObjectPooler.instance.CreateNewPool(explosionVFXPool, explosionVFXPrefab, 10);
-		ObjectPooler.instance.CreateNewPool(frostVFXPool, frostVFXPrefab, 10);
+		ObjectPooler.Instance.CreateNewPool(explosionVFXPool, explosionVFXPrefab, 10);
+		ObjectPooler.Instance.CreateNewPool(frostVFXPool, frostVFXPrefab, 10);
 	}
 
 	//--------------------------
@@ -50,11 +50,11 @@ public class VFXManager : MonoBehaviour
 	//--------------------------
 	public void SpawnExplosionVFX(Vector3 position, Quaternion rotation)
 	{
-		ObjectPooler.instance.SpawnFromPool(explosionVFXPool, position, rotation);
+		ObjectPooler.Instance.SpawnFromPool(explosionVFXPool, position, rotation);
 	}
 
 	public void SpawnFrostVFX(Vector3 position, Quaternion rotation)
 	{
-		ObjectPooler.instance.SpawnFromPool(frostVFXPool, position, rotation);
+		ObjectPooler.Instance.SpawnFromPool(frostVFXPool, position, rotation);
 	}
 }

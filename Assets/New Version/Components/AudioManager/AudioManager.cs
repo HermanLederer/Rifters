@@ -54,8 +54,8 @@ public class AudioManager : MonoBehaviour
 
 	private void Start()
 	{
-		ObjectPooler.instance.CreateNewPool(pool2d, soundObject2dPrefab, 5);
-		ObjectPooler.instance.CreateNewPool(pool3d, soundObject3dPrefab, 60);
+		ObjectPooler.Instance.CreateNewPool(pool2d, soundObject2dPrefab, 5);
+		ObjectPooler.Instance.CreateNewPool(pool3d, soundObject3dPrefab, 60);
 	}
 
 	private void Update()
@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
 
 	public void PlayIn2D(AudioClip clip, float volume)
 	{
-		GameObject obj = ObjectPooler.instance.SpawnFromPool(pool2d);
+		GameObject obj = ObjectPooler.Instance.SpawnFromPool(pool2d);
 		AudioSource source = obj.GetComponent<AudioSource>();
 		source.volume = volume;
 		source.clip = clip;
@@ -103,7 +103,7 @@ public class AudioManager : MonoBehaviour
 
 	public void PlayIn3D(AudioClip clip, float volume, Vector3 position, float minDistance, float maxVolume)
 	{
-		GameObject obj = ObjectPooler.instance.SpawnFromPool(pool3d, position, Quaternion.identity);
+		GameObject obj = ObjectPooler.Instance.SpawnFromPool(pool3d, position, Quaternion.identity);
 		AudioSource source = obj.GetComponent<AudioSource>();
 		source.volume = volume;
 		source.minDistance = minDistance;

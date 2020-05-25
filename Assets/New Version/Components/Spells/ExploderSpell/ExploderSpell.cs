@@ -40,7 +40,7 @@ public class ExploderSpell : Spell
 	private void Awake()
 	{
 		audioSource = GetComponent<AudioSource>();
-		ObjectPooler.instance.CreateNewPool(poolName, exploderProjectilePrefab, 8);
+		ObjectPooler.Instance.CreateNewPool(poolName, exploderProjectilePrefab, 8);
 	}
 
 	//--------------------------
@@ -69,7 +69,7 @@ public class ExploderSpell : Spell
 			{
 				// projectile
 				Vector3 direction = hit.point - exploderSpawnpoint.position;
-				lastFireball = ObjectPooler.instance.SpawnFromPool(poolName, exploderSpawnpoint.position, Quaternion.LookRotation(direction));
+				lastFireball = ObjectPooler.Instance.SpawnFromPool(poolName, exploderSpawnpoint.position, Quaternion.LookRotation(direction));
 
 				// SFX
 				audioSource.PlayOneShot(exploderThrow);

@@ -42,7 +42,7 @@ public class ExploderSpell1 : MonoBehaviour
 	{
 		if (!isCharged) return false; // not shooting because 
 
-		ObjectPooler.instance.SpawnFromPool("Spell_Exploder", fireballSpawnpoint.position, fireballSpawnpoint.rotation);
+		ObjectPooler.Instance.SpawnFromPool("Spell_Exploder", fireballSpawnpoint.position, fireballSpawnpoint.rotation);
 
 		AudioManager.instance.PlayIn3D(fireballThrow, volume, transform.position, minDistance, maxDistance);
 		AudioManager.instance.PlayDrum(fireballThrowDrum);

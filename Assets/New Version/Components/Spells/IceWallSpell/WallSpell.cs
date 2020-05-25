@@ -27,7 +27,7 @@ public class WallSpell : Spell
 	//--------------------------
 	private void Awake()
 	{
-		ObjectPooler.instance.CreateNewPool(poolName, stopperObjectPrefab, 8);
+		ObjectPooler.Instance.CreateNewPool(poolName, stopperObjectPrefab, 8);
 	}
 
 	protected override void Start()
@@ -101,7 +101,7 @@ public class WallSpell : Spell
 
 		// Instantiate the wall
 		//Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-		ObjectPooler.instance.SpawnFromPool(poolName, marker.transform.position, marker.transform.rotation);
+		ObjectPooler.Instance.SpawnFromPool(poolName, marker.transform.position, marker.transform.rotation);
 
 		return true;
 	}
