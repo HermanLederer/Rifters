@@ -1,10 +1,9 @@
-﻿using Mirror;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : NetworkBehaviour
+public class ObjectPooler : MonoBehaviour
 {
 	//
 	// Pool class
@@ -22,6 +21,13 @@ public class ObjectPooler : NetworkBehaviour
 	{
 		get
 		{
+			if (instance == null)
+			{
+				GameObject singletonObject = new GameObject();
+				singletonObject.name = "ObjectPooler";
+				instance = singletonObject.AddComponent<ObjectPooler>();
+			}
+
 			return instance;
 		}
 	}
@@ -30,7 +36,6 @@ public class ObjectPooler : NetworkBehaviour
 	// Public variables
 	public List<Pool> pools;
 	public Dictionary<string, Queue<GameObject>> poolDictionary;
-	public List<GameObject> temp = new List<GameObject>();
 
 	/// <summary>
 	/// Ensures singleton functionality and initializes poolDictionary
@@ -47,13 +52,6 @@ public class ObjectPooler : NetworkBehaviour
 		poolDictionary = new Dictionary<string, Queue<GameObject>>();
 	}
 
-	private void Start()
-	{
-		if (!isServer)
-			return;
-		StartCoroutine(SpawnCoroutine());
-	}
-
 	/// <summary>
 	/// Creates a new object pool
 	/// </summary>
@@ -62,36 +60,16 @@ public class ObjectPooler : NetworkBehaviour
 	/// <param name="size">Amount of clones created on initialiation</param>
 	public void CreateNewPool(string tag, GameObject prefab, int size)
 	{
-		if (!isServer)
-			return;
-
-		if (poolDictionary.ContainsKey(tag))
-		{
-			return;
-		}
 		Queue<GameObject> objectPool = new Queue<GameObject>();
 
 		for (int i = 0; i < size; i++)
 		{
 			GameObject obj = Instantiate(prefab, transform);
-			temp.Add(obj);
 			obj.SetActive(false);
 			objectPool.Enqueue(obj);
 		}
 
 		poolDictionary.Add(tag, objectPool);
-	}
-
-	public IEnumerator SpawnCoroutine()
-	{
-		yield return new WaitForSeconds(10f);
-
-		Debug.Log("Temp size: " + temp.Count);
-
-		foreach (var item in temp)
-		{
-			NetworkServer.Spawn(item);
-		}
 	}
 
 	/// <summary>
