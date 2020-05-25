@@ -9,7 +9,6 @@ public class Player : NetworkBehaviour
 	//
 	// Editor variables
 	#region Editor variables
-	public GameObject exploderProjectilePrefab = null;
 	public bool isPlayer1;
 	[Header("Player components")]
 	public CinemachineFreeLook cameraRig;
@@ -21,6 +20,9 @@ public class Player : NetworkBehaviour
 	public ExploderSpell exploderSpell;
 	public WallSpell wallSpell;
 	public BlinkSpell blinkSpell;
+
+	[Header("Spell spawnable prefabs")]
+	public List<GameObject> spellSpawnableObjects = null;
 
 	[Header("Camera settings")]
 	public float mouseAcceleration = 100f;
@@ -162,9 +164,9 @@ public class Player : NetworkBehaviour
 	}
 
 	[Command]
-	public void CmdSpawnObject(float px, float py, float pz, float rx, float ry, float rz, float rw)
+	public void CmdSpawnObject(int spawnablePrefabId, float px, float py, float pz, float rx, float ry, float rz, float rw)
 	{
-		GameObject obj = Instantiate(exploderProjectilePrefab, new Vector3(px, py, pz), new Quaternion(rx, ry, rz, rw));
+		GameObject obj = Instantiate(spellSpawnableObjects[spawnablePrefabId], new Vector3(px, py, pz), new Quaternion(rx, ry, rz, rw));
 		NetworkServer.Spawn(obj);
 	}
 

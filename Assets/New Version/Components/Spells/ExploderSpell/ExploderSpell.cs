@@ -61,7 +61,7 @@ public class ExploderSpell : Spell
 			Vector3 direction = hit.point - exploderSpawnpoint.position;
 			Vector3 p = exploderSpawnpoint.position;
 			Quaternion r = Quaternion.LookRotation(direction);
-			player.CmdSpawnObject(p.x, p.y, p.z, r.x, r.y, r.z, r.w);
+			player.CmdSpawnObject(0, p.x, p.y, p.z, r.x, r.y, r.z, r.w);
 
 			// SFX
 			audioSource.PlayOneShot(exploderThrow);

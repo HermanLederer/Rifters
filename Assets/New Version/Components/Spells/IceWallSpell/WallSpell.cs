@@ -6,7 +6,6 @@ public class WallSpell : Spell
 	// Editor variables
 	[Header("Wall parameters")]
 	public GameObject markerObjectPrefab = null; // Marker that will show how the wall will behave
-	public GameObject stopperObjectPrefab = null;
 	public LayerMask levelLayerMask = 1; // Level Layer
 
 	//
@@ -94,7 +93,7 @@ public class WallSpell : Spell
 		//Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
 		Vector3 p = marker.transform.position;
 		Quaternion r = marker.transform.rotation;
-		player.CmdSpawnObject(p.x, p.y, p.z, r.x, r.y, r.z, r.w);
+		player.CmdSpawnObject(1, p.x, p.y, p.z, r.x, r.y, r.z, r.w);
 
 		return true;
 	}
