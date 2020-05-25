@@ -57,7 +57,7 @@ public class ExploderSpell : Spell
 	{
 		if (lastFireball != null && lastFireball.activeSelf) // explode the last fireball
 		{
-			lastFireball.GetComponent<ExploderSpellProjectile>().Explode();
+			lastFireball.GetComponent<ExploderSpellProjectile>().CmdExplode();
 		}
 		else // shoot a fireball
 		{

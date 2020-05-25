@@ -44,16 +44,9 @@ public class NetworkManagerRifter : NetworkManager
                 else
                     DeclareWiner(GameTeam.Team2);
             }
-
-            if (ballInstance != null)
-            {
-                Debug.Log("Ball position: " + ballInstance.transform.position);
-            }
         }
     }
 
-        
-		
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
 
     public override void OnStartClient()

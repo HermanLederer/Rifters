@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(Rigidbody))]
-public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
+public class ExploderSpellProjectile : NetworkBehaviour, IPooledObject
 {
 	//
 	// Other components
@@ -49,20 +50,20 @@ public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 
 	private void Update()
 	{
-		if (Time.time >= deathTime) Explode();
+		if (Time.time >= deathTime) CmdExplode();
 	}
 
 	private void OnCollisionEnter(Collision collision)
 	{
 		transform.rotation = Quaternion.LookRotation(collision.contacts[0].normal);
-		Explode();
+		CmdExplode();
 		
 	}
 
 	//--------------------------
 	// ExploderSpellProjectile methods
 	//--------------------------
-	public void Explode()
+	public void CmdExplode()
 	{
 		if (isDead) return;
 		isDead = true;

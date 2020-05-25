@@ -868,7 +868,7 @@ MonoBehaviour:
   energyChargeRate: 1.2
   energyCharges: 1
   player: {fileID: 1804862892492501761}
-  exploderProjectilePrefab: {fileID: 1896346109625938319, guid: 6290b6621ba3a7c49bc18b19d0a85cc7,
+  exploderProjectilePrefab: {fileID: 583750198183120929, guid: 4fb96483f15367947a75b9cd9de7fb42,
     type: 3}
   exploderSpawnpoint: {fileID: 6266250536905422023}
   exploderCrarge: {fileID: 8300000, guid: ca919b8c738a0fe4d97ced46c2f15fcd, type: 3}
@@ -1115,12 +1115,11 @@ MonoBehaviour:
   player: {fileID: 1804862892492501761}
   markerObjectPrefab: {fileID: 8653616022254516482, guid: 5a8beff100d339f4bbe53efbf8fbdcf6,
     type: 3}
-  stopperObjectPrefab: {fileID: 1403816118238559167, guid: 831e17ac9bf5af248a5858e91750ef01,
+  stopperObjectPrefab: {fileID: 4932736162837719570, guid: 854db0cd6a47b2d4cb4b2ffe91164148,
     type: 3}
   levelLayerMask:
     serializedVersion: 2
     m_Bits: 6656
-  isAiming: 0
 --- !u!1 &8952736320589113810
 GameObject:
   m_ObjectHideFlags: 0

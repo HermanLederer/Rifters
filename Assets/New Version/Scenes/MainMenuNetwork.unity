@@ -866,6 +866,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1647714438292737831, guid: f1050b630057bd14a8320ee26c427d0f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1647714438949170293, guid: f1050b630057bd14a8320ee26c427d0f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1001,6 +1006,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2008384881786060184, guid: f1050b630057bd14a8320ee26c427d0f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2008384881952130861, guid: f1050b630057bd14a8320ee26c427d0f,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1097,6 +1107,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2008384882823935530, guid: f1050b630057bd14a8320ee26c427d0f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037470179961975995, guid: f1050b630057bd14a8320ee26c427d0f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -1111,6 +1126,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: HostLobby
       objectReference: {fileID: 0}
+    - target: {fileID: 3832886482089451847, guid: f1050b630057bd14a8320ee26c427d0f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6330326940952393697, guid: f1050b630057bd14a8320ee26c427d0f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1120,6 +1140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: JoinLobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330326941741799739, guid: f1050b630057bd14a8320ee26c427d0f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1050b630057bd14a8320ee26c427d0f, type: 3}

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5393135547862896877
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 514333598349108616, guid: b7e3c318f609b6f498de8ed586b4085d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514333598349108616, guid: b7e3c318f609b6f498de8ed586b4085d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514333598349108616, guid: b7e3c318f609b6f498de8ed586b4085d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514333598349108616, guid: b7e3c318f609b6f498de8ed586b4085d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376850897261363359, guid: b7e3c318f609b6f498de8ed586b4085d,
+        type: 3}
+      propertyPath: explosionVFXPrefab
+      value: 
+      objectReference: {fileID: 5327701402774800905, guid: 5810f6f8f42134240a22c4cc3dcd5934,
+        type: 3}
+    - target: {fileID: 4376850897261363359, guid: b7e3c318f609b6f498de8ed586b4085d,
+        type: 3}
+      propertyPath: frostVFXPrefab
+      value: 
+      objectReference: {fileID: 6427396076116232494, guid: 5448756f1dd627a499e689ae73a39191,
+        type: 3}
+    - target: {fileID: 7778493796281655044, guid: b7e3c318f609b6f498de8ed586b4085d,
+        type: 3}
+      propertyPath: m_Name
+      value: VFXManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7e3c318f609b6f498de8ed586b4085d, type: 3}
