@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9112791472121447263
 Transform:
   m_ObjectHideFlags: 0
@@ -54,6 +54,7 @@ MonoBehaviour:
   explosionLayer:
     serializedVersion: 2
     m_Bits: 4096
+  lifeTime: 10
 --- !u!135 &1376854845470131873
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class MagicVFXExplosionLight : MonoBehaviour
 	//
 	// Other components
 	#region Other components
-	new private Light light = null;
+	private Light li = null;
 	#endregion
 
 	//
@@ -31,19 +31,19 @@ public class MagicVFXExplosionLight : MonoBehaviour
 	//--------------------------
 	void Awake()
 	{
-		light = GetComponent<Light>();
+		li = GetComponent<Light>();
 	}
 
 	private void OnEnable()
 	{
 		bornTime = Time.time;
 		lifeTime = Random.Range(minLifeTime, maxLifeTime);
-		light.intensity = maxIntensity;
+		li.intensity = maxIntensity;
 	}
 
     void Update()
     {
-		if ((Time.time - bornTime) > lifeTime) light.intensity = 0;
-		else light.intensity = Mathf.Lerp(maxIntensity, 0, (Time.time - bornTime) / lifeTime);
+		if ((Time.time - bornTime) > lifeTime) li.intensity = 0;
+		else li.intensity = Mathf.Lerp(maxIntensity, 0, (Time.time - bornTime) / lifeTime);
 	}
 }

@@ -50,11 +50,11 @@ public class VFXManager : MonoBehaviour
 	//--------------------------
 	public void SpawnExplosionVFX(Vector3 position, Quaternion rotation)
 	{
-		ObjectPooler.Instance.SpawnFromPool(explosionVFXPool, position, rotation);
+		//ObjectPooler.Instance.SpawnFromPool(explosionVFXPool, position, rotation);
 	}
 
 	public void SpawnFrostVFX(Vector3 position, Quaternion rotation)
 	{
-		ObjectPooler.Instance.SpawnFromPool(frostVFXPool, position, rotation);
+		//ObjectPooler.Instance.SpawnFromPool(frostVFXPool, position, rotation);
 	}
 }

@@ -44,11 +44,6 @@ public class NetworkManagerRifter : NetworkManager
                 else
                     DeclareWiner(GameTeam.Team2);
             }
-
-            if (ballInstance != null)
-            {
-                Debug.Log("Ball position: " + ballInstance.transform.position);
-            }
         }
     }
 

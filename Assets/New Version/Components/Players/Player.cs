@@ -9,6 +9,7 @@ public class Player : NetworkBehaviour
 	//
 	// Editor variables
 	#region Editor variables
+	public GameObject exploderProjectilePrefab = null;
 	public bool isPlayer1;
 	[Header("Player components")]
 	public CinemachineFreeLook cameraRig;
@@ -101,6 +102,8 @@ public class Player : NetworkBehaviour
 		aimKey = "Fire2 P1";
 		triggerKey = "Fire1 P1";
 		blinkKey = "Fire3 P1";
+
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	private void Update()
@@ -140,7 +143,7 @@ public class Player : NetworkBehaviour
 		if (Input.GetButtonDown(jumpKey)) rigidbodyController.Jump();
 
 		// Animator
-		Vector3 velocity = rigidbodyController.rigidbody.velocity;
+		Vector3 velocity = rigidbodyController.Rb.velocity;
 		Vector3 localVelocity = rigidbodyController.transform.InverseTransformDirection(velocity);
 
 		animator.SetBool("IsGrounded", rigidbodyController.isGrounded);
@@ -158,8 +161,15 @@ public class Player : NetworkBehaviour
 		animator.SetTrigger(valueString);
 	}
 
+	[Command]
+	public void CmdSpawnObject(float px, float py, float pz, float rx, float ry, float rz, float rw)
+	{
+		GameObject obj = Instantiate(exploderProjectilePrefab, new Vector3(px, py, pz), new Quaternion(rx, ry, rz, rw));
+		NetworkServer.Spawn(obj);
+	}
+
 	//--------------------------
-	// Player events
+	// Player methods
 	//--------------------------
 	public void FreezeControls(float duration)
 	{

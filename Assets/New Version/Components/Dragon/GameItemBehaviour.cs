@@ -12,8 +12,8 @@ public class GameItemBehaviour : MonoBehaviour
 	//
 	// Other compnents
 	private GameItemPerception perception;
-	new private SphereCollider collider;
-	new private Rigidbody rigidbody;
+	private SphereCollider col;
+	private Rigidbody rb;
 	private NavMeshAgent navMeshAgent;
 
 	//
@@ -50,8 +50,8 @@ public class GameItemBehaviour : MonoBehaviour
 	void Awake()
 	{
 		perception = GetComponent<GameItemPerception>();
-		collider = GetComponent<SphereCollider>();
-		rigidbody = GetComponent<Rigidbody>();
+		col = GetComponent<SphereCollider>();
+		rb = GetComponent<Rigidbody>();
 		navMeshAgent = GetComponent<NavMeshAgent>();
 	}
 
@@ -68,10 +68,10 @@ public class GameItemBehaviour : MonoBehaviour
 	{
 		// Ground retraction
 		RaycastHit hit;
-		if (Physics.SphereCast(transform.position, collider.radius, Vector3.down, out hit, 5))
+		if (Physics.SphereCast(transform.position, col.radius, Vector3.down, out hit, 5))
 		{
 			float dist =  1 - Vector3.Distance(transform.position, hit.point) / 5;
-			rigidbody.AddForce(Vector3.up * dist * 20, ForceMode.Impulse);
+			rb.AddForce(Vector3.up * dist * 20, ForceMode.Impulse);
 		}
 
 		// Modes
@@ -82,7 +82,7 @@ public class GameItemBehaviour : MonoBehaviour
 		}
 		else
 		{
-			if (Time.time >= nextDragonTime && rigidbody.velocity.magnitude <= 1f)
+			if (Time.time >= nextDragonTime && rb.velocity.magnitude <= 1f)
 			{
 				//BecomeDragon();
 			}
@@ -141,8 +141,8 @@ public class GameItemBehaviour : MonoBehaviour
 
 		// components
 		navMeshAgent.enabled = false;
-		collider.enabled = true;
-		rigidbody.isKinematic = false;
+		col.enabled = true;
+		rb.isKinematic = false;
 
 		return true;
 	}
@@ -158,10 +158,10 @@ public class GameItemBehaviour : MonoBehaviour
 		meshFilter.mesh = dragonMesh;
 
 		// components
-		Vector3 vel = rigidbody.velocity; // used later to set navmesh destination
+		Vector3 vel = rb.velocity; // used later to set navmesh destination
 		navMeshAgent.enabled = true;
-		collider.enabled = false;
-		rigidbody.isKinematic = true;
+		col.enabled = false;
+		rb.isKinematic = true;
 
 		// rotation and navmesh destination
 		transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -172,7 +172,7 @@ public class GameItemBehaviour : MonoBehaviour
 
 	public void Kick(Vector3 direction)
 	{
-		rigidbody.AddForce(direction * rigidbody.mass, ForceMode.Impulse);
+		rb.AddForce(direction * rb.mass, ForceMode.Impulse);
 	}
 
 	public void SetNextDragonTime(float amount)

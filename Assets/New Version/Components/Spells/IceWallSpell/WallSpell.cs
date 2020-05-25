@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Mirror;
+﻿using UnityEngine;
 
 public class WallSpell : Spell
 {
@@ -20,16 +17,10 @@ public class WallSpell : Spell
 	//
 	// Private variables
 	private GameObject marker;
-	private string poolName = "Stopper_Spell_Projectiles";
 
 	//--------------------------
 	// MonoBehaviour events
 	//--------------------------
-	private void Awake()
-	{
-		ObjectPooler.Instance.CreateNewPool(poolName, stopperObjectPrefab, 8);
-	}
-
 	protected override void Start()
 	{
 		base.Start();
@@ -101,7 +92,9 @@ public class WallSpell : Spell
 
 		// Instantiate the wall
 		//Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-		ObjectPooler.Instance.SpawnFromPool(poolName, marker.transform.position, marker.transform.rotation);
+		Vector3 p = marker.transform.position;
+		Quaternion r = marker.transform.rotation;
+		player.CmdSpawnObject(p.x, p.y, p.z, r.x, r.y, r.z, r.w);
 
 		return true;
 	}

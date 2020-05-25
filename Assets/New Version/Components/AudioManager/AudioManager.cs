@@ -94,21 +94,21 @@ public class AudioManager : MonoBehaviour
 
 	public void PlayIn2D(AudioClip clip, float volume)
 	{
-		GameObject obj = ObjectPooler.Instance.SpawnFromPool(pool2d);
+		/*GameObject obj = ObjectPooler.Instance.SpawnFromPool(pool2d, Vector3.zero, Quaternion.identity);
 		AudioSource source = obj.GetComponent<AudioSource>();
 		source.volume = volume;
 		source.clip = clip;
-		source.Play();
+		source.Play();*/
 	}
 
 	public void PlayIn3D(AudioClip clip, float volume, Vector3 position, float minDistance, float maxVolume)
 	{
-		GameObject obj = ObjectPooler.Instance.SpawnFromPool(pool3d, position, Quaternion.identity);
+		/*GameObject obj = ObjectPooler.Instance.SpawnFromPool(pool3d, position, Quaternion.identity);
 		AudioSource source = obj.GetComponent<AudioSource>();
 		source.volume = volume;
 		source.minDistance = minDistance;
 		source.maxDistance = maxVolume;
 		source.clip = clip;
-		source.Play();
+		source.Play();*/
 	}
 }

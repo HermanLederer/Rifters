@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class SoundObject : MonoBehaviour
+public class SoundObject : NetworkBehaviour
 {
 	private AudioSource audioSource;
 	private float deathTime = 10f;
@@ -30,7 +31,8 @@ public class SoundObject : MonoBehaviour
 	{
 		if (Time.time >= deathTime)
 		{
-			gameObject.SetActive(false);
+			//gameObject.SetActive(false);
+			NetworkServer.Destroy(gameObject);
 		}
 	}
 }

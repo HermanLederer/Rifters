@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(Rigidbody))]
-public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
+public class ExploderSpellProjectile : NetworkBehaviour
 {
 	//
 	// Other components
 	#region Other components
-	new private Rigidbody rigidbody = null;
+	private Rigidbody rb = null;
 	#endregion
 
 	//
@@ -35,15 +36,15 @@ public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 	//--------------------------
 	private void Awake()
 	{
-		rigidbody = GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody>();
 	}
 
-	public void OnObjectSpawn()
+	public void OnEnable()
 	{
 		deathTime = Time.time + lifeTime;
 		isDead = false;
-		rigidbody.velocity = Vector3.zero;
-		rigidbody.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+		rb.velocity = Vector3.zero;
+		rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
 		gameObject.GetComponentsInChildren<Light>()[0].enabled = true;
 	}
 
@@ -56,7 +57,6 @@ public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 	{
 		transform.rotation = Quaternion.LookRotation(collision.contacts[0].normal);
 		Explode();
-		
 	}
 
 	//--------------------------
@@ -87,6 +87,8 @@ public class ExploderSpellProjectile : MonoBehaviour, IPooledObject
 			}
 		}
 
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
+		//NetworkBehaviour.Destroy(gameObject);
+		NetworkServer.Destroy(gameObject);
 	}
 }

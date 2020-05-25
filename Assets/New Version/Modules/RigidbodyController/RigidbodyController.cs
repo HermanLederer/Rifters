@@ -6,13 +6,13 @@ using Mirror;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class RigidbodyController : NetworkBehaviour
+public class RigidbodyController : MonoBehaviour
 {
 	//
 	// Other components
 	#region Other components
-	new public CapsuleCollider collider { get; private set; }
-	new public Rigidbody rigidbody { get; private set; }
+	public CapsuleCollider Col { get; private set; }
+	public Rigidbody Rb { get; private set; }
 	#endregion
 
 	//
@@ -57,12 +57,12 @@ public class RigidbodyController : NetworkBehaviour
 	{
 		// Other components
 		//player = GetComponent<Player>();
-		collider = GetComponent<CapsuleCollider>();
-		rigidbody = GetComponent<Rigidbody>();
+		Col = GetComponent<CapsuleCollider>();
+		Rb = GetComponent<Rigidbody>();
 
 		isGrounded = true;
 
-		rigidbody.centerOfMass = new Vector3(0, -1, 0);
+		Rb.centerOfMass = new Vector3(0, -1, 0);
 	}
 
 	private void FixedUpdate()
@@ -79,7 +79,7 @@ public class RigidbodyController : NetworkBehaviour
 		FollowGround();
 
 		// Acceleration
-		Vector3 horizontalVelocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+		Vector3 horizontalVelocity = new Vector3(Rb.velocity.x, 0, Rb.velocity.z);
 
 		float targetSpeed = 0;
 
@@ -124,25 +124,25 @@ public class RigidbodyController : NetworkBehaviour
 
 	private void Accelerate(Vector3 direction, float acceleration)
 	{
-		if (isGrounded) rigidbody.AddForce(direction * acceleration * rigidbody.mass, ForceMode.Impulse);
+		if (isGrounded) Rb.AddForce(direction * acceleration * Rb.mass, ForceMode.Impulse);
 		else
 		{
-			float mag = Mathf.Max(new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z).magnitude, maxFloatingSpeed);
-			rigidbody.AddForce(direction * acceleration * rigidbody.mass, ForceMode.Impulse);
+			float mag = Mathf.Max(new Vector3(Rb.velocity.x, 0, Rb.velocity.z).magnitude, maxFloatingSpeed);
+			Rb.AddForce(direction * acceleration * Rb.mass, ForceMode.Impulse);
 
-			Vector3 vel = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+			Vector3 vel = new Vector3(Rb.velocity.x, 0, Rb.velocity.z);
 			vel = Vector3.ClampMagnitude(vel, mag);
 
-			rigidbody.velocity = new Vector3(vel.x, rigidbody.velocity.y, vel.z);
+			Rb.velocity = new Vector3(vel.x, Rb.velocity.y, vel.z);
 		}
 	}
 
 	private void Decelerate(float deceleration)
 	{
 		// Only decelerates horizontally
-		Vector3 horizontalVelocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+		Vector3 horizontalVelocity = new Vector3(Rb.velocity.x, 0, Rb.velocity.z);
 		horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, horizontalVelocity.magnitude - deceleration);
-		rigidbody.velocity = new Vector3(horizontalVelocity.x, rigidbody.velocity.y, horizontalVelocity.z);
+		Rb.velocity = new Vector3(horizontalVelocity.x, Rb.velocity.y, horizontalVelocity.z);
 	}
 
 	private void FollowGround()
@@ -153,12 +153,12 @@ public class RigidbodyController : NetworkBehaviour
 		float rayLength = 0.2f;
 		Vector3 center = transform.position;
 		center += Vector3.up * (rayLength * 0.5f);
-		center += Vector3.up * collider.radius;
+		center += Vector3.up * Col.radius;
 
 		Debug.DrawRay(center, Vector3.down * rayLength);
 
 		RaycastHit hit;
-		if (Physics.SphereCast(center, collider.radius, Vector3.down, out hit, rayLength, levelLayerMask))
+		if (Physics.SphereCast(center, Col.radius, Vector3.down, out hit, rayLength, levelLayerMask))
 		{
 			isGrounded = true;
 			groundMagnetismForce = 0f;
@@ -174,7 +174,7 @@ public class RigidbodyController : NetworkBehaviour
 			Vector3 center = transform.position;
 
 			RaycastHit hit;
-			float downAngle = Vector3.Angle(Vector3.down, rigidbody.velocity);
+			float downAngle = Vector3.Angle(Vector3.down, Rb.velocity);
 			if (downAngle < 90)
 			{
 				float groundMagnetismAmount = 1f;
@@ -185,7 +185,7 @@ public class RigidbodyController : NetworkBehaviour
 				}
 
 				groundMagnetismForce += groundMagnetismAmount * Time.fixedDeltaTime;
-				rigidbody.AddForce(Vector3.down * groundMagnetismForce * groundMagnetism * rigidbody.mass, ForceMode.Impulse);
+				Rb.AddForce(Vector3.down * groundMagnetismForce * groundMagnetism * Rb.mass, ForceMode.Impulse);
 			}
 		}
 	}
@@ -203,7 +203,7 @@ public class RigidbodyController : NetworkBehaviour
 		if (!isGrounded) return false;
 
 		groundMagnetismForce = 0f;
-		rigidbody.AddForce(Vector3.up * jumpPower * rigidbody.mass, ForceMode.Impulse);
+		Rb.AddForce(Vector3.up * jumpPower * Rb.mass, ForceMode.Impulse);
 		return true;
 	}
 }

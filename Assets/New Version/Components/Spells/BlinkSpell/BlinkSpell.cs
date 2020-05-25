@@ -58,7 +58,7 @@ public class BlinkSpell : Spell
 		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 50f))
 		{
 			// Twean
-			originalVelocity = player.rigidbodyController.rigidbody.velocity;
+			originalVelocity = player.rigidbodyController.Rb.velocity;
 			player.FreezeControls(blinkDuration);
 			player.rigidbodyController.transform.DOMove(hit.point, blinkDuration).SetEase(easeType).OnComplete(RestoreVelocity);
 			return true;
@@ -69,6 +69,6 @@ public class BlinkSpell : Spell
 
 	private void RestoreVelocity()
 	{
-		player.rigidbodyController.rigidbody.velocity = originalVelocity;
+		player.rigidbodyController.Rb.velocity = originalVelocity;
 	}
 }

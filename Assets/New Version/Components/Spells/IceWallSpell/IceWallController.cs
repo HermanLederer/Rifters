@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Mirror;
 
-public class IceWallController : MonoBehaviour
+public class IceWallController : NetworkBehaviour
 {
 	//
 	// Editor variables
@@ -43,6 +44,7 @@ public class IceWallController : MonoBehaviour
 	void Update()
 	{
 		if (Time.time >= deathTime)
-			gameObject.SetActive(false); // using set active to be compatible with object pool
+			NetworkServer.Destroy(gameObject);
+		//gameObject.SetActive(false); // using set active to be compatible with object pool
 	}
 }
