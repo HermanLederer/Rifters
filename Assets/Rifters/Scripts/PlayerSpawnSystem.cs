@@ -23,11 +23,6 @@ public class PlayerSpawnSystem : NetworkBehaviour
 
     public override void OnStartServer() => NetworkManagerRifter.OnServerReadied += SpawnPlayer;
 
-    public override void OnStartClient()
-    {
-
-    }
-
     [ServerCallback]
     private void OnDestroy() => NetworkManagerRifter.OnServerReadied -= SpawnPlayer;
 

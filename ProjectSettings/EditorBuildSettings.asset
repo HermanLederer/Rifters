@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/New Version/Scenes/MainMenuNetwork.unity
     guid: b65a5407b862f0c4cac43b49c41b17e1
+  - enabled: 0
+    path: Assets/Inital Version/Scenes/Character selection.unity
+    guid: c29d0be9bd62580468da52a4ce46062d
   - enabled: 1
     path: Assets/New Version/Scenes/NetworkGame.unity
     guid: 27dc67ad8d1d32040b0cfe32af410d01

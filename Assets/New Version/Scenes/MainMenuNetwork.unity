@@ -1244,7 +1244,8 @@ MonoBehaviour:
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 0}
   minPlayers: 1
   menuScene: Assets/New Version/Scenes/MainMenuNetwork.unity
   gameScene: Assets/New Version/Scenes/NetworkGame.unity
@@ -1254,6 +1255,11 @@ MonoBehaviour:
     type: 3}
   playerSpawnSystem: {fileID: 662149683748510705, guid: ec257bd6ef16de84e9be30d1b1b556c1,
     type: 3}
+  ballPrefab: {fileID: 8982838994785950291, guid: ceb8f801768c520428df1bf4061d3f83,
+    type: 3}
+  playToGoals: 5
+  team1score: 0
+  team2score: 0
 --- !u!114 &1879820771
 MonoBehaviour:
   m_ObjectHideFlags: 0

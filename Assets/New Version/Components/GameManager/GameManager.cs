@@ -15,10 +15,8 @@ public class GameManager : MonoBehaviour
 	// Editor variables
 	//[SerializeField] private bool offlineMode = false;
 	[SerializeField] private bool respawnPlayersAfterGoal = true;
-	//[SerializeField] private GameObject playerPrefab = null;
-	[SerializeField] private GameObject gameBallPrefab = null;
 	[SerializeField] private int playToGoals = 5;
-	[SerializeField] private Transform ballSpawn = null;
+	
 	[Header("Audio")]
 	//[SerializeField] private AudioClip goal = null;
 	[SerializeField] private AudioClip goalDrums = null;
@@ -53,14 +51,14 @@ public class GameManager : MonoBehaviour
 
 	void Start()
     {
-		gameBall = Instantiate(gameBallPrefab, ballSpawn.position, Quaternion.identity);
-
 		localPlayerTeam = GameTeam.Team1;
 
 		if (localPlayerTeam == GameTeam.Team1)
 			inGameUI.yourTeam1.gameObject.SetActive(true);
 		else
 			inGameUI.yourTeam2.gameObject.SetActive(true);
+
+		gameBall = GameObject.FindGameObjectWithTag("Dragon");
 	}
 
 	void Update()
@@ -124,7 +122,7 @@ public class GameManager : MonoBehaviour
 	public void respawnPlayersAndBall()
 	{
 		//AudioManager.instance.PlayJump(Goal);
-		gameBall.transform.position = ballSpawn.position;
+		//gameBall.transform.position = ballSpawn.position;
 		gameBall.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 		
 		if (respawnPlayersAfterGoal)

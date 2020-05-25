@@ -17,6 +17,13 @@ public class NetworkManagerRifter : NetworkManager
     [Header("Game")]
     [SerializeField] private NetworkGamePlayerRifters gamePlayerPrefab = null;
     [SerializeField] private GameObject playerSpawnSystem = null;
+    [SerializeField] private GameObject ballPrefab = null;
+    private GameObject ballInstance = null;
+
+    [Header("Game Conditions")]
+    [SerializeField] private int playToGoals = 5;
+    [HideInInspector] public int team1score = 0;
+    [HideInInspector] public int team2score = 0;
 
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
@@ -26,6 +33,27 @@ public class NetworkManagerRifter : NetworkManager
     public List<NetworkRoomPlayerRifters> RoomPlayers { get; } = new List<NetworkRoomPlayerRifters>();
     public List<NetworkGamePlayerRifters> GamePlayers { get; } = new List<NetworkGamePlayerRifters>();
 
+    public void Update()
+    {
+        if (IsSceneActive(gameScene))
+        {
+            if (team1score >= playToGoals || team2score >= playToGoals)
+            {
+                if (team1score > team2score)
+                    DeclareWiner(GameTeam.Team1);
+                else
+                    DeclareWiner(GameTeam.Team2);
+            }
+
+            if (ballInstance != null)
+            {
+                Debug.Log("Ball position: " + ballInstance.transform.position);
+            }
+        }
+    }
+
+        
+		
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
 
     public override void OnStartClient()
@@ -78,6 +106,11 @@ public class NetworkManagerRifter : NetworkManager
             roomPlayerInstance.IsLeader = isLeader;
 
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
+        }
+
+        if (IsSceneActive(gameScene))
+        {
+
         }
     }
 
@@ -157,6 +190,9 @@ public class NetworkManagerRifter : NetworkManager
         {
             GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
             NetworkServer.Spawn(playerSpawnSystemInstance);
+
+            ballInstance = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
+            NetworkServer.Spawn(ballInstance);
         }
     }
 
@@ -165,5 +201,37 @@ public class NetworkManagerRifter : NetworkManager
         base.OnServerReady(conn);
 
         OnServerReadied?.Invoke(conn);
+    }
+
+    public void DeclareWiner(GameTeam team)
+    {
+        Debug.Log(team + " won!");
+        //isGamePlaying = false;
+        Time.timeScale = 0.1f;
+    }
+
+    public void respawnPlayersAndBall()
+    {
+        //AudioManager.instance.PlayJump(Goal);
+        ballInstance.transform.position = Vector3.zero;
+        ballInstance.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+    }
+
+    public void Score(GameTeam team)
+    {
+        // increasing the score
+        if (team == GameTeam.Team1) ++team1score;
+        else ++team2score;
+
+        //inGameUI.score1.text = "" + team1score;
+        //inGameUI.score2.text = "" + team2score;
+
+        //Debug.Log("A goal has been scored by " + team);
+        //Debug.Log("" + GameTeam.Team1 + ": " + team1score + "; " + GameTeam.Team2 + ": " + team2score + ";");
+
+        //AudioManager.instance.PlayDrum(goalDrums);
+        //AudioManager.instance.PlayTribeVoc(goalVoc);
+
+        respawnPlayersAndBall();
     }
 }
