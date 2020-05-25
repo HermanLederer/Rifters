@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionVFXPrefab: {fileID: 4637990454504761178, guid: 2d6f09614dbc3c64c99fdabb313211a7,
     type: 3}
-  frostVFXPrefab: {fileID: 1403816118238559167, guid: 362c3ac28b81b864ab1938bf46fd5a60,
+  frostVFXPrefab: {fileID: 1403816118238559167, guid: 45eb65a466563e647ad465e96f57143f,
     type: 3}

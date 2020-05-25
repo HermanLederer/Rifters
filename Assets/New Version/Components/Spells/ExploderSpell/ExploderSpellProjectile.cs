@@ -48,15 +48,25 @@ public class ExploderSpellProjectile : NetworkBehaviour
 		gameObject.GetComponentsInChildren<Light>()[0].enabled = true;
 	}
 
+	public void OnDisable()
+	{
+		Explode();
+	}
+
 	private void Update()
 	{
-		if (Time.time >= deathTime) Explode();
+		if (Time.time >= deathTime)
+		{
+			Explode();
+			NetworkServer.Destroy(gameObject);
+		}
 	}
 
 	private void OnCollisionEnter(Collision collision)
 	{
 		transform.rotation = Quaternion.LookRotation(collision.contacts[0].normal);
 		Explode();
+		NetworkServer.Destroy(gameObject);
 	}
 
 	//--------------------------
@@ -86,9 +96,5 @@ public class ExploderSpellProjectile : NetworkBehaviour
 				rb.AddExplosionForce(700, transform.position, 9, 0, ForceMode.Impulse);
 			}
 		}
-
-		//gameObject.SetActive(false);
-		//NetworkBehaviour.Destroy(gameObject);
-		NetworkServer.Destroy(gameObject);
 	}
 }

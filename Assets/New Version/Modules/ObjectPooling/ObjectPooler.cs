@@ -1,10 +1,9 @@
-﻿using Mirror;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : NetworkBehaviour
+public class ObjectPooler : MonoBehaviour
 {
 	//
 	// Singleton
@@ -14,7 +13,11 @@ public class ObjectPooler : NetworkBehaviour
 		get
 		{
 			if (instance == null)
-				Debug.LogError("Object pooler has not been initialized. You must initialize it manually in the scene");
+			{
+				GameObject obj = new GameObject();
+				obj.name = "ObjectPool";
+				obj.AddComponent<ObjectPooler>();
+			}
 
 			return instance;
 		}
@@ -49,13 +52,13 @@ public class ObjectPooler : NetworkBehaviour
 	{
 		if (poolDictionary.ContainsKey(tag)) return;
 
+		prefab.SetActive(false);
+
 		Queue<GameObject> objectPool = new Queue<GameObject>();
 
-		//for (int i = 0; i < size; i++)
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < size; i++)
 		{
 			GameObject obj = Instantiate(prefab, transform);
-			obj.SetActive(false);
 			objectPool.Enqueue(obj);
 		}
 
@@ -67,36 +70,35 @@ public class ObjectPooler : NetworkBehaviour
 	/// </summary>
 	/// <param name="tag">Identificator of the pool to get the an object from</param>
 	/// <returns>The spawned game object</returns>
-	//public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
-	//{
-	//	if (!poolDictionary.ContainsKey(tag))
-	//	{
-	//		Debug.LogError("Pool with tag " + tag + " doesn't exist.");
-	//		return null;
-	//	}
+	public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+	{
+		if (!poolDictionary.ContainsKey(tag))
+		{
+			Debug.LogError("Pool with tag " + tag + " doesn't exist.");
+			return null;
+		}
 
-	//	GameObject objectToSpawn = poolDictionary[tag].Peek();
+		GameObject objectToSpawn = poolDictionary[tag].Peek();
 
 		// Checking if an object is available to take
-		//if (!objectToSpawn.gameObject.activeSelf)
-		//{
+		if (!objectToSpawn.gameObject.activeSelf)
+		{
 			// taking an existing object
-		//	poolDictionary[tag].Dequeue();
-		//	objectToSpawn.transform.position = position;
-		//	objectToSpawn.transform.rotation = rotation;
-		//}
+			poolDictionary[tag].Dequeue();
+			objectToSpawn.transform.position = position;
+			objectToSpawn.transform.rotation = rotation;
+		}
 		//else
 		//{
 			// creating a new object because all enqueued objects are in use
-	//		objectToSpawn = Instantiate(objectToSpawn, position, rotation, transform);
-	//	NetworkServer.Spawn(objectToSpawn);
+			//objectToSpawn = Instantiate(objectToSpawn, position, rotation, transform);
 		//}		
 
-	//	objectToSpawn.SetActive(true);
+		objectToSpawn.SetActive(true);
 
 		// putting the object in the queue
-		//poolDictionary[tag].Enqueue(objectToSpawn);
+		poolDictionary[tag].Enqueue(objectToSpawn);
 
-	//	return objectToSpawn;
-	//}
+		return objectToSpawn;
+	}
 }
