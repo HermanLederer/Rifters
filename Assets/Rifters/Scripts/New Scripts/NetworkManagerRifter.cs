@@ -22,8 +22,10 @@ public class NetworkManagerRifter : NetworkManager
 
     [Header("Game Conditions")]
     [SerializeField] private int playToGoals = 5;
+    [SerializeField] private int playToMinutes = 5;
     [HideInInspector] public int team1score = 0;
     [HideInInspector] public int team2score = 0;
+    [HideInInspector] public float gameTime = 0;
 
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
@@ -37,6 +39,8 @@ public class NetworkManagerRifter : NetworkManager
     {
         if (IsSceneActive(gameScene))
         {
+            gameTime -= Time.deltaTime;
+
             if (team1score >= playToGoals || team2score >= playToGoals)
             {
                 if (team1score > team2score)
@@ -46,8 +50,6 @@ public class NetworkManagerRifter : NetworkManager
             }
         }
     }
-
-        
 		
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
 
@@ -111,13 +113,16 @@ public class NetworkManagerRifter : NetworkManager
 
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        if(conn.identity != null)
+        if (IsSceneActive(menuScene))
         {
-            var player = conn.identity.GetComponent<NetworkRoomPlayerRifters>();
+            if (conn.identity != null)
+            {
+                var player = conn.identity.GetComponent<NetworkRoomPlayerRifters>();
 
-            RoomPlayers.Remove(player);
+                RoomPlayers.Remove(player);
 
-            NotifyPlayersOfReadyState();
+                NotifyPlayersOfReadyState();
+            }
         }
         base.OnServerDisconnect(conn);
     }
@@ -188,6 +193,8 @@ public class NetworkManagerRifter : NetworkManager
 
             ballInstance = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
             NetworkServer.Spawn(ballInstance);
+
+            gameTime = playToMinutes * 60;
         }
     }
 
@@ -215,18 +222,21 @@ public class NetworkManagerRifter : NetworkManager
     public void Score(GameTeam team)
     {
         // increasing the score
-        if (team == GameTeam.Team1) ++team1score;
-        else ++team2score;
-
-        //inGameUI.score1.text = "" + team1score;
-        //inGameUI.score2.text = "" + team2score;
-
-        //Debug.Log("A goal has been scored by " + team);
-        //Debug.Log("" + GameTeam.Team1 + ": " + team1score + "; " + GameTeam.Team2 + ": " + team2score + ";");
+        if (team == GameTeam.Team1) ++team2score;
+        else ++team1score;
 
         //AudioManager.instance.PlayDrum(goalDrums);
         //AudioManager.instance.PlayTribeVoc(goalVoc);
 
+        UpdatePlayersDisplay();
         respawnPlayersAndBall();
+    }
+
+    private void UpdatePlayersDisplay()
+    {
+        foreach (var player in GamePlayers)
+        {
+            player.UpdateDisplay();
+        }
     }
 }

@@ -24,7 +24,7 @@ public class Spell : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		// Quite a lot of checks for what it is, but makes the UI implementation easy and allows for OnFullRecharge event to pay sounds
+		// Quite a lot of checks for what it is, but makes the UI implementation easy and allows for OnFullRecharge event to play sounds
 		if (energy < 1f)
 		{
 			// Charging energy

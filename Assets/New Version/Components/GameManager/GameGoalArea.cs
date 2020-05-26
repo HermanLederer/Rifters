@@ -1,13 +1,24 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameGoalArea : MonoBehaviour
+public class GameGoalArea : NetworkBehaviour
 {
-	//
 	// Editor variables
-	//[SerializeField] private GameTeam team = GameTeam.Team1;
+	[SerializeField] private GameTeam team = GameTeam.Team1;
 
+	private NetworkManagerRifter room;
+
+	private NetworkManagerRifter Room
+	{
+		get
+		{
+			if (room != null) { return room; }
+
+			return room = NetworkManager.singleton as NetworkManagerRifter;
+		}
+	}
 	//
 	// Public variables
 
@@ -19,7 +30,7 @@ public class GameGoalArea : MonoBehaviour
 	//--------------------------
 	private void OnTriggerEnter(Collider other)
 	{
-		/*if (other.GetComponent<GameItemBehaviour>() != null)
-			GameManager.instance.Score(team);*/
+		if (other.tag == "Dragon")
+			Room.Score(team);
 	}
 }

@@ -1,8 +1,18 @@
-﻿using Mirror;
+﻿using Boo.Lang.Environments;
+using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum TypeOfSpell
+{
+    FIREBALL,
+    STOPSPELL,
+    BLINK
+}
 
 public class NetworkGamePlayerRifters : NetworkBehaviour
 {
@@ -50,8 +60,9 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
 
     [SerializeField] private Text gameTimeText = null;
 
-    [SerializeField] private Image FireSpell = null;
-    [SerializeField] private Image StopSpell = null;
+    [SerializeField] private Image fireSpellImage = null;
+    [SerializeField] private Image stopSpellImage = null;
+    [SerializeField] private Image blinkSpellImage = null;
 
     [Header("Pause UI")]
     [SerializeField] private GameObject PauseUI = null;
@@ -63,8 +74,9 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
     [SyncVar]
     private string displayName = "PlaceHolder...";
 
+    public bool isPaused = false;
+
     private NetworkManagerRifter room;
-    private bool isPaused = false;
 
     private NetworkManagerRifter Room
     {
@@ -85,10 +97,7 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
         {
             if (isPaused)
             {
-                GameUI.SetActive(true);
-                PauseUI.SetActive(false);
-                isPaused = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                ResumeGame();
             }
             else
             {
@@ -98,6 +107,15 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
                 Cursor.lockState = CursorLockMode.None;
             }
         }
+
+        string minutes = Mathf.Floor(Room.gameTime / 60).ToString();
+        string seconds = Mathf.RoundToInt(Room.gameTime % 60).ToString("00");
+
+        Debug.Log("Minutes: " + minutes);
+        Debug.Log("Seconds: " + seconds);
+
+        gameTimeText.text = minutes + ":" + seconds;
+        pauseTimeText.text = minutes + ":" + seconds;
     }
 
     public override void OnStartClient()
@@ -111,6 +129,57 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
     public override void OnStopClient()
     {
         Room.GamePlayers.Remove(this);
+    }
+
+    public void UpdateDisplay()
+    {
+        if (!hasAuthority)
+        {
+            foreach (var player in Room.GamePlayers)
+            {
+                if (player.hasAuthority)
+                {
+                    player.UpdateDisplay();
+                    break;
+                }
+            }
+        }
+
+        myScore.text = isClientOnly ? Room.team2score.ToString() : Room.team1score.ToString();
+        opponentScore.text = isClientOnly ? Room.team1score.ToString() : Room.team2score.ToString();
+
+        pauseScore.text = myScore.text + " : " + opponentScore.text;
+    }
+
+    public void ResumeGame()
+    {
+        PauseUI.SetActive(false);
+        GameUI.SetActive(true);
+        isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void ChangeSpellAlpha(TypeOfSpell spell, float alphaValue)
+    {
+        Color tempColor = Color.white;
+        switch (spell)
+        {
+            case TypeOfSpell.FIREBALL:
+                tempColor = fireSpellImage.color;
+                tempColor.a = alphaValue;
+                fireSpellImage.color = tempColor;
+                break;
+            case TypeOfSpell.STOPSPELL:
+                tempColor = stopSpellImage.color;
+                tempColor.a = alphaValue;
+                stopSpellImage.color = tempColor;
+                break;
+            case TypeOfSpell.BLINK:
+                tempColor = blinkSpellImage.color;
+                tempColor.a = alphaValue;
+                blinkSpellImage.color = tempColor;
+                break;
+        }
     }
 
     [Server]

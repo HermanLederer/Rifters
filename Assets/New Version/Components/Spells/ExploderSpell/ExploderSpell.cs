@@ -44,6 +44,8 @@ public class ExploderSpell : Spell
 	//--------------------------
 	public override void OnFullyRecharged()
 	{
+		player.ChangeSpellAlpha(TypeOfSpell.FIREBALL, 1f);
+
 		// SFX
 		//audioSource.PlayOneShot(fireballCrarge);
 		//AudioManager.instance.PlayTribeVoc(fireballCrargeVoc);
@@ -68,6 +70,8 @@ public class ExploderSpell : Spell
 			AudioManager.instance.PlayDrum(exploderThrowDrum);
 			AudioManager.instance.PlayTribeVoc(exploderThrowVoc);
 		}
+
+		player.ChangeSpellAlpha(TypeOfSpell.FIREBALL, 0.5f);
 
 		return true;
 	}

@@ -61,6 +61,7 @@ public class BlinkSpell : Spell
 			originalVelocity = player.rigidbodyController.Rb.velocity;
 			player.FreezeControls(blinkDuration);
 			player.rigidbodyController.transform.DOMove(hit.point, blinkDuration).SetEase(easeType).OnComplete(RestoreVelocity);
+			player.ChangeSpellAlpha(TypeOfSpell.BLINK, .5f);
 			return true;
 		}
 
@@ -70,5 +71,10 @@ public class BlinkSpell : Spell
 	private void RestoreVelocity()
 	{
 		player.rigidbodyController.Rb.velocity = originalVelocity;
+	}
+
+	public override void OnFullyRecharged()
+	{
+		player.ChangeSpellAlpha(TypeOfSpell.BLINK, 1f);
 	}
 }

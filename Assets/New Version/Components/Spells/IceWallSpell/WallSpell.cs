@@ -95,6 +95,13 @@ public class WallSpell : Spell
 		Quaternion r = marker.transform.rotation;
 		player.CmdSpawnObject(1, p.x, p.y, p.z, r.x, r.y, r.z, r.w);
 
+		player.ChangeSpellAlpha(TypeOfSpell.STOPSPELL, 0.5f);
+
 		return true;
+	}
+
+	public override void OnFullyRecharged()
+	{
+		player.ChangeSpellAlpha(TypeOfSpell.STOPSPELL, 1f);
 	}
 }

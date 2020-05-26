@@ -44,6 +44,8 @@ public class Player : NetworkBehaviour
 	private string blinkKey = "Fire3";
 
 	private float nextControlTime = 0f;
+
+	private NetworkGamePlayerRifters myPlayer;
 	#endregion
 
 	//--------------------------
@@ -54,6 +56,22 @@ public class Player : NetworkBehaviour
 		base.OnStartAuthority();
 
 		cameraRig.gameObject.SetActive(true);
+
+		NetworkManagerRifter room = NetworkManager.singleton as NetworkManagerRifter;
+
+		foreach (var player in room.GamePlayers)
+		{
+			if (player.hasAuthority)
+			{
+				myPlayer = player;
+				break;
+			}
+		}
+
+		if(myPlayer == null)
+		{
+			Debug.LogError("I couldn't find your Game Player");
+		}
 	}
 
 	//--------------------------
@@ -116,18 +134,23 @@ public class Player : NetworkBehaviour
 		// Control freeze check
 		if (Time.time < nextControlTime) return;
 
-		// Spells
-		wallSpell.isAiming = Input.GetButton(aimKey);
-		if (wallSpell.isAiming)
+		// If the player is on the pause menu
+		if (!myPlayer.isPaused)
 		{
-			if (Input.GetButtonDown(triggerKey)) wallSpell.Trigger();
-		}
-		else if(Input.GetButtonDown(triggerKey))
-			exploderSpell.Trigger(); // exploder
+			// Spells
+			wallSpell.isAiming = Input.GetButton(aimKey);
+			if (wallSpell.isAiming)
+			{
+				if (Input.GetButtonDown(triggerKey)) wallSpell.Trigger();
+			}
+			else if (Input.GetButtonDown(triggerKey))
+				exploderSpell.Trigger(); // exploder
 
-		if (Input.GetButtonDown(blinkKey))
-		{
-			blinkSpell.Trigger();
+			if (Input.GetButtonDown(blinkKey))
+			{
+				blinkSpell.Trigger();
+
+			}
 		}
 
 		// Camera rotation
@@ -185,5 +208,10 @@ public class Player : NetworkBehaviour
 	public void UnfreezeControls()
 	{
 		nextControlTime = 0f;
+	}
+
+	public void ChangeSpellAlpha(TypeOfSpell spell, float alphaValue)
+	{
+		myPlayer.ChangeSpellAlpha(spell, alphaValue);
 	}
 }
