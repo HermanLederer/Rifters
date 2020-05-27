@@ -26,10 +26,16 @@ namespace UIGrids
 				}
 			}
 
-			if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
+			if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
 			{
-				cell.quantizePosition();
-				cell.quantizeSize();
+				cell.isFree = true;
+			}
+			else if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
+			{
+				cell.isFree = false;
+
+				cell.SaveQuantizedPosition();
+				cell.SaveQuantizedSize();
 			}
 		}
 	}

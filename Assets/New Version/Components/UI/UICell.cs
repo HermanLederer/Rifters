@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UIGrids
 {
+	[ExecuteAlways]
 	[RequireComponent(typeof(RectTransform))]
 	public class UICell : MonoBehaviour
 	{
@@ -14,14 +15,54 @@ namespace UIGrids
 		[HideInInspector]
 		public UIGrid grid;
 
-		public void quantizePosition()
+		//
+		// Editor properties
+		[Header("Cell properties")]
+		public Vector2 pos = Vector2.zero;
+		public Vector2 size = new Vector2(1f, 1f);
+
+		public bool isFree = false;
+
+		private void Start()
 		{
-			rect.position = grid.GetQuantizedPosition(rect.position.x, rect.position.y);
+			Reposition();
+			Resize();
 		}
 
-		public void quantizeSize()
+		private void Update()
 		{
-			rect.sizeDelta = grid.GetQuantizedSize(rect.sizeDelta.x, rect.sizeDelta.y);
+			if (Application.isEditor)
+			{
+				if (!isFree)
+				{
+					Reposition();
+					Resize();
+				}
+			}
+		}
+
+		//
+		// Grid to world
+		public void Reposition()
+		{
+			rect.position = grid.PositionGridToWorld(pos.x, pos.y);
+		}
+
+		public void Resize()
+		{
+			rect.sizeDelta = grid.SizeGridToWorld(size.x, size.y);
+		}
+
+		// World to grid
+		public void SaveQuantizedPosition()
+		{
+			pos = grid.PositionWorldToGrid(rect.position.x, rect.position.y);
+			
+		}
+
+		public void SaveQuantizedSize()
+		{
+			size = grid.SizeWorldToGrid(rect.sizeDelta.x, rect.sizeDelta.y);
 		}
 	}
 }

@@ -52,34 +52,52 @@ namespace UIGrids
 			unscaledRowSize = height / rows;
 		}
 
-		public Vector2 GetPositionOnGrid(float col, float row)
+		//
+		// Grid to world
+		public Vector2 PositionGridToWorld(float col, float row)
 		{
 			RecalculateSizes();
 			return new Vector2(col * scaledColSize, row * scaledRowSize);
 		}
 
-		public Vector2 GetCellSize(float cols, float rows)
+		public Vector2 SizeGridToWorld(float cols, float rows)
 		{
 			RecalculateSizes();
 			return new Vector2(cols * unscaledColSize, rows * unscaledRowSize);
 		}
 
-		public Vector2 GetQuantizedPosition(float x, float y)
+		//
+		// World to grid
+		public Vector2 PositionWorldToGrid(float x, float y)
 		{
 			RecalculateSizes();
 
 			x = Mathf.Round(x / scaledColSize);
 			y = Mathf.Round(y / scaledRowSize);
-			return GetPositionOnGrid(x, y);
+
+			return new Vector2(x, y);
 		}
 
-		public Vector2 GetQuantizedSize(float width, float height)
+		public Vector2 SizeWorldToGrid(float width, float height)
 		{
 			RecalculateSizes();
 
 			width = Mathf.Round(width / unscaledColSize);
 			height = Mathf.Round(height / unscaledRowSize);
-			return GetCellSize(width, height);
+
+			return new Vector2(width, height);
 		}
+
+		//
+		// Quantization
+		/*public Vector2 GetQuantizedPosition(float x, float y)
+		{
+			return PositionGridToWorld(x, y);
+		}
+
+		public Vector2 GetQuantizedSize(float width, float height)
+		{
+			return SizeGridToWorld(width, height);
+		}*/
 	}
 }
