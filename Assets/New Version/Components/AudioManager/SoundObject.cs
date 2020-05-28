@@ -31,8 +31,7 @@ public class SoundObject : NetworkBehaviour
 	{
 		if (Time.time >= deathTime)
 		{
-			//gameObject.SetActive(false);
-			NetworkServer.Destroy(gameObject);
+			gameObject.SetActive(false);
 		}
 	}
 }

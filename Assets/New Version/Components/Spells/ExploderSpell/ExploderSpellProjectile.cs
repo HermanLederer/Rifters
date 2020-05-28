@@ -86,14 +86,14 @@ public class ExploderSpellProjectile : NetworkBehaviour
 		VFXManager.instance.SpawnExplosionVFX(transform.position, transform.rotation);
 
 		// Explosion force
-		Collider[] colliders = Physics.OverlapSphere(transform.position, 9, explosionLayer);
+		Collider[] colliders = Physics.OverlapSphere(transform.position, 18, explosionLayer);
 		foreach (Collider other in colliders)
 		{
 			Rigidbody rb;
 			if (other.TryGetComponent<Rigidbody>(out rb))
 			{
 				if (other.gameObject.GetInstanceID() == GetInstanceID()) continue;
-				rb.AddExplosionForce(700, transform.position, 9, 0, ForceMode.Impulse);
+				rb.AddExplosionForce(1600, transform.position, 18, 0, ForceMode.Impulse);
 			}
 		}
 	}

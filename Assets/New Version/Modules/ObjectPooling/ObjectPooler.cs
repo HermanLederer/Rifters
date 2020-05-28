@@ -81,13 +81,13 @@ public class ObjectPooler : MonoBehaviour
 		GameObject objectToSpawn = poolDictionary[tag].Peek();
 
 		// Checking if an object is available to take
-		if (!objectToSpawn.gameObject.activeSelf)
-		{
+		//if (!objectToSpawn.gameObject.activeSelf)
+		//{
 			// taking an existing object
 			poolDictionary[tag].Dequeue();
 			objectToSpawn.transform.position = position;
 			objectToSpawn.transform.rotation = rotation;
-		}
+		//}
 		//else
 		//{
 			// creating a new object because all enqueued objects are in use

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3942743368470420403}
   - component: {fileID: 8730878501873605272}
   m_Layer: 0
-  m_Name: Smoke particles
+  m_Name: Smoke PS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1419,7 +1419,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 1
+    enabled: 0
     mode: 0
     timeMode: 0
     fps: 30

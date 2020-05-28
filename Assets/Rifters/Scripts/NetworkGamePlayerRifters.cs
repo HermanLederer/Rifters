@@ -111,8 +111,8 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
         string minutes = Mathf.Floor(Room.gameTime / 60).ToString();
         string seconds = Mathf.RoundToInt(Room.gameTime % 60).ToString("00");
 
-        Debug.Log("Minutes: " + minutes);
-        Debug.Log("Seconds: " + seconds);
+        //Debug.Log("Minutes: " + minutes);
+        //Debug.Log("Seconds: " + seconds);
 
         gameTimeText.text = minutes + ":" + seconds;
         pauseTimeText.text = minutes + ":" + seconds;

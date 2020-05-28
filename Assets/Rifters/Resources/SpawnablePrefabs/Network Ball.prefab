@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -2926924727163272422}
   - component: {fileID: 8175774746972644644}
   m_Layer: 12
-  m_Name: RoundDragon
+  m_Name: Network Ball
   m_TagString: Dragon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8982838994785950291}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dff2582c7dbf11c4597eaae248aafecd, type: 3}
   m_Name: 
