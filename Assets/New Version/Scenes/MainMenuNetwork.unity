@@ -1810,6 +1810,8 @@ MonoBehaviour:
   team1score: 0
   team2score: 0
   gameTime: 0
+  goalDrums: {fileID: 8300000, guid: 721dce8331e5f554bb47e7dbd4b8184c, type: 3}
+  goalVoc: {fileID: 8300000, guid: 40f7e9189e05b9b409d66beccc5b485b, type: 3}
 --- !u!114 &1879820771
 MonoBehaviour:
   m_ObjectHideFlags: 0

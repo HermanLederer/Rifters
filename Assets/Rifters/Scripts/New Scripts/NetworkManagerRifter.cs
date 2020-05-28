@@ -21,13 +21,18 @@ public class NetworkManagerRifter : NetworkManager
     private GameObject ballInstance = null;
 
     [Header("Game Conditions")]
-    [SerializeField] private int playToGoals = 5;
-    [SerializeField] private int playToMinutes = 5;
+    [SerializeField] private int playToGoals = 10;
+    [SerializeField] private int playToMinutes = 7;
     [HideInInspector] public int team1score = 0;
     [HideInInspector] public int team2score = 0;
     [HideInInspector] public float gameTime = 0;
 
-    public static event Action OnClientConnected;
+	[Header("Audio")]
+	//[SerializeField] private AudioClip goal = null;
+	[SerializeField] private AudioClip goalDrums = null;
+	[SerializeField] private AudioClip goalVoc = null;
+
+	public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
     public static event Action<NetworkConnection> OnServerReadied;
     public static event Action OnServerStopped;
@@ -191,7 +196,7 @@ public class NetworkManagerRifter : NetworkManager
             GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
             NetworkServer.Spawn(playerSpawnSystemInstance);
 
-            ballInstance = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
+            ballInstance = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
             NetworkServer.Spawn(ballInstance);
 
             gameTime = playToMinutes * 60;
@@ -214,8 +219,7 @@ public class NetworkManagerRifter : NetworkManager
 
     public void respawnPlayersAndBall()
     {
-        //AudioManager.instance.PlayJump(Goal);
-        ballInstance.transform.position = Vector3.zero;
+        ballInstance.transform.position = new Vector3(0, 2, 0);
         ballInstance.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
     }
 
@@ -225,8 +229,8 @@ public class NetworkManagerRifter : NetworkManager
         if (team == GameTeam.Team1) ++team2score;
         else ++team1score;
 
-        //AudioManager.instance.PlayDrum(goalDrums);
-        //AudioManager.instance.PlayTribeVoc(goalVoc);
+        AudioManager.instance.PlayDrum(goalDrums);
+        AudioManager.instance.PlayTribeVoc(goalVoc);
 
         UpdatePlayersDisplay();
         respawnPlayersAndBall();
