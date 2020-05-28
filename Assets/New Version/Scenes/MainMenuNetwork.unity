@@ -1064,6 +1064,11 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: f1050b630057bd14a8320ee26c427d0f
       objectReference: {fileID: 0}
+    - target: {fileID: 449604506481239893, guid: f1050b630057bd14a8320ee26c427d0f,
+        type: 3}
+      propertyPath: networkManager
+      value: 
+      objectReference: {fileID: 1879820770}
     - target: {fileID: 449604506798573173, guid: f1050b630057bd14a8320ee26c427d0f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
