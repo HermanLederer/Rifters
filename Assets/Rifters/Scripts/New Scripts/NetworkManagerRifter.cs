@@ -40,10 +40,14 @@ public class NetworkManagerRifter : NetworkManager
     public List<NetworkRoomPlayerRifters> RoomPlayers { get; } = new List<NetworkRoomPlayerRifters>();
     public List<NetworkGamePlayerRifters> GamePlayers { get; } = new List<NetworkGamePlayerRifters>();
 
+	private bool isGamePlaying = true;
+
     public void Update()
     {
         if (IsSceneActive(gameScene))
         {
+			if (!isGamePlaying) return;
+
             gameTime -= Time.deltaTime;
 
             if (team1score >= playToGoals || team2score >= playToGoals)
@@ -213,7 +217,7 @@ public class NetworkManagerRifter : NetworkManager
     public void DeclareWiner(GameTeam team)
     {
         Debug.Log(team + " won!");
-        //isGamePlaying = false;
+        isGamePlaying = false;
     }
 
     public void respawnPlayersAndBall()
@@ -224,6 +228,7 @@ public class NetworkManagerRifter : NetworkManager
 		NetworkBall Nb = ballInstance.GetComponent<NetworkBall>();
 		Nb.Tr.position = new Vector3(0, 2, 0);
 		Nb.Rb.velocity = new Vector3(0, 0, 0);
+		Nb.Rb.angularVelocity = new Vector3(0, 0, 0);
     }
 
     public void Score(GameTeam team)
