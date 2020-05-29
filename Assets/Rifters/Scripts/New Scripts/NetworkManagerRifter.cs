@@ -214,7 +214,6 @@ public class NetworkManagerRifter : NetworkManager
     {
         Debug.Log(team + " won!");
         //isGamePlaying = false;
-        Time.timeScale = 0.1f;
     }
 
     public void respawnPlayersAndBall()
