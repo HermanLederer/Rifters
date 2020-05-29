@@ -93,7 +93,7 @@ public class ExploderSpellProjectile : NetworkBehaviour
 			if (other.TryGetComponent<Rigidbody>(out rb))
 			{
 				if (other.gameObject.GetInstanceID() == GetInstanceID()) continue;
-				rb.AddExplosionForce(1600, transform.position, 18, 0, ForceMode.Impulse);
+				rb.AddExplosionForce(800, transform.position, 18, 0, ForceMode.Impulse);
 			}
 		}
 	}

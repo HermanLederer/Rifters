@@ -132,7 +132,7 @@ public class Player : NetworkBehaviour
 		if (!hasAuthority) return;
 
 		// If the player is on the pause menu
-		if (!myPlayer.isPaused)
+		if (myPlayer && !myPlayer.isPaused)
 		{
 			// Control freeze check
 			if (Time.time < nextControlTime) return;

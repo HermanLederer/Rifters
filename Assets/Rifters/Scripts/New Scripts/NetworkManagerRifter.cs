@@ -219,8 +219,12 @@ public class NetworkManagerRifter : NetworkManager
 
     public void respawnPlayersAndBall()
     {
-        ballInstance.transform.position = new Vector3(0, 2, 0);
-        ballInstance.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+		// CHANGE: made a wrapper prefab for the ball so we can have it in the Ball folder
+		// NetworkBall is a reference passthrough class
+		// Please delete this when you've read it
+		NetworkBall Nb = ballInstance.GetComponent<NetworkBall>();
+		Nb.Tr.position = new Vector3(0, 2, 0);
+		Nb.Rb.velocity = new Vector3(0, 0, 0);
     }
 
     public void Score(GameTeam team)

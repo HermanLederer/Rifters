@@ -68,10 +68,10 @@ public class GameItemBehaviour : MonoBehaviour
 	{
 		// Ground retraction
 		RaycastHit hit;
-		if (Physics.SphereCast(transform.position, col.radius, Vector3.down, out hit, 5))
+		if (Physics.Raycast(transform.position, Vector3.down, out hit, 4))
 		{
-			float dist =  1 - Vector3.Distance(transform.position, hit.point) / 5;
-			rb.AddForce(Vector3.up * dist * 30, ForceMode.Impulse);
+			float dist =  1 - Vector3.Distance(transform.position, hit.point) / 4;
+			rb.AddForce(Vector3.up * dist * 20, ForceMode.Impulse);
 		}
 
 		// Modes

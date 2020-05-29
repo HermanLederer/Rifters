@@ -67,7 +67,7 @@ public class BlinkSpell : Spell
 		//}
 
 		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 50f))
+		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 50f, layermask))
 		{
 			// Twean
 			originalVelocity = player.rigidbodyController.Rb.velocity;
