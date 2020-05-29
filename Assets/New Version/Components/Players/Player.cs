@@ -131,12 +131,12 @@ public class Player : NetworkBehaviour
 		// Multiplayer check
 		if (!hasAuthority) return;
 
-		// Control freeze check
-		if (Time.time < nextControlTime) return;
-
 		// If the player is on the pause menu
 		if (!myPlayer.isPaused)
 		{
+			// Control freeze check
+			if (Time.time < nextControlTime) return;
+
 			// Spells
 			wallSpell.isAiming = Input.GetButton(aimKey);
 			if (wallSpell.isAiming)
@@ -151,21 +151,21 @@ public class Player : NetworkBehaviour
 				blinkSpell.Trigger();
 
 			}
+
+			// Camera rotation
+			float mouseX = Input.GetAxisRaw(cameraX) * acceleration * Time.fixedDeltaTime;
+			float mouseY = Input.GetAxisRaw(cameraY) * acceleration * Time.fixedDeltaTime;
+
+			cameraRig.m_XAxis.Value += mouseX;
+			cameraRig.m_YAxis.Value -= mouseY / 180f;
+
+			// RigidbodyController
+			Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
+			rigidbodyController.transform.rotation = Quaternion.Euler(newRotation);
+			rigidbodyController.axisV = Input.GetAxisRaw(verticalKey);
+			rigidbodyController.axisH = Input.GetAxisRaw(horizontalKey);
+			if (Input.GetButtonDown(jumpKey)) rigidbodyController.Jump();
 		}
-
-		// Camera rotation
-		float mouseX = Input.GetAxisRaw(cameraX) * acceleration * Time.fixedDeltaTime;
-		float mouseY = Input.GetAxisRaw(cameraY) * acceleration * Time.fixedDeltaTime;
-
-		cameraRig.m_XAxis.Value += mouseX;
-		cameraRig.m_YAxis.Value -= mouseY / 180f;
-
-		// RigidbodyController
-		Vector3 newRotation = new Vector3(0, Camera.main.transform.rotation.eulerAngles.y, 0);
-		rigidbodyController.transform.rotation = Quaternion.Euler(newRotation);
-		rigidbodyController.axisV = Input.GetAxisRaw(verticalKey);
-		rigidbodyController.axisH = Input.GetAxisRaw(horizontalKey);
-		if (Input.GetButtonDown(jumpKey)) rigidbodyController.Jump();
 
 		// Animator
 		Vector3 velocity = rigidbodyController.Rb.velocity;

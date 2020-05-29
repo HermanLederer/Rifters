@@ -15,12 +15,24 @@ public class BlinkSpell : Spell
 
 	public float raycastHeight = 1f;
 	public float raycastRadius = 1f;
-	#endregion
 
 	public Ease easeType;
 	public LayerMask layermask;
 
+	public GameObject vfxPrefab;
+	#endregion
+
+	//
+	// Private variables
 	private Vector3 originalVelocity = Vector3.zero;
+	private string vfxPoolName = "Pool_BlinkSpell";
+
+	protected override void Start()
+	{
+		base.Start();
+
+		ObjectPooler.Instance.CreateNewPool(vfxPoolName, vfxPrefab, 4);
+	}
 
 	//--------------------------
 	// BlinkSpell methods
@@ -61,7 +73,13 @@ public class BlinkSpell : Spell
 			originalVelocity = player.rigidbodyController.Rb.velocity;
 			player.FreezeControls(blinkDuration);
 			player.rigidbodyController.transform.DOMove(hit.point, blinkDuration).SetEase(easeType).OnComplete(RestoreVelocity);
+
+			// UI
 			player.ChangeSpellAlpha(TypeOfSpell.BLINK, .5f);
+
+			// VFX
+			GameObject vfx = ObjectPooler.Instance.SpawnFromPool(vfxPoolName, transform.position, transform.rotation, true);
+			vfx.transform.parent = transform;
 			return true;
 		}
 

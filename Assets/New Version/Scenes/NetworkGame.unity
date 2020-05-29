@@ -313,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: 7d428700aaf5b7e4dbcd72ba40527dff, type: 2}
   m_StaticLightingSkyUniqueID: 3
-  m_SkySettings: {fileID: 464005437}
+  m_SkySettings: {fileID: 521157670}
   m_SkySettingsFromProfile: {fileID: 5432513390165529012, guid: 7d428700aaf5b7e4dbcd72ba40527dff,
     type: 2}
 --- !u!4 &321731769
@@ -330,7 +330,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &464005437
+--- !u!114 &521157670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

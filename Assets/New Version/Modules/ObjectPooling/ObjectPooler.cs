@@ -70,7 +70,7 @@ public class ObjectPooler : MonoBehaviour
 	/// </summary>
 	/// <param name="tag">Identificator of the pool to get the an object from</param>
 	/// <returns>The spawned game object</returns>
-	public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+	public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation, bool parentToPosition = false)
 	{
 		if (!poolDictionary.ContainsKey(tag))
 		{
@@ -85,6 +85,7 @@ public class ObjectPooler : MonoBehaviour
 		//{
 			// taking an existing object
 			poolDictionary[tag].Dequeue();
+			objectToSpawn.transform.parent = transform;
 			objectToSpawn.transform.position = position;
 			objectToSpawn.transform.rotation = rotation;
 		//}
