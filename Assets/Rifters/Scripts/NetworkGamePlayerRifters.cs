@@ -110,9 +110,6 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
         string minutes = Mathf.Floor(Room.gameTime / 60).ToString();
         string seconds = Mathf.RoundToInt(Room.gameTime % 60).ToString("00");
 
-        //Debug.Log("Minutes: " + minutes);
-        //Debug.Log("Seconds: " + seconds);
-
         gameTimeText.text = minutes + ":" + seconds;
         pauseTimeText.text = minutes + ":" + seconds;
     }
@@ -122,6 +119,12 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
 
         Room.GamePlayers.Add(this);
+    }
+
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+
         GameUI.SetActive(true);
     }
 
