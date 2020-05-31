@@ -69,9 +69,12 @@ public class ExploderSpell : Spell
 			audioSource.PlayOneShot(exploderThrow);
 			AudioManager.instance.PlayDrum(exploderThrowDrum);
 			AudioManager.instance.PlayTribeVoc(exploderThrowVoc);
+
+			player.SetAnimTriggerSpell(animationTrigger);
 		}
 
 		player.ChangeSpellAlpha(TypeOfSpell.FIREBALL, 0.5f);
+		
 
 		return true;
 	}

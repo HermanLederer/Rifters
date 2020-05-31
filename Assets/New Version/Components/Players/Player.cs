@@ -181,7 +181,7 @@ public class Player : NetworkBehaviour
 	{
 		animator.SetBool(valueString, valueBool);
 	}
-	public void SetAnimTriggerSpell(string valueString, float time)
+	public void SetAnimTriggerSpell(string valueString)
 	{
 		animator.SetTrigger(valueString);
 	}

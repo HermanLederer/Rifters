@@ -77,6 +77,9 @@ public class BlinkSpell : Spell
 			// UI
 			player.ChangeSpellAlpha(TypeOfSpell.BLINK, .5f);
 
+			// Animation
+			player.SetAnimTriggerSpell(animationTrigger);
+
 			// VFX
 			GameObject vfx = ObjectPooler.Instance.SpawnFromPool(vfxPoolName, transform.position, transform.rotation, true);
 			vfx.transform.parent = transform;

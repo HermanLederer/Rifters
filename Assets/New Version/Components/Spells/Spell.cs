@@ -7,6 +7,7 @@ public class Spell : MonoBehaviour
 	#region Editor variables
 	public float energyChargeRate = 1f;
 	public int energyCharges = 1;
+	public string animationTrigger;
 	[Header("References")]
 	public Player player;
 	#endregion

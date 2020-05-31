@@ -96,6 +96,7 @@ public class WallSpell : Spell
 		player.CmdSpawnObject(1, p.x, p.y, p.z, r.x, r.y, r.z, r.w);
 
 		player.ChangeSpellAlpha(TypeOfSpell.STOPSPELL, 0.5f);
+		player.SetAnimTriggerSpell(animationTrigger);
 
 		return true;
 	}
