@@ -1,0 +1,277 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UpperBody
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000000000000000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: All_GRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Eye_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Eye_CTRL/LeftEye_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Eye_CTRL/RightEye_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/HipJiggle_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/LeftClavicle_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/LeftClavicle_CTRLGRP/LeftClavicle_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/LeftClavicle_CTRLGRP/LeftClavicle_CTRL/LeftShoulder_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/LeftClavicle_CTRLGRP/LeftClavicle_CTRL/LeftShoulder_CTRLGRP/LeftShoulder_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/Neck_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/Neck_CTRLGRP/Neck_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/Neck_CTRLGRP/Neck_CTRL/Head_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/Neck_CTRLGRP/Neck_CTRL/Head_CTRLGRP/Head_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/Neck_CTRLGRP/Neck_CTRL/Head_CTRLGRP/Head_CTRL/Jaw_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/Neck_CTRLGRP/Neck_CTRL/Head_CTRLGRP/Head_CTRL/Jaw_CTRLGRP/Jaw_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/RightClavicle_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/RightClavicle_CTRLGRP/RightClavicle_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/RightClavicle_CTRLGRP/RightClavicle_CTRL/RightShoulder_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/Hips_CTRL/Spine_1_CTRLGRP/Spine_1_CTRL/Spine_2_CTRLGRP/Spine_2_CTRL/RightClavicle_CTRLGRP/RightClavicle_CTRL/RightShoulder_CTRLGRP/RightShoulder_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/LeftElbow_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/LeftFoot_CTRL
+    m_Weight: 0
+  - m_Path: All_GRP/All_CTRL/LeftKnee_CTRL
+    m_Weight: 0
+  - m_Path: All_GRP/All_CTRL/LeftWrist_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/LeftWrist_CTRLGRP/LeftWrist_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/RightElbow_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/RightFoot_CTRL
+    m_Weight: 0
+  - m_Path: All_GRP/All_CTRL/RightKnee_CTRL
+    m_Weight: 0
+  - m_Path: All_GRP/All_CTRL/RightWrist_CTRLGRP
+    m_Weight: 1
+  - m_Path: All_GRP/All_CTRL/RightWrist_CTRLGRP/RightWrist_CTRL
+    m_Weight: 1
+  - m_Path: All_GRP/Hips
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/LeftLeg
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/LeftLeg/LeftKnee
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/LeftLeg/LeftKnee/LeftAnkle
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/LeftLeg/LeftKnee/LeftAnkle/LeftToes
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/RightLeg
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/RightLeg/RightKnee
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/RightLeg/RightKnee/RightAnkle
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/RightLeg/RightKnee/RightAnkle/RightToes
+    m_Weight: 0
+  - m_Path: All_GRP/Hips/Spine_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftMiddle_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftMiddle_1/LeftMiddle_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftMiddle_1/LeftMiddle_2/LeftMiddle_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftPinky_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftPinky_1/LeftPinky_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftPinky_1/LeftPinky_2/LeftPinky_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftPointer_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftPointer_1/LeftPointer_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftPointer_1/LeftPointer_2/LeftPointer_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftRing_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftRing_1/LeftRing_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftRing_1/LeftRing_2/LeftRing_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftThumb_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftThumb_1/LeftThumb_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/LeftClavicle/LeftShoulder/LeftElbow/LeftWrist/LeftThumb_1/LeftThumb_2/LeftThumb_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/Neck
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/Neck/Head
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/Neck/Head/Jaw
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/Neck/Head/LeftEye
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/Neck/Head/RightEye
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightMiddle_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightMiddle_1/RightMiddle_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightMiddle_1/RightMiddle_2/RightMiddle_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightPinky_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightPinky_1/RightPinky_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightPinky_1/RightPinky_2/RightPinky_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightPointer_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightPointer_1/RightPointer_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightPointer_1/RightPointer_2/RightPointer_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightRing_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightRing_1/RightRing_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightRing_1/RightRing_2/RightRing_3
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightThumb_1
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightThumb_1/RightThumb_2
+    m_Weight: 1
+  - m_Path: All_GRP/Hips/Spine_1/Spine_2/RightClavicle/RightShoulder/RightElbow/RightWrist/RightThumb_1/RightThumb_2/RightThumb_3
+    m_Weight: 1
+  - m_Path: All_GRP/IKs_GRP
+    m_Weight: 1
+  - m_Path: All_GRP/IKs_GRP/ikHandle1
+    m_Weight: 0
+  - m_Path: All_GRP/IKs_GRP/LeftArm_IK
+    m_Weight: 1
+  - m_Path: All_GRP/IKs_GRP/LeftLeg_IK
+    m_Weight: 0
+  - m_Path: All_GRP/IKs_GRP/RightArm_IK
+    m_Weight: 1
+  - m_Path: Character
+    m_Weight: 1
+  - m_Path: Character/ArmBelt_1
+    m_Weight: 1
+  - m_Path: Character/ArmBelt_2
+    m_Weight: 1
+  - m_Path: Character/ArmBeltBuckle_11
+    m_Weight: 1
+  - m_Path: Character/ArmBeltBuckle_12
+    m_Weight: 1
+  - m_Path: Character/ArmBeltBuckle_21
+    m_Weight: 1
+  - m_Path: Character/ArmBeltBuckle_22
+    m_Weight: 1
+  - m_Path: Character/ArmPiece
+    m_Weight: 1
+  - m_Path: Character/Belt_Cloth
+    m_Weight: 1
+  - m_Path: Character/Book
+    m_Weight: 1
+  - m_Path: Character/BookBelt
+    m_Weight: 1
+  - m_Path: Character/BookBeltBuckle_1
+    m_Weight: 1
+  - m_Path: Character/BookBeltBuckle_2
+    m_Weight: 1
+  - m_Path: Character/Button_1
+    m_Weight: 1
+  - m_Path: Character/Button_2
+    m_Weight: 1
+  - m_Path: Character/ChestBelt
+    m_Weight: 1
+  - m_Path: Character/ChestBeltBuckle_1
+    m_Weight: 1
+  - m_Path: Character/ChestBeltBuckle_2
+    m_Weight: 1
+  - m_Path: Character/Cloak
+    m_Weight: 1
+  - m_Path: Character/Eyebrows
+    m_Weight: 1
+  - m_Path: Character/Hair
+    m_Weight: 1
+  - m_Path: Character/HeadPiece
+    m_Weight: 1
+  - m_Path: Character/Hood
+    m_Weight: 1
+  - m_Path: Character/Left_Eye
+    m_Weight: 1
+  - m_Path: Character/Right_Eye
+    m_Weight: 1
+  - m_Path: Character/Ring_1
+    m_Weight: 1
+  - m_Path: Character/Ring_2
+    m_Weight: 1
+  - m_Path: Character/RopeEnd_1
+    m_Weight: 1
+  - m_Path: Character/RopeEnd_2
+    m_Weight: 1
+  - m_Path: Character/RopeKnot_1
+    m_Weight: 1
+  - m_Path: Character/RopeKnot_2
+    m_Weight: 1
+  - m_Path: Character/RopeWaist
+    m_Weight: 1
+  - m_Path: Character/Sachel_1
+    m_Weight: 1
+  - m_Path: Character/Sachel_2
+    m_Weight: 1
+  - m_Path: Character/Teeth_Bottom
+    m_Weight: 1
+  - m_Path: Character/Teeth_Top
+    m_Weight: 1
+  - m_Path: Character/Tongue
+    m_Weight: 1
+  - m_Path: Character/Wizard_Body
+    m_Weight: 1
