@@ -202,7 +202,7 @@ MonoBehaviour:
   exploderSpell: {fileID: 3350228441923655957}
   wallSpell: {fileID: 250670616278275395}
   blinkSpell: {fileID: 5154031765672474635}
-  spellSpawnableObjects: []
+  spawnableObjects: []
   mouseAcceleration: 9
   joystickAcceleration: 9
   horizontalKey: Horizontal
@@ -1548,6 +1548,11 @@ PrefabInstance:
     - target: {fileID: 3092229176916149124, guid: bcc587c6341377c498c157df327f48cc,
         type: 3}
       propertyPath: stepVelocity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092229176916149124, guid: bcc587c6341377c498c157df327f48cc,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

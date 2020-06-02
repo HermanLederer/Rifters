@@ -25,13 +25,10 @@ public class BlinkSpell : Spell
 	//
 	// Private variables
 	private Vector3 originalVelocity = Vector3.zero;
-	private string vfxPoolName = "Pool_BlinkSpell";
 
 	protected override void Start()
 	{
 		base.Start();
-
-		ObjectPooler.Instance.CreateNewPool(vfxPoolName, vfxPrefab, 4);
 	}
 
 	//--------------------------
@@ -67,7 +64,7 @@ public class BlinkSpell : Spell
 		//}
 
 		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 50f, layermask))
+		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 120f, layermask))
 		{
 			// Twean
 			originalVelocity = player.rigidbodyController.Rb.velocity;
@@ -80,9 +77,10 @@ public class BlinkSpell : Spell
 			// Animation
 			player.SetAnimTriggerSpell(animationTrigger);
 
-			// VFX
-			GameObject vfx = ObjectPooler.Instance.SpawnFromPool(vfxPoolName, transform.position, transform.rotation, true);
-			vfx.transform.parent = transform;
+			// Spell object
+			Vector3 p = transform.localPosition;
+			Quaternion r = transform.localRotation;
+			player.CmdSpawnChildObject(2, p.x, p.y, p.z, r.x, r.y, r.z, r.w);
 			return true;
 		}
 

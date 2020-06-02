@@ -29,7 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5498901149568039367}
+  - {fileID: 7872609600915348831}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  lifeTime: 1
+  lifeTime: 2
 --- !u!1001 &7872609600915348623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96,9 +96,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireFlareVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 2382727247084578121, guid: e47faef248c5be8478afd4845d4399cf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e47faef248c5be8478afd4845d4399cf, type: 3}
---- !u!4 &5498901149568039367 stripped
+--- !u!4 &7872609600915348831 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2382727247084578120, guid: e47faef248c5be8478afd4845d4399cf,
     type: 3}

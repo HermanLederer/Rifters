@@ -125,6 +125,16 @@ public class Player : NetworkBehaviour
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
+	private void Start()
+	{
+		// Disabeling components that are not needed on "the other player"
+		if (!hasAuthority)
+		{
+			rigidbodyController.Rb.isKinematic = true;
+			rigidbodyController.enabled = false;
+		}
+	}
+
 	private void Update()
 	{
 		// Multiplayer check
@@ -189,6 +199,15 @@ public class Player : NetworkBehaviour
 	public void CmdSpawnObject(int spawnablePrefabId, float px, float py, float pz, float rx, float ry, float rz, float rw)
 	{
 		GameObject obj = Instantiate(spawnableObjects[spawnablePrefabId], new Vector3(px, py, pz), new Quaternion(rx, ry, rz, rw));
+		NetworkServer.Spawn(obj);
+	}
+
+	[Command]
+	public void CmdSpawnChildObject(int spawnablePrefabId, float px, float py, float pz, float rx, float ry, float rz, float rw)
+	{
+		GameObject obj = Instantiate(spawnableObjects[spawnablePrefabId], rigidbodyController.transform);
+		obj.transform.localPosition = new Vector3(px, py, pz);
+		obj.transform.localRotation = new Quaternion(rx, ry, rz, rw);
 		NetworkServer.Spawn(obj);
 	}
 
