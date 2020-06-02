@@ -22,6 +22,8 @@ public class ExploderSpell : Spell
 	public AudioClip exploderThrow = null;
 	public AudioClip exploderThrowDrum = null;
 	public AudioClip exploderThrowVoc = null;
+	[Header("Collision")]
+	public LayerMask raycastAgainst = 1;
 	#endregion
 
 	//
@@ -57,7 +59,7 @@ public class ExploderSpell : Spell
 
 		// Get the direction vector
 		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 150f))
+		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 150f, raycastAgainst))
 		{
 			// projectile
 			Vector3 direction = hit.point - exploderSpawnpoint.position;

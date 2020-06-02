@@ -883,6 +883,9 @@ MonoBehaviour:
   exploderThrow: {fileID: 8300000, guid: 9c0be11f3e8aaa84aa69cbfe946d7b1a, type: 3}
   exploderThrowDrum: {fileID: 8300000, guid: 681b4a998cdc7f545936fbf84a45f3dc, type: 3}
   exploderThrowVoc: {fileID: 8300000, guid: 26ff7d959d133884b8c716f1b69c3a3f, type: 3}
+  raycastAgainst:
+    serializedVersion: 2
+    m_Bits: 4608
 --- !u!82 &432386248274482564
 AudioSource:
   m_ObjectHideFlags: 0

@@ -62,10 +62,10 @@ public class ExploderSpellProjectile : NetworkBehaviour
 		}
 	}
 
+	[Server]
 	private void OnCollisionEnter(Collision collision)
 	{
 		transform.rotation = Quaternion.LookRotation(collision.contacts[0].normal);
-		Explode();
 		NetworkServer.Destroy(gameObject);
 	}
 
