@@ -25,12 +25,10 @@ public class IceWallController : NetworkBehaviour
 		// Resetting the death time
 		deathTime = Time.time + lifeTime;
 
-		// CHANGE: sphere cast instead of box cast
+		// Sperecasting
 		Vector3 sphereCastOrigin = transform.position;
 		Collider[] colliders = Physics.OverlapSphere(sphereCastOrigin, radius, objectsLayerMask);
 
-		// CHANGE: doing something different
-		//--If the cast hits something--
 		foreach (Collider collider in colliders)
 		{
 			Rigidbody colliderRB;
@@ -45,6 +43,5 @@ public class IceWallController : NetworkBehaviour
 	{
 		if (Time.time >= deathTime)
 			NetworkServer.Destroy(gameObject);
-		//gameObject.SetActive(false); // using set active to be compatible with object pool
 	}
 }

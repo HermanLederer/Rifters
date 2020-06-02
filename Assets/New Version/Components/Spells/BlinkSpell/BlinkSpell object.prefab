@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1403816118238559167
+--- !u!1 &6765965673542629864
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1403816118238559164}
-  - component: {fileID: 2992028643757152723}
-  - component: {fileID: 1403816118238559165}
+  - component: {fileID: 5863135927439254095}
+  - component: {fileID: 3835958658615516419}
+  - component: {fileID: 5179820955335620953}
   m_Layer: 0
-  m_Name: StopperSpell object
+  m_Name: BlinkSpell object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1403816118238559164
+  m_IsActive: 1
+--- !u!4 &5863135927439254095
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403816118238559167}
+  m_GameObject: {fileID: 6765965673542629864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5754853888534229872}
+  - {fileID: 5498901149568039367}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2992028643757152723
+--- !u!114 &3835958658615516419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403816118238559167}
+  m_GameObject: {fileID: 6765965673542629864}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
@@ -49,67 +49,58 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &1403816118238559165
+--- !u!114 &5179820955335620953
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403816118238559167}
+  m_GameObject: {fileID: 6765965673542629864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8acc25a76cc25474a821bfc56fd6cd3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4347c6a76187df54caec9cdce63c4ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  lifeTime: 1.4
-  objectsLayerMask:
-    serializedVersion: 2
-    m_Bits: 5120
-  radius: 6
---- !u!1001 &6676026028999575756
+  lifeTime: 1
+--- !u!1001 &7872609600915348623
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1403816118238559164}
+    m_TransformParent: {fileID: 5863135927439254095}
     m_Modifications:
-    - target: {fileID: 1403816118238559164, guid: 45eb65a466563e647ad465e96f57143f,
+    - target: {fileID: 2382727247084578120, guid: e47faef248c5be8478afd4845d4399cf,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1403816118238559164, guid: 45eb65a466563e647ad465e96f57143f,
+    - target: {fileID: 2382727247084578120, guid: e47faef248c5be8478afd4845d4399cf,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1403816118238559164, guid: 45eb65a466563e647ad465e96f57143f,
+    - target: {fileID: 2382727247084578120, guid: e47faef248c5be8478afd4845d4399cf,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1403816118238559164, guid: 45eb65a466563e647ad465e96f57143f,
+    - target: {fileID: 2382727247084578120, guid: e47faef248c5be8478afd4845d4399cf,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1403816118238559167, guid: 45eb65a466563e647ad465e96f57143f,
+    - target: {fileID: 2382727247084578121, guid: e47faef248c5be8478afd4845d4399cf,
         type: 3}
       propertyPath: m_Name
-      value: IceWallVFX
-      objectReference: {fileID: 0}
-    - target: {fileID: 1403816118238559167, guid: 45eb65a466563e647ad465e96f57143f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: FireFlareVFX
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 45eb65a466563e647ad465e96f57143f, type: 3}
---- !u!4 &5754853888534229872 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: e47faef248c5be8478afd4845d4399cf, type: 3}
+--- !u!4 &5498901149568039367 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1403816118238559164, guid: 45eb65a466563e647ad465e96f57143f,
+  m_CorrespondingSourceObject: {fileID: 2382727247084578120, guid: e47faef248c5be8478afd4845d4399cf,
     type: 3}
-  m_PrefabInstance: {fileID: 6676026028999575756}
+  m_PrefabInstance: {fileID: 7872609600915348623}
   m_PrefabAsset: {fileID: 0}

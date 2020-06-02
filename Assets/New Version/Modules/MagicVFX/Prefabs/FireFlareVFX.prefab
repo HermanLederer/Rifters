@@ -265,8 +265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxIntensity: 1000000
-  minLifeTime: 0.5
-  maxLifeTime: 0.5
+  minLifeTime: 0.3
+  maxLifeTime: 0.3
 --- !u!1001 &2382727247437760392
 PrefabInstance:
   m_ObjectHideFlags: 0
