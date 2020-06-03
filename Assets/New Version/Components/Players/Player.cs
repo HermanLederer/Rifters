@@ -176,12 +176,11 @@ public class Player : NetworkBehaviour
 				else if (Input.GetButtonDown(triggerKey))
 					exploderSpell.Trigger(); // exploder
 			}
-			
 
 			if (Input.GetButtonDown(blinkKey))
 			{
+				blinkSpell.direction = new Vector2(Input.GetAxisRaw(horizontalKey), Input.GetAxisRaw(verticalKey));
 				blinkSpell.Trigger();
-
 			}
 
 			// Camera rotation

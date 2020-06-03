@@ -205,9 +205,6 @@ MonoBehaviour:
   spawnableObjects: []
   mouseAcceleration: 9
   joystickAcceleration: 9
-  horizontalKey: Horizontal
-  verticalKey: Vertical
-  jumpKey: Jump
 --- !u!114 &-4447161020309897418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,7 +299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922022332260574289}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.079, z: 0.684}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 456956107658361589}
@@ -325,7 +322,8 @@ MonoBehaviour:
   animationTrigger: Blink
   player: {fileID: 1804862892492501761}
   blinkDuration: 0.3
-  blinkDistance: 10
+  blinkDistance: 20
+  postBlinkVelocity: 20
   raycastHeight: 1.7
   raycastRadius: 1
   easeType: 1
@@ -334,6 +332,7 @@ MonoBehaviour:
     m_Bits: 512
   vfxPrefab: {fileID: 2382727247084578121, guid: e47faef248c5be8478afd4845d4399cf,
     type: 3}
+  direction: {x: 0, y: 0}
 --- !u!1 &1509804553749245948
 GameObject:
   m_ObjectHideFlags: 0
