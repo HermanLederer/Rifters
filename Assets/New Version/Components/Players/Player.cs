@@ -35,9 +35,10 @@ public class Player : NetworkBehaviour
 	private string cameraY;
 	private float acceleration;
 
-	public string horizontalKey = "Horizontal";
-	public string verticalKey = "Vertical";
-	public string jumpKey = "Jump";
+	private bool altControls = false;
+	private string horizontalKey = "Horizontal";
+	private string verticalKey = "Vertical";
+	private string jumpKey = "Jump";
 	private string aimKey = "Fire2";
 	private string triggerKey = "Fire1";
 	private string blinkKey = "Fire3";
@@ -147,13 +148,35 @@ public class Player : NetworkBehaviour
 			if (Time.time < nextControlTime) return;
 
 			// Spells
-			wallSpell.isAiming = Input.GetButton(aimKey);
-			if (wallSpell.isAiming)
+			if (Input.GetButtonDown("Alt controls")) altControls = !altControls;
+
+			if (altControls)
 			{
-				if (Input.GetButtonDown(triggerKey)) wallSpell.Trigger();
+				// Alternative controls
+				if (Input.GetButtonDown(aimKey))
+					wallSpell.isAiming = true;
+
+				if (Input.GetButtonUp(aimKey))
+				{
+					wallSpell.isAiming = false;
+					wallSpell.Trigger();
+				}
+
+				if (Input.GetButtonDown(triggerKey))
+					exploderSpell.Trigger(); // exploder
 			}
-			else if (Input.GetButtonDown(triggerKey))
-				exploderSpell.Trigger(); // exploder
+			else
+			{
+				// Normal controls
+				wallSpell.isAiming = Input.GetButton(aimKey);
+				if (wallSpell.isAiming)
+				{
+					if (Input.GetButtonDown(triggerKey)) wallSpell.Trigger();
+				}
+				else if (Input.GetButtonDown(triggerKey))
+					exploderSpell.Trigger(); // exploder
+			}
+			
 
 			if (Input.GetButtonDown(blinkKey))
 			{
