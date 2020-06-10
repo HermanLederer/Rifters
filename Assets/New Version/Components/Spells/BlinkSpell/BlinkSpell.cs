@@ -10,8 +10,9 @@ public class BlinkSpell : Spell
 	// Editor variables
 	#region Editor variables
 	[Header("Blink parameters")]
-	public float blinkDuration;
-	public float blinkDistance;
+	public float blinkDuration = 0.3f;
+	public float blinkDistance = 30f;
+	public float postBlinkVelocity = 30f;
 
 	public float raycastHeight = 1f;
 	public float raycastRadius = 1f;
@@ -21,6 +22,10 @@ public class BlinkSpell : Spell
 
 	public GameObject vfxPrefab;
 	#endregion
+
+	//
+	// Public variables
+	public Vector2 direction = Vector2.zero;
 
 	//
 	// Private variables
@@ -38,53 +43,51 @@ public class BlinkSpell : Spell
 	{
 		if (!base.Trigger()) return false; // does cooldown
 
-		//Vector3 direction = player.rigidbodyController.rigidbody.velocity.normalized;
-		//if (Vector3.Angle(direction, transform.forward) < 46) direction = Camera.main.transform.forward;
+		// Getting direction from this.direction that stores player input
+		Vector3 direction = Vector3.zero;
+		if (this.direction.y > 0f) direction += transform.forward;
+		else if (this.direction.y < 0f) direction -= transform.forward;
+		if (this.direction.x > 0f) direction += transform.right;
+		else if (this.direction.x < 0f) direction -= transform.right;
+		direction = direction.normalized;
+		if (direction.magnitude <= 0) direction = transform.forward;
 
-		//// Original destination
-		//Vector3 destination = transform.position + direction * blinkDistance;
+		// Preferred destination
+		Vector3 destination = transform.position + direction * blinkDistance;
 
-		//// Looking for obstacles
-		//Vector3 raycastOrigin1 = transform.position + transform.up * raycastRadius;
-		//Vector3 raycastOrigin2 = transform.position + transform.up * (raycastHeight - raycastRadius);
-		//RaycastHit wallHit;
+		// Looking for obstacles and changing the destination if needed
+		Vector3 raycastOrigin1 = transform.position + transform.up * raycastRadius;
+		Vector3 raycastOrigin2 = transform.position + transform.up * (raycastHeight - raycastRadius);
 
-		//// Looking for ground
-		//if (Physics.CapsuleCast(raycastOrigin1, raycastOrigin2, raycastRadius, direction, out wallHit, blinkDistance, layermask))
-		//{
-		//	// changing the destination to the position at the wall
-		//	destination = wallHit.point - direction * raycastRadius;
-		//	RaycastHit groundHit;
-
-		//	if (Physics.Raycast(destination, Vector3.down, out groundHit, raycastHeight, layermask))
-		//	{
-		//		// changing the destionation to the postion at the ground
-		//		destination = groundHit.point;
-		//	}
-		//}
-
-		RaycastHit hit;
-		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 120f, layermask))
+		// Looking for ground and putting the destination there if it is close enough
+		if (Physics.CapsuleCast(raycastOrigin1, raycastOrigin2, raycastRadius, direction, out RaycastHit wallHit, blinkDistance, layermask))
 		{
-			// Twean
-			originalVelocity = player.rigidbodyController.Rb.velocity;
-			player.FreezeControls(blinkDuration);
-			player.rigidbodyController.transform.DOMove(hit.point, blinkDuration).SetEase(easeType).OnComplete(RestoreVelocity);
+			// changing the destination to the position at the wall
+			destination = wallHit.point - direction * raycastRadius;
 
-			// UI
-			player.ChangeSpellAlpha(TypeOfSpell.BLINK, .5f);
-
-			// Animation
-			player.SetAnimTriggerSpell(animationTrigger);
-
-			// Spell object
-			Vector3 p = transform.localPosition;
-			Quaternion r = transform.localRotation;
-			player.CmdSpawnChildObject(2, p.x, p.y, p.z, r.x, r.y, r.z, r.w);
-			return true;
+			if (Physics.Raycast(destination, Vector3.down, out RaycastHit groundHit, raycastHeight + 1, layermask))
+			{
+				// changing the destionation to the postion at the ground
+				destination = groundHit.point;
+			}
 		}
 
-		return false;
+		// Twean
+		originalVelocity = direction * postBlinkVelocity;
+		player.FreezeControls(blinkDuration);
+		player.rigidbodyController.transform.DOMove(destination, blinkDuration).SetEase(easeType).OnComplete(RestoreVelocity);
+
+		// UI
+		player.ChangeSpellAlpha(TypeOfSpell.BLINK, .5f);
+
+		// Animation
+		player.SetAnimTriggerSpell(animationTrigger);
+
+		// Spell object
+		Vector3 p = transform.localPosition;
+		Quaternion r = transform.localRotation;
+		player.CmdSpawnChildObject(2, p.x, p.y, p.z, r.x, r.y, r.z, r.w);
+		return true;
 	}
 
 	private void RestoreVelocity()
