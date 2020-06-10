@@ -106,12 +106,6 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
                 Cursor.lockState = CursorLockMode.None;
             }
         }
-
-        string minutes = Mathf.Floor(Room.gameTime / 60).ToString();
-        string seconds = Mathf.RoundToInt(Room.gameTime % 60).ToString("00");
-
-        gameTimeText.text = minutes + ":" + seconds;
-        pauseTimeText.text = minutes + ":" + seconds;
     }
 
     public override void OnStartClient()
@@ -151,6 +145,18 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
         opponentScore.text = isClientOnly ? Room.team1score.ToString() : Room.team2score.ToString();
 
         pauseScore.text = myScore.text + " : " + opponentScore.text;
+    }
+
+    [ClientRpc]
+    public void RpcUpdateTimer(float _gameTime)
+    {
+        Debug.Log("Tiempo de juego: " + _gameTime + " del jugador: " + netId);
+
+        string minutes = Mathf.Floor(_gameTime / 60).ToString();
+        string seconds = Mathf.RoundToInt(_gameTime % 60).ToString("00");
+
+        gameTimeText.text = minutes + ":" + seconds;
+        pauseTimeText.text = minutes + ":" + seconds;
     }
 
     public void ResumeGame()

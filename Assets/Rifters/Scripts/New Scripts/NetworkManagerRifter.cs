@@ -50,6 +50,11 @@ public class NetworkManagerRifter : NetworkManager
 
             gameTime -= Time.deltaTime;
 
+            foreach (var player in GamePlayers)
+            {
+                player.RpcUpdateTimer(gameTime);
+            }
+
             if (team1score >= playToGoals || team2score >= playToGoals)
             {
                 if (team1score > team2score)
