@@ -322,7 +322,7 @@ MonoBehaviour:
   animationTrigger: Blink
   player: {fileID: 1804862892492501761}
   blinkDuration: 0.3
-  blinkDistance: 20
+  blinkDistance: 40
   postBlinkVelocity: 20
   raycastHeight: 1.7
   raycastRadius: 1
