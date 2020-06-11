@@ -150,7 +150,7 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
     [ClientRpc]
     public void RpcUpdateTimer(float _gameTime)
     {
-        Debug.Log("Tiempo de juego: " + _gameTime + " del jugador: " + netId);
+        //Debug.Log("Tiempo de juego: " + _gameTime + " del jugador: " + netId);
 
         string minutes = Mathf.Floor(_gameTime / 60).ToString();
         string seconds = Mathf.RoundToInt(_gameTime % 60).ToString("00");

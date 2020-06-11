@@ -6,7 +6,27 @@ ModelImporter:
   - first:
       74: -6519760567115542380
     second: TPose
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: fbe1a6e0d0b11bf4e9132665f6acac1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cloth
+    second: {fileID: 2100000, guid: a6c820d5869de5242b601124fe4e3f67, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: df8fb2a2b0a94454cbac36f810beb0fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StingrayPBS4
+    second: {fileID: 2100000, guid: fbe1a6e0d0b11bf4e9132665f6acac1c, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
