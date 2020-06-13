@@ -75,6 +75,9 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
 
     public bool isPaused = false;
 
+    [HideInInspector]
+    public Player myPlayer = null;
+
     private NetworkManagerRifter room;
 
     private NetworkManagerRifter Room
@@ -190,9 +193,17 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    public void RpcResetPlayerPosition()
+    {
+        myPlayer.ResetPlayerPosition();
+    }
+
     [Server]
     public void SetDisplayName(string displayName)
     {
         this.displayName = displayName;
     }
+
+
 }

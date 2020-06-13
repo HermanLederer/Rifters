@@ -234,6 +234,11 @@ public class NetworkManagerRifter : NetworkManager
 		Nb.Tr.position = new Vector3(0, 2, 0);
 		Nb.Rb.velocity = new Vector3(0, 0, 0);
 		Nb.Rb.angularVelocity = new Vector3(0, 0, 0);
+
+        foreach (var player in GamePlayers)
+        {
+            player.RpcResetPlayerPosition();
+        }
     }
 
     public void Score(GameTeam team)

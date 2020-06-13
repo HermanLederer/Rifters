@@ -64,6 +64,7 @@ public class Player : NetworkBehaviour
 			if (player.hasAuthority)
 			{
 				myPlayer = player;
+				myPlayer.myPlayer = this;
 				break;
 			}
 		}
@@ -248,6 +249,12 @@ public class Player : NetworkBehaviour
 	public void UnfreezeControls()
 	{
 		nextControlTime = 0f;
+	}
+
+	public void ResetPlayerPosition()
+	{
+		rigidbodyController.transform.position = transform.position;
+		rigidbodyController.transform.rotation = transform.rotation;
 	}
 
 	public void ChangeSpellAlpha(TypeOfSpell spell, float alphaValue)
