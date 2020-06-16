@@ -26,7 +26,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: StingrayPBS4
-    second: {fileID: 2100000, guid: fbe1a6e0d0b11bf4e9132665f6acac1c, type: 2}
+    second: {fileID: 2100000, guid: 1d1477a7e753a2e4694156f4a6e8892f, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
