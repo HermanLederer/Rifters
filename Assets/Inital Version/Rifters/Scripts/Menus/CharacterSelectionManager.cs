@@ -19,6 +19,6 @@ public class CharacterSelectionManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
     }
 }
