@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
-    public Vector2 normalisedMousePosition;
-    public float currentAngle;
-    public int selection;
+    private Vector2 normalisedMousePosition;
+    private float currentAngle;
+    private int selection;
     private int previousSelection;
 
-    public GameObject[] menuItems;
+    [SerializeField] private GameObject[] menuItems;
+    [SerializeField] private GameObject[] spellObjects;
 
     private MenuItem menuItemSc;
     private MenuItem previousMenuItemSc;
+
+    [SerializeField] private Text currentSpell;
 
     [HideInInspector] public bool showing;
 
@@ -20,7 +24,8 @@ public class MenuScript : MonoBehaviour
     void Awake()
     {
         selection = 0;
-        ChooseSpell(selection);
+        menuItemSc = menuItems[selection].GetComponent<MenuItem>();
+        ChooseSpell();
         HideMenu();
     }
 
@@ -32,7 +37,7 @@ public class MenuScript : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
-            ChooseSpell(selection);
+            ChooseSpell();
             HideMenu();
         }
 
@@ -77,29 +82,44 @@ public class MenuScript : MonoBehaviour
         showing = false;
     }
 
-    private void ChooseSpell(int selectedSpell)
+    private void ChooseSpell()
     {
+        foreach (var item in spellObjects)
+        {
+            item.SetActive(false);
+        }
+
+        spellObjects[selection].SetActive(true);
+        currentSpell.text = menuItemSc.spellName;
+        currentSpell.color = menuItemSc.hoverColor;
+
+        /*
         switch (selectedSpell)
         {
             case 0:
                 Debug.Log("Has elegido Geyser");
+                spellObjects[0].SetActive(true);
                 break;
             case 1:
                 Debug.Log("Has elegido Push");
+                spellObjects[1].SetActive(true);
                 break;
             case 2:
                 Debug.Log("Has elegido Pull Rocks");
+                spellObjects[2].SetActive(true);
                 break;
             case 3:
                 Debug.Log("Has elegido Grow Wall");
+                spellObjects[3].SetActive(true);
                 break;
             case 4:
                 Debug.Log("Has elegido Proyectiles");
+                spellObjects[4].SetActive(true);
                 break;
             default:
                 Debug.Log("Has elegido Roots");
+                spellObjects[5].SetActive(true);
                 break;
-
-        }
+        }*/
     }
 }

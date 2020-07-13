@@ -10,6 +10,7 @@ public class MenuItem : MonoBehaviour
     public Image background;
     public GameObject description;
     public float scaleFactor;
+    public string spellName;
 
     // Start is called before the first frame update
     void Start()
