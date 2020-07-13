@@ -13,6 +13,7 @@ public class SpellsPlayer : MonoBehaviour
 	public RigidbodyController rigidbodyController;
 	public Animator animator;
 	public AnimationState state;
+	public MenuScript pieMenu;
 
 	[Header("Spell components")]
 	//public ExploderSpell exploderSpell;
@@ -103,9 +104,12 @@ public class SpellsPlayer : MonoBehaviour
 	private void Update()
 	{
 		// Spells
-		
+
 
 		// Camera rotation
+		if (pieMenu.showing)
+			return;
+
 		float mouseX = Input.GetAxisRaw(cameraX) * acceleration * Time.fixedDeltaTime;
 		float mouseY = Input.GetAxisRaw(cameraY) * acceleration * Time.fixedDeltaTime;
 

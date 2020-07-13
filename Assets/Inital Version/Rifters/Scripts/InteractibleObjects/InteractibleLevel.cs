@@ -29,7 +29,7 @@ public class InteractibleLevel : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if(playerLayer == (playerLayer.value | 1 << other.gameObject.layer))
+        if(playerLayer == (playerLayer.value | 1 << other.gameObject.layer)) //Check if the player has entered
         {
             Transform parent = other.transform.parent;
             PlayerSpells ps = parent.GetComponentInChildren<PlayerSpells>();

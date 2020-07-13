@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  projectileSpeed: 20
+  projectileSpeed: 30
   turn: 10
 --- !u!1 &7129254626778766512
 GameObject:

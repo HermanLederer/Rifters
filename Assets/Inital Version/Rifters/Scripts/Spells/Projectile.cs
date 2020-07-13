@@ -5,11 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
-    public Transform target;
+    
 
     public float projectileSpeed;
     public float turn;
 
+    private Transform target;
     private Rigidbody rb;
 
     // Start is called before the first frame update

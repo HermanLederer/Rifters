@@ -31,25 +31,10 @@ public class Geyser : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer))
-        {
-            GameItemBehaviour dragon = other.GetComponent<GameItemBehaviour>();
-
-            //dragon.BecomeBall();
-            //dragon.SetNextDragonTime(ballTime);
-        }
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer))
         {
-            GameItemBehaviour dragon = other.GetComponent<GameItemBehaviour>();
-
-            //dragon.SetNextDragonTime(ballTime);
-            
             if (other.attachedRigidbody)
             {
                 other.attachedRigidbody.AddForce(Vector3.up * upForce);

@@ -37,16 +37,15 @@ public class Roots : MonoBehaviour
         }
         else
         {
-            if(holdedObject != null)
-            {
-                holdedObject.GetComponent<Rigidbody>().useGravity = true;
-            }
+            DeleteHoldedObject();
             Destroy(gameObject);
         }
 
         if (holding)
         {
-            holdedObject.transform.position = Vector3.MoveTowards(holdedObject.transform.position, holdingPosition.position, holdedObjectSpeed * Time.deltaTime);
+            if(holdedObject != null)
+                holdedObject.transform.position = Vector3.MoveTowards(holdedObject.transform.position, holdingPosition.position, holdedObjectSpeed * Time.deltaTime);
+
         }
     }
 
@@ -58,14 +57,26 @@ public class Roots : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(dragonLayer == (dragonLayer.value | 1 << other.gameObject.layer))
+        {
+            DeleteHoldedObject();
+        }
+    }
+
+    private void DeleteHoldedObject()
+    {
+        if(holdedObject == null) { return; }
+
+        holdedObject.GetComponent<Rigidbody>().useGravity = true;
+
+        holdedObject = null;
+    }
+
     private void SetHoldedObject(GameObject other)
     {
         holdedObject = other;
-
-        GameItemBehaviour dragon = holdedObject.GetComponent<GameItemBehaviour>();
-
-        //dragon.BecomeBall();
-        //dragon.SetNextDragonTime(livingTime + 1);
 
         Rigidbody rb = other.GetComponent<Rigidbody>();
 

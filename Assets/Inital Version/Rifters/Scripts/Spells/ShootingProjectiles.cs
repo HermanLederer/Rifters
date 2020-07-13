@@ -24,14 +24,7 @@ public class ShootingProjectiles : MonoBehaviour
 	{
 		player = GetComponentInParent<Player>();
 
-		if (player.isPlayer1)
-		{
-			fireKey = "Fire2 P1";
-		}
-		else
-		{
-			fireKey = "Fire2 P2";
-		}
+		fireKey = "Fire1 P1";
 	}
 
 	void FixedUpdate()
@@ -40,7 +33,7 @@ public class ShootingProjectiles : MonoBehaviour
 		{
 			if (Input.GetButton(fireKey))
 			{
-				player.SetAnimTriggerSpell("Projectile");
+				//player.SetAnimTriggerSpell("Projectile");
 				shooting = true;
 				StartCoroutine(ShootProjectiles());
 			}
