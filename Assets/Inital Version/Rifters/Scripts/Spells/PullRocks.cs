@@ -8,13 +8,13 @@ public class PullRocks : MonoBehaviour
 {
     public List<GameObject> inRangeRocks;
     public Transform holdingTransform;
+    public Transform Rocks;
 
     public float limitAngle;
     public float shootingForce;
     public float upRotationCameraForward;
 
-    [SerializeField] private LayerMask levelLayer;
-    [SerializeField] private string rockTag;
+    [SerializeField] private LayerMask RocksLayer;
 
     private GameObject targetRock;
 
@@ -41,7 +41,7 @@ public class PullRocks : MonoBehaviour
             //Comprobar si hay alguna roca que se pueda coger
             FindVisibleRocks();
 
-            if (targetRock != null)
+            if (targetRock != null && inRangeRocks.Count > 0)
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -54,7 +54,7 @@ public class PullRocks : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (levelLayer == (levelLayer.value | 1 << other.gameObject.layer))
+        if (RocksLayer == (RocksLayer.value | 1 << other.gameObject.layer))
         {
             inRangeRocks.Add(other.gameObject);
         }
@@ -62,7 +62,7 @@ public class PullRocks : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (levelLayer == (levelLayer.value | 1 << other.gameObject.layer))
+        if (RocksLayer == (RocksLayer.value | 1 << other.gameObject.layer))
         {
             inRangeRocks.Remove(other.gameObject);
         }
@@ -111,7 +111,7 @@ public class PullRocks : MonoBehaviour
 
     private void ThrowRock()
     {
-        targetRock.transform.SetParent(null);
+        targetRock.transform.SetParent(Rocks);
 
         targetRock.GetComponent<Rigidbody>().isKinematic = false;
 
@@ -119,6 +119,8 @@ public class PullRocks : MonoBehaviour
         shootingDirection = Quaternion.AngleAxis(-upRotationCameraForward, Camera.main.transform.right) * shootingDirection;
         shootingDirection.Normalize();
         targetRock.GetComponent<Rigidbody>().AddForce(shootingDirection * shootingForce, ForceMode.Impulse);
+
+        targetRock = null;
 
         isHolding = false;
     }

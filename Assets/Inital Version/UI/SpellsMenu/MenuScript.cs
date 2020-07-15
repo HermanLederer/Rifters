@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+    public GameObject rocks;
+    public GameObject walls;
+
     private Vector2 normalisedMousePosition;
     private float currentAngle;
     private int selection;
@@ -23,7 +26,7 @@ public class MenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        selection = 2;
+        selection = 0;
         menuItemSc = menuItems[selection].GetComponent<MenuItem>();
         ChooseSpell();
         HideMenu();
@@ -92,6 +95,12 @@ public class MenuScript : MonoBehaviour
         spellObjects[selection].SetActive(true);
         currentSpell.sprite = menuItemSc.icon.sprite;
         currentSpell.color = menuItemSc.hoverColor;
+
+        bool activateRocks = selection == 2;
+        bool activateWalls = selection == 3;
+
+        rocks.SetActive(activateRocks);
+        walls.SetActive(activateWalls);
 
         /*
         switch (selectedSpell)
