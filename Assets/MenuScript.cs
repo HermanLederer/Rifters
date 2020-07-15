@@ -16,14 +16,14 @@ public class MenuScript : MonoBehaviour
     private MenuItem menuItemSc;
     private MenuItem previousMenuItemSc;
 
-    [SerializeField] private Text currentSpell;
+    [SerializeField] private Image currentSpell;
 
     [HideInInspector] public bool showing;
 
     // Start is called before the first frame update
     void Awake()
     {
-        selection = 0;
+        selection = 2;
         menuItemSc = menuItems[selection].GetComponent<MenuItem>();
         ChooseSpell();
         HideMenu();
@@ -90,7 +90,7 @@ public class MenuScript : MonoBehaviour
         }
 
         spellObjects[selection].SetActive(true);
-        currentSpell.text = menuItemSc.spellName;
+        currentSpell.sprite = menuItemSc.icon.sprite;
         currentSpell.color = menuItemSc.hoverColor;
 
         /*

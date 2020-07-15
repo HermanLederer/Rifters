@@ -7,7 +7,10 @@ public class MenuItem : MonoBehaviour
 {
     public Color hoverColor;
     public Color baseColor;
+    public Color hoverColorIcon;
+    public Color baseColorIcon;
     public Image background;
+    public Image icon;
     public GameObject description;
     public float scaleFactor;
     public string spellName;
@@ -22,6 +25,7 @@ public class MenuItem : MonoBehaviour
     {
         background.color = hoverColor;
         background.rectTransform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
+        icon.color = hoverColorIcon;
         description.SetActive(true);
     }
 
@@ -29,6 +33,7 @@ public class MenuItem : MonoBehaviour
     {
         background.color = baseColor;
         background.rectTransform.localScale = Vector3.one;
+        icon.color = baseColorIcon;
         description.SetActive(false);
     }
 }
