@@ -8,6 +8,8 @@ public class MenuScript : MonoBehaviour
     public GameObject rocks;
     public GameObject walls;
 
+    public GameObject pauseMenu;
+
     private Vector2 normalisedMousePosition;
     private float currentAngle;
     private int selection;
@@ -22,6 +24,7 @@ public class MenuScript : MonoBehaviour
     [SerializeField] private Image currentSpell;
 
     [HideInInspector] public bool showing;
+    [HideInInspector] public bool paused;
 
     // Start is called before the first frame update
     void Awake()
@@ -42,6 +45,19 @@ public class MenuScript : MonoBehaviour
         {
             ChooseSpell();
             HideMenu();
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (pauseMenu.activeSelf)
+            {
+                pauseMenu.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                pauseMenu.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
 
         if (!showing)
@@ -101,34 +117,5 @@ public class MenuScript : MonoBehaviour
 
         rocks.SetActive(activateRocks);
         walls.SetActive(activateWalls);
-
-        /*
-        switch (selectedSpell)
-        {
-            case 0:
-                Debug.Log("Has elegido Geyser");
-                spellObjects[0].SetActive(true);
-                break;
-            case 1:
-                Debug.Log("Has elegido Push");
-                spellObjects[1].SetActive(true);
-                break;
-            case 2:
-                Debug.Log("Has elegido Pull Rocks");
-                spellObjects[2].SetActive(true);
-                break;
-            case 3:
-                Debug.Log("Has elegido Grow Wall");
-                spellObjects[3].SetActive(true);
-                break;
-            case 4:
-                Debug.Log("Has elegido Proyectiles");
-                spellObjects[4].SetActive(true);
-                break;
-            default:
-                Debug.Log("Has elegido Roots");
-                spellObjects[5].SetActive(true);
-                break;
-        }*/
     }
 }
