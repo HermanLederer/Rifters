@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using Mirror.Websocket;
 
 public enum TypeOfSpell
 {
@@ -90,6 +92,10 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
         }
     }
 
+    private void Start()
+    {
+        //if(Room.)
+    }
     private void Update()
     {
         if (!hasAuthority)
@@ -197,6 +203,14 @@ public class NetworkGamePlayerRifters : NetworkBehaviour
     public void RpcResetPlayerPosition()
     {
         myPlayer.ResetPlayerPosition();
+    }
+
+    [ClientRpc]
+    public void RpcReturnToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+        Cursor.lockState = CursorLockMode.None;
+        Room.StopClient();
     }
 
     [Server]

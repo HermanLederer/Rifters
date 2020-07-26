@@ -140,7 +140,13 @@ public class NetworkManagerRifter : NetworkManager
         }
         if (IsSceneActive(gameScene))
         {
-            Debug.Log("Player: " + conn.identity.name + " disconnected");
+            for(int i = GamePlayers.Count - 1; i >= 0; i--)
+            {
+                GamePlayers[i].RpcReturnToMainMenu();
+                //var connection = GamePlayers[i].connectionToClient;
+                //NetworkServer.Destroy(connection.identity.gameObject);
+            }
+            //NetworkServer.Shutdown();
         }
         base.OnServerDisconnect(conn);
     }
@@ -179,6 +185,7 @@ public class NetworkManagerRifter : NetworkManager
         {
             if(!IsReadyToStart()) { return; }
 
+            ServerChangeScene(gameScene);
             ServerChangeScene(gameScene);
         }
     }

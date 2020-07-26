@@ -26,4 +26,9 @@ public class SceneManagerMainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void GoToCharacterSelection()
+    {
+        SceneManager.LoadScene(3);
+    }
 }

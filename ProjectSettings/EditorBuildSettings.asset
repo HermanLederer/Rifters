@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/New Version/Scenes/NetworkGame.unity
     guid: 27dc67ad8d1d32040b0cfe32af410d01
-  - enabled: 0
+  - enabled: 1
     path: Assets/New Version/Scenes/Trying_Old_Spells.unity
     guid: 0de89c7c5ba9f894787f305df18b3cbe
+  - enabled: 1
+    path: Assets/Inital Version/Scenes/Character selection.unity
+    guid: c29d0be9bd62580468da52a4ce46062d
   m_configObjects: {}

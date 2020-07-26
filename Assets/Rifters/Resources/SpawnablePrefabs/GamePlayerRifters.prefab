@@ -74,6 +74,7 @@ MonoBehaviour:
   pauseTimeText: {fileID: 3650553974937702744}
   pauseScore: {fileID: 797300041547947797}
   isPaused: 0
+  myPlayer: {fileID: 0}
 --- !u!1001 &2053835090574649167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -125,6 +126,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147014860949294950, guid: 7d824f2bd076f4942921f1c309d16161,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147014860949294950, guid: 7d824f2bd076f4942921f1c309d16161,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147014860949294950, guid: 7d824f2bd076f4942921f1c309d16161,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147014860949294950, guid: 7d824f2bd076f4942921f1c309d16161,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2729146466592421322}
+    - target: {fileID: 4147014860949294950, guid: 7d824f2bd076f4942921f1c309d16161,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RpcReturnToMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147014860949294950, guid: 7d824f2bd076f4942921f1c309d16161,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5255529519960331768, guid: 7d824f2bd076f4942921f1c309d16161,
         type: 3}
