@@ -138,6 +138,10 @@ public class NetworkManagerRifter : NetworkManager
                 NotifyPlayersOfReadyState();
             }
         }
+        if (IsSceneActive(gameScene))
+        {
+            Debug.Log("Player: " + conn.identity.name + " disconnected");
+        }
         base.OnServerDisconnect(conn);
     }
 
